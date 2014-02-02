@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: resource/index.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: resource/index.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * @module resource
+ */
+
+
+"use strict";
+
+var resourceList = [],
+    resourceMap = {};
+
+
+function getResourceName(resource) {
+    return resource.name;
+}
+
+
+/**
+ * Check whether there is a resource with given name.
+ * 
+ * @param {String} name
+ *      A name that should be checked (case-insensitive).
+ * @return {Boolean}
+ *      &lt;code>true&lt;/code> if there is a resource with the given name,
+ *      &lt;code>false&lt;/code> if no one of available resources has the specified name.
+ * @alias module:resource.isAvailable
+ */
+function isAvailable(name) {
+    return name.toLowerCase() in resourceMap;
+}
+
+/**
+ * Return identifier of resource with given name.
+ * 
+ * @param {String} name
+ *      A resource name (case-insensitive).
+ * @return {String | null}
+ *      Identifier of resource that has the given name
+ *      or &lt;code>null&lt;/code> if no one of available resources has the specified name.
+ * @alias module:resource.getIdByName
+ */
+function getIdByName(name) {
+    /*jshint laxbreak:true*/
+    var sId = name.toLowerCase();
+    return sId in resourceMap
+            ? sId
+            : null;
+}
+
+/**
+ * Return list that contains names of all available resources.
+ * 
+ * @return {Array}
+ *      List that contains names of all available resources.
+ * @alias module:resource.getAllNameList
+ */
+function getAllNameList() {
+    return resourceList.map(getResourceName);
+}
+
+
+/**
+ * Return list of specified resources.
+ * If no selection criteria is set then returns list of all available resources.
+ * 
+ * @param {Object} [settings]
+ *      Specifies which data items should be returned.
+ *      The following settings are supported (name - type - description):
+        &lt;ul>
+        &lt;li>&lt;code>includeApi&lt;/code> - &lt;code>Boolean&lt;/code> - whether API object for resource should be included into data item
+                under &lt;code>api&lt;/code> field; &lt;code>false&lt;/code> by default
+        &lt;li>&lt;code>selectResource&lt;/code> - &lt;code>Array | String&lt;/code> - list of names of resources or name of resource (case-insensitive)
+                that should be included into result; if setting's value is not specified, all resources will be included into result
+        &lt;/ul>
+ * @return {Array}
+ *      List that contains objects presenting data about selected resources.
+ * @alias module:resource.getList
+ */
+function getList(settings) {
+    /*jshint boss:true*/
+    var resList = resourceList,
+        result = [],
+        bIncludeApi, nI, nL, resource, selectedIds;
+    // Prepare settings
+    if (! settings) {
+        settings = {};
+    }
+    if (selectedIds = settings.selectResource) {
+        if (typeof selectedIds === "string") {
+            selectedIds = [ selectedIds.toLowerCase() ];
+        }
+        else {
+            selectedIds = selectedIds.map(function(name) {
+                return name.toLowerCase();
+            });
+        }
+    }
+    bIncludeApi = settings.includeApi;
+    // Form result list
+    for (nI = 0, nL = resList.length; nI &lt; nL; nI++) {
+        resource = resList[nI];
+        if (! selectedIds || selectedIds.indexOf(resource.id) > -1) {
+            if (bIncludeApi && ! resource.api) {
+                resource.api = require(resource.module);
+            }
+            result.push(resource);
+        }
+    }
+    return result;
+}
+
+/**
+ * Return object that represents specified resources.
+ * If no selection criteria is set then returns object that contains data about all available resources.
+ * 
+ * @param {Object} [settings]
+ *      Specifies which data items should be returned.
+ *      See {@link module:resource.getList getList} for details.
+ * @return {Object}
+ *      Object that contains data about selected resources.
+ *      Fields are resource keys, values are objects representing data about resources.
+ * @alias module:resource.getMap
+ * @see {@link module:resource.getList getList}
+ */
+function getMap(settings) {
+    var result = {};
+    getList(settings).forEach(function(item) {
+        result[item.id] = item;
+    });
+    return result;
+}
+
+/**
+ * Add data about a resource into the list of available resources.
+ * 
+ * @param {Object} resource
+ *      Represents data about a resource that should be added.
+ *      Object should contain the following fields (name - type - description):
+        &lt;ul>
+        &lt;li>&lt;code>name&lt;/code> - &lt;code>String&lt;/code> - resource name (required)
+        &lt;li>&lt;code>description&lt;/code> - &lt;code>String&lt;/code> - resource description
+        &lt;li>&lt;code>url&lt;/code> - &lt;code>String&lt;/code> - URL of resource's site
+        &lt;li>&lt;code>tag&lt;/code> - &lt;code>Array of String&lt;/code> - tags/keywords of resource
+        &lt;li>&lt;code>note&lt;/code> - &lt;code>String&lt;/code> - additional information about resource usage
+        &lt;li>&lt;code>module&lt;/code> - &lt;code>String&lt;/code> - path to the module that should be used to work with resource;
+                the module should implement necessary API 
+        &lt;li>&lt;code>api&lt;/code> - &lt;code>Object&lt;/code> - object that implements necessary API to work with resource
+        &lt;/ul>
+        The only mandatory field is &lt;code>name&lt;/code>. Also &lt;code>module&lt;/code> or &lt;code>api&lt;/code> field should be specified.
+ * @return {Object}
+ *      Object that represents module &lt;code>exports&lt;/code>.
+ * @throws Will throw an error if resource name is not specified.
+ * @throws Will throw an error if resource API object and path to resource module are not specified.
+ * @throws Will throw an error if there is a resource with the same name.
+ * @alias module:resource.add
+ * @see {@link module:resource.isAvailable isAvailable}
+ */
+function add(resource) {
+    /*jshint newcap:false*/
+    var sName = resource.name,
+        sId;
+    if (! sName) {
+        throw Error("Unknown name: resource name is not specified");
+    }
+    if ((! resource.api || typeof resource.api !== "object") && (! resource.module || typeof resource.module !== "string")) {
+        throw Error("Unknown API: resource API object or path to resource module must be specified");
+    }
+    if (isAvailable(sName)) {
+        throw Error("Duplicate name: there is a resource with the same name");
+    }
+    
+    sId = resource.id = sName.toLowerCase();
+    if (! resource.tag) {
+        resource.tag = [];
+    }
+    resourceList.push(resource);
+    resourceMap[sId] = resource;
+    return exports;
+}
+
+// Form list of all available resources
+require("./list.json").forEach(add);
+
+
+//Exports
+
+exports.isAvailable = isAvailable;
+exports.getIdByName = getIdByName;
+exports.getAllNameList = getAllNameList;
+exports.getList = getList;
+exports.getMap = getMap;
+exports.add = add;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-bower.html">bower</a></li><li><a href="module-cli.html">cli</a></li><li><a href="module-component.html">component</a></li><li><a href="module-github.html">github</a></li><li><a href="module-jam.html">jam</a></li><li><a href="module-npm.html">npm</a></li><li><a href="module-resource.html">resource</a></li><li><a href="module-seeq.html">seeq</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 02 2014 23:34:04 GMT+0400 (MSK)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

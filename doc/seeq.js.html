@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: seeq.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: seeq.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/*
+ * seeq
+ * https://github.com/gamtiq/seeq
+ *
+ * Copyright (c) 2014 Denis Sikuler
+ * Licensed under the MIT license.
+ */
+
+
+/**
+ * Utility to detect whether a name is registered or present on some resource.
+ * 
+ * @module seeq
+ */
+
+
+"use strict";
+
+var resourceLib = require("./resource");
+
+
+function getCheckNameCallback(resource, position, callback) {
+    return function(err, result) {
+        callback(err, result, resource, position);
+    };
+}
+
+/**
+ * Check existence of name on specified resources.
+ * 
+ * Result of checking will be passed into callback as object.
+ * Each field of the object is name of resource that was checked.
+ * Value of result's field is object with the following fields (name - type - description):
+   &lt;ul>
+   &lt;li>&lt;code>name&lt;/code> - &lt;code>String&lt;/code> - resource name
+   &lt;li>&lt;code>description&lt;/code> - &lt;code>String&lt;/code> - resource description
+   &lt;li>&lt;code>url&lt;/code> - &lt;code>String&lt;/code> - URL of resource
+   &lt;li>&lt;code>query&lt;/code> - &lt;code>String&lt;/code> - name that was checked
+   &lt;li>&lt;code>result&lt;/code> - &lt;code>Array&lt;/code> - result that was received from resource; 
+           each item in the array is object that represents data about found name
+   &lt;li>&lt;code>error&lt;/code> - &lt;code>Object | String&lt;/code> - error that was got while checking resource;
+           this field is present only when there was an error
+   &lt;/ul>
+ * 
+ * &lt;code>null&lt;/code> will be passed into callback when the name is not given and resources with specified names are not found.
+ * 
+ * @param {String} name
+ *      The name that should be checked.
+ * @param {Function} callback
+ *      Function that should be called to process operation's result.
+ * @param {Object} [settings]
+ *      Operation settings. The following settings are supported (name - type - description):
+        &lt;ul>
+        &lt;li>&lt;code>resource&lt;/code> - &lt;code>Array | String&lt;/code> - list of names of resources or name of resource (case-insensitive)
+                that should be checked; if setting's value is not specified, all resources will be checked
+        &lt;li>&lt;code>settings&lt;/code> - &lt;code>Object&lt;/code> - settings for resources usage;
+                fields are resource identifiers, values are objects representing settings for the corresponding resources
+        &lt;/ul>
+ * @alias module:seeq.checkName
+ */
+function checkName(name, callback, settings) {
+    
+    // Gather results from resources
+    function resultCallback(err, result, resource, position) {
+        /*jshint boss:true*/
+        var sResourceName = resource.name,
+            item, nI, nK, resultMap;
+        nC--;
+        item = resultList[position] = {
+            name: sResourceName,
+            description: resource.description,
+            url: resource.url,
+            query: name,
+            result: result
+        };
+        if (err) {
+            item.error = err;
+        }
+        if (nC === 0) {
+            // Form result
+            resultMap = {};
+            for (nI = 0, nK = resultList.length; nI &lt; nK; nI++) {
+                if (resource = resultList[nI]) {
+                    resultMap[resource.name] = resource;
+                }
+            }
+            callback(resultMap);
+        }
+    }
+    
+    var resultList = [],
+        nC, nI, nK, resource, resourceList, resourceSettings;
+    if (! settings) {
+        settings = {};
+    }
+    resourceSettings = settings.settings || {};
+    resourceList = resourceLib.getList({selectResource: settings.resource, includeApi: true});
+    if (name && (nC = resourceList.length)) {
+        // Request data from resources
+        for (nI = 0, nK = nC; nI &lt; nK; nI++) {
+            resource = resourceList[nI];
+            resource.api.detect(name, getCheckNameCallback(resource, nI, resultCallback), resourceSettings[resource.id]);
+        }
+    }
+    else {
+        callback(null);
+    }
+}
+
+
+/**
+ * Check existence of each name from the list on specified resources.
+ * 
+ * Result of checking will be passed into callback as object.
+ * Each field of the object is a name that was checked.
+ * Value of result's field is object that is returned by {@link module:seeq.checkName checkName} function.
+ * 
+ * &lt;code>null&lt;/code> will be passed into callback when no name is specified to check.
+ * 
+ * @param {Array | String} names
+ *      The list of names or a name that should be checked.
+ * @param {Function} callback
+ *      Function that should be called to process operation's result.
+ * @param {Object} [settings]
+ *      Operation settings. See {@link module:seeq.checkName checkName} for details.
+ * @alias module:seeq.check
+ */
+function check(names, callback, settings) {
+    /*jshint boss:true*/
+    
+    // Gather results for each name
+    function resultCallback(result) {
+        resultMap[ names[nI] ] = result;
+        nI++;
+        if (nI &lt; nK) {
+            // Get results for the next name
+            checkName(names[nI], resultCallback, settings);
+        }
+        else {
+            // Return collected data
+            callback(resultMap);
+        }
+    }
+    
+    var resultMap = {},
+        nI, nK;
+    
+    if (names && typeof names === "string") {
+        names = [names];
+    }
+    if (names && (nK = names.length)) {
+        // Get results for the first name
+        checkName(names[nI = 0], resultCallback, settings);
+    }
+    else {
+        callback(null);
+    }
+}
+
+
+// Exports
+
+exports.check = check;
+exports.checkName = checkName;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-bower.html">bower</a></li><li><a href="module-cli.html">cli</a></li><li><a href="module-component.html">component</a></li><li><a href="module-github.html">github</a></li><li><a href="module-jam.html">jam</a></li><li><a href="module-npm.html">npm</a></li><li><a href="module-resource.html">resource</a></li><li><a href="module-seeq.html">seeq</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 02 2014 23:34:04 GMT+0400 (MSK)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

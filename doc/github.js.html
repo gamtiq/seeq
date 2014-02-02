@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: resource/module/github.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: resource/module/github.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * @module github
+ */
+
+
+"use strict";
+
+var github = require("octonode"),
+    remainingLimit = 1,
+    delay = 60001;
+
+// Process search result
+function handler(err, data, headers) {
+    /*jshint camelcase:false, validthis:true*/
+    var result = [],
+        item, itemList, nI, nL, nLimit;
+    if (! err) {
+        remainingLimit = Number(headers["x-ratelimit-remaining"]);
+        delay = (Number(headers["x-ratelimit-reset"]) * 1000) - (new Date()).getTime() + 1;
+        
+        nLimit = this.settings.limit;
+        if (typeof nLimit !== "number" || nLimit &lt;= 0 || nLimit > 100) {
+            nLimit = 100;
+        }
+        
+        itemList = data.items;
+        for (nI = 0, nL = itemList.length; nI &lt; nL; nI++) {
+            item = itemList[nI];
+            if (item.name.toLowerCase() === this.name) {
+                item.api_url = item.url;
+                item.url = item.homepage ? null : item.html_url;
+                item.repository = item.clone_url;
+                item.stars = item.stargazers_count;
+                result.push(item);
+                if (result.length === nLimit) {
+                    break;
+                }
+            }
+        }
+        this.callback(err, result);
+    }
+    else if (err.message === "Search repos error") {
+        setTimeout(this.send, delay);
+    }
+    else {
+        this.callback(err, result);
+    }
+}
+
+// Send search request
+function send() {
+    /*jshint validthis:true*/
+    var settings = this.settings,
+        sLanguage = settings.lang || settings.language,
+        sQuery = this.name + "+in:name",
+        nPageSize = settings.pageSize;
+    if (sLanguage) {
+        sQuery += "+language:" + sLanguage;
+    }
+    if (typeof nPageSize !== "number" || nPageSize &lt;= 0 || nPageSize > 100) {
+        nPageSize = 100;
+    }
+    this.search.repos({q: sQuery, "per_page": nPageSize}, this.handler);
+}
+
+/**
+ * Supported operation settings/options.
+ * 
+ * Conform to format of {@link https://github.com/harthur/nomnom nomnom} options.
+ */
+exports.settings = {
+    lang: {
+        help: "Search GitHub repositories that are written in the specified language"
+    },
+    limit: {
+        help: "Limit of quantity of GitHub results; default and maximum value is 100"
+    },
+    user: {
+        help: "GitHub username that should be used for authentication"
+    },
+    password: {
+        help: "GitHub account password"
+    },
+    token: {
+        help: "GitHub OAuth2 token that should be used for authentication instead of username and password"
+    }
+};
+
+/**
+ * Check whether repository with the specified name is existent.
+ * 
+ * Data about found repositories will be passed into callback as array.
+ * If no repository is found, empty array will be passed into callback.
+ * 
+ * @param {String} name
+ *      Name of the repository to check.
+ * @param {Function} callback
+ *      Function that should be called to process operation's result.
+ * @param {Object} [settings]
+ *      Operation settings.
+ *      The following settings are supported (name - type - description):
+        &lt;ul>
+        &lt;li>&lt;code>lang, language&lt;/code> - &lt;code>String&lt;/code> - Search repositories that are written in the specified language
+        &lt;li>&lt;code>user&lt;/code> - &lt;code>String&lt;/code> - GitHub username that should be used for authentication
+        &lt;li>&lt;code>password&lt;/code> - &lt;code>String&lt;/code> - GitHub account password
+        &lt;li>&lt;code>token&lt;/code> - &lt;code>String&lt;/code> - OAuth2 token that should be used for authentication 
+            instead of username and password
+        &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results; default and maximum value is 100
+        &lt;li>&lt;code>pageSize&lt;/code> - &lt;code>Integer&lt;/code> - Quantity of results per page; default and maximum value is 100
+        &lt;/ul>
+ */
+exports.detect = function(name, callback, settings) {
+    var client, request;
+    if (! settings) {
+        settings = {};
+    }
+    if (settings.token) {
+        client = github.client(settings.token);
+    }
+    else if (settings.user && settings.password) {
+        client = github.client({
+            username: settings.user,
+            password: settings.password
+        });
+    }
+    else {
+        client = github.client();
+    }
+    request = {
+        search: client.search(),
+        name: name.toLowerCase(),
+        callback: callback,
+        settings: settings
+    };
+    request.send = send.bind(request);
+    request.handler = handler.bind(request);
+    if (remainingLimit) {
+        request.send();
+    }
+    else {
+        setTimeout(request.send, delay);
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-bower.html">bower</a></li><li><a href="module-cli.html">cli</a></li><li><a href="module-component.html">component</a></li><li><a href="module-github.html">github</a></li><li><a href="module-jam.html">jam</a></li><li><a href="module-npm.html">npm</a></li><li><a href="module-resource.html">resource</a></li><li><a href="module-seeq.html">seeq</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 02 2014 23:34:04 GMT+0400 (MSK)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

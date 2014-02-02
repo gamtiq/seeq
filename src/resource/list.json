@@ -1,0 +1,38 @@
+[
+    {
+        "name": "GitHub",
+        "description": "GitHub repositories",
+        "url": "https://github.com",
+        "tag": ["repository", "project", "library", "framework", "package"],
+        "note": "For requests using Basic Authentication or OAuth token, you can make up to 20 requests per minute. For unauthenticated requests, the rate limit allows you to make up to 5 requests per minute.",
+        "module": "./module/github"
+    },
+    {
+        "name": "NPM",
+        "description": "Node packaged modules registry",
+        "url": "https://npmjs.org",
+        "tag": ["js", "javascript", "package", "library", "node"],
+        "module": "./module/npm"
+    },
+    {
+        "name": "Component",
+        "description": "Component client package manager registry",
+        "url": "https://github.com/component/component",
+        "tag": ["js", "javascript", "package", "component", "browser"],
+        "module": "./module/component"
+    },
+    {
+        "name": "Bower",
+        "description": "Bower package manager registry",
+        "url": "http://bower.io",
+        "tag": ["js", "javascript", "package", "component", "library", "browser"],
+        "module": "./module/bower"
+    },
+    {
+        "name": "Jam",
+        "description": "Jam package manager repository",
+        "url": "http://jamjs.org",
+        "tag": ["js", "javascript", "package", "requirejs", "amd", "browser"],
+        "module": "./module/jam"
+    }
+]
