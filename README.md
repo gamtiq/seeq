@@ -4,6 +4,7 @@ Detect whether a name is registered or present on some resource ([GitHub](https:
 [Component](https://github.com/component/component), [Bower](http://bower.io), [Jam](http://jamjs.org), ...).
 
 [![NPM version](https://badge.fury.io/js/seeq.png)](http://badge.fury.io/js/seeq)
+[![Build Status](https://travis-ci.org/gamtiq/seeq.png)](https://travis-ci.org/gamtiq/seeq)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ## Installation
