@@ -25,6 +25,18 @@ function resourceListToString(resourceList) {
 }
 
 
+function showProgress(data) {
+    var sOut = [data.number, "/", data.total, " (", Math.floor(data.number * 100 / data.total), "%)"].join("");
+    charm.left(showProgress.shift);
+    charm.write(sOut);
+    showProgress.shift = sOut.length;
+    if (data.number === data.total) {
+        charm.write("\n");
+    }
+}
+showProgress.shift = 3;
+
+
 function licenseToString(license) {
     var result = [],
         item, nI, nL;
@@ -45,7 +57,7 @@ function licenseToString(license) {
 function showResult(resultMap) {
     /*jshint expr:true*/
     var bVerbose = args.verbose,
-        out = ["Results:"], 
+        out = ["\nResults:"], 
         sIndent = "    ",
         sIndentTwice = "        ",
         nameResult, nI, nK, nN, nQ, sName, sResourceName, resourceResult, result, value;
@@ -103,7 +115,10 @@ function showResult(resultMap) {
 }
 
 var fs = require("fs"),
+    
+    charm = require("charm")(),
     nomnom = require("nomnom"),
+    
     resourceUnit = require("./resource"),
     seeq = require("./seeq"),
     
@@ -225,7 +240,20 @@ if (args.name && args.name.length) {
         }
         // Start checking
         console.log("Checking " + sMessage + "...");
-        seeq.check(nameList, showResult, {resource: resourceNameList, settings: resourceSettings});
+        if (nameList.length > 1 || (resourceNameList || resourceList).length > 1) {
+            value = showProgress;
+            charm.pipe(process.stdout);
+            charm.write("Progress: 0 %");
+        }
+        else {
+            value = null;
+        }
+        seeq.check(nameList, showResult, 
+                    {
+                        resource: resourceNameList, 
+                        settings: resourceSettings,
+                        progressCallback: value
+                    });
     }
 }
 else if (bShowUsage) {

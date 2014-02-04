@@ -16,7 +16,8 @@
 
 "use strict";
 
-var resourceLib = require("./resource");
+var mixing = require("mixing"),
+    resourceLib = require("./resource");
 
 
 function getCheckNameCallback(resource, position, callback) {
@@ -51,6 +52,15 @@ function getCheckNameCallback(resource, position, callback) {
  * @param {Object} [settings]
  *      Operation settings. The following settings are supported (name - type - description):
         <ul>
+        <li><code>progressCallback</code> - <code>Function</code> - function that should be called after getting result
+                from each resource; object with the following fields will be passed into callback:
+                <ul>
+                <li><code>name</code> - <code>String</code> - name that was checked
+                <li><code>resource</code> - <code>String</code> - resource that was checked
+                <li><code>result</code> - <code>Object</code> - result of checking (see above)
+                <li><code>number</code> - <code>Integer</code> - index number of checking
+                <li><code>total</code> - <code>Integer</code> - total number of checks
+                </ul>
         <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
                 that should be checked; if setting's value is not specified, all resources will be checked
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;
@@ -76,6 +86,15 @@ function checkName(name, callback, settings) {
         if (err) {
             item.error = err;
         }
+        if (settings.progressCallback) {
+            settings.progressCallback({
+                name: name,
+                resource: sResourceName,
+                result: item,
+                number: nTotal - nC,
+                total: nTotal
+            });
+        }
         if (nC === 0) {
             // Form result
             resultMap = {};
@@ -89,7 +108,7 @@ function checkName(name, callback, settings) {
     }
     
     var resultList = [],
-        nC, nI, nK, resource, resourceList, resourceSettings;
+        nC, nI, nTotal, resource, resourceList, resourceSettings;
     if (! settings) {
         settings = {};
     }
@@ -97,7 +116,7 @@ function checkName(name, callback, settings) {
     resourceList = resourceLib.getList({selectResource: settings.resource, includeApi: true});
     if (name && (nC = resourceList.length)) {
         // Request data from resources
-        for (nI = 0, nK = nC; nI < nK; nI++) {
+        for (nI = 0, nTotal = nC; nI < nTotal; nI++) {
             resource = resourceList[nI];
             resource.api.detect(name, getCheckNameCallback(resource, nI, resultCallback), resourceSettings[resource.id]);
         }
@@ -128,6 +147,13 @@ function checkName(name, callback, settings) {
 function check(names, callback, settings) {
     /*jshint boss:true*/
     
+    // Notify about operation progress
+    function checkNameProgress(data) {
+        data.number += data.total * nI;
+        data.total *= nK;
+        progressCallback(data);
+    }
+    
     // Gather results for each name
     function resultCallback(result) {
         resultMap[ names[nI] ] = result;
@@ -142,13 +168,17 @@ function check(names, callback, settings) {
         }
     }
     
-    var resultMap = {},
+    var progressCallback = settings && settings.progressCallback,
+        resultMap = {},
         nI, nK;
     
     if (names && typeof names === "string") {
         names = [names];
     }
     if (names && (nK = names.length)) {
+        if (progressCallback) {
+            settings = mixing({progressCallback: checkNameProgress}, settings, {except: "progressCallback"});
+        }
         // Get results for the first name
         checkName(names[nI = 0], resultCallback, settings);
     }

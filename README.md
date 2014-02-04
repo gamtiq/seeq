@@ -243,6 +243,11 @@ In your program you can use API provided by seeq in the following way:
 ```javascript
 var seeq = require("seeq");
 ...
+function onProgress(data) {
+    console.log([data.number, "/", data.total, ": checked ", data.name, " at ", data.resource, 
+                    ", results - ", data.result.result.length].join(""));
+}
+
 seeq.check(["chronoman", "knockout", "joy"], 
             callback, 
             {
@@ -252,7 +257,8 @@ seeq.check(["chronoman", "knockout", "joy"],
                         limit: 10,
                         language: "js"
                     }
-                }
+                },
+                progressCallback: onProgress
             });
 ...
 seeq.checkName("duratiform",
