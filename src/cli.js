@@ -77,6 +77,7 @@ function showResult(resultMap) {
                     result = resourceResult[nN];
                     nN &&
                         out.push("\n");
+                    
                     out.push("\n", sIndentTwice, result.name);
                     result.description &&
                         out.push(" - ", result.description);
@@ -84,6 +85,7 @@ function showResult(resultMap) {
                         out.push("\n", sIndentTwice, "url: ", value);
                     (value = result.keywords) && value.length &&
                         out.push("\n", sIndentTwice, "keywords: ", value.join(" "));
+                    
                     if (bVerbose) {
                         result.version &&
                             out.push("\n", sIndentTwice, "version: ", result.version);
@@ -113,6 +115,7 @@ function showResult(resultMap) {
     }
     console.log(out.join(""));
 }
+
 
 var fs = require("fs"),
     
@@ -159,6 +162,26 @@ var fs = require("fs"),
                         full: "list-resource",
                         flag: true,
                         help: "Show information about all available resources"
+                    },
+                    "partialMatch": {
+                        abbr: "p",
+                        full: "partial-match",
+                        help: "Allow partial matching: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching",
+                        choices: [0, 1, 2]
+                    },
+                    "caseSensitive": {
+                        abbr: "c",
+                        full: "case-sensitive",
+                        flag: true,
+                        help: "Use case-sensitive search"
+                    },
+                    "limit": {
+                        help: "Limit of quantity of results per resource",
+                        callback: function(value) {
+                            if (value < 1) {
+                                return "Limit should be equal to or greater than 1";
+                            }
+                        }
                     },
                     "verbose": {
                         abbr: "V",
@@ -227,13 +250,17 @@ if (args.name && args.name.length) {
     // Make check if resources are specified
     if (sMessage) {
         // Prepare resources settings
+        resourceSettings = {
+        };
         for (sName in args) {
-            if (list = /^(\w+)\-(.+)$/.exec(sName)) {
-                value = args[sName];
+            value = args[sName];
+            // General settings
+            if (sName === "partialMatch" || sName === "caseSensitive" || sName === "limit") {
+                (resourceSettings._general || (resourceSettings._general = {}))[sName] = value;
+            }
+            // Resource-specific settings
+            else if (list = /^(\w+)\-(.+)$/.exec(sName)) {
                 if (sName = resourceUnit.getIdByName(list[1])) {
-                    if (! resourceSettings) {
-                        resourceSettings = {};
-                    }
                     ( resourceSettings[sName] || (resourceSettings[sName] = {}) )[ list[2] ] = value;
                 }
             }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: seeq</title>
+    <title>JSDoc: Module: util</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Module: seeq</h1>
+    <h1 class="page-title">Module: util</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    seeq
+    util
     </h2>
     
 </header>  
@@ -38,7 +38,7 @@
     
     
         
-            <div class="description">Utility to detect whether a name is registered or present on some resource.</div>
+            <div class="description">Helper functions.</div>
         
         
         
@@ -64,7 +64,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line4">line 4</a>
+        <a href="util.js.html">resource/util.js</a>, <a href="util.js.html#line1">line 1</a>
     </li></ul></dd>
     
     
@@ -98,7 +98,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="check"><span class="type-signature">&lt;static> </span>check<span class="signature">(names, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getLimit"><span class="type-signature">&lt;static> </span>getLimit<span class="signature">(<span class="optional">settings</span>, <span class="optional">defaultValue</span>, <span class="optional">maxValue</span>)</span><span class="type-signature"> &rarr; {Number}</span></h4>
     
     
 </dt>
@@ -106,7 +106,7 @@
     
     
     <div class="description">
-        Check existence of each name from the list on specified resources.Result of checking will be passed into callback as object.Each field of the object is a name that was checked.Value of result's field is object that is returned by <a href="module-seeq.html#checkName">checkName</a> function.<code>null</code> will be passed into callback when no name is specified to check.
+        Return value of <code>limit</code> setting.Default value will be returned if <code>limit</code> field is not present in <code>settings</code> parameter.
     </div>
     
 
@@ -142,71 +142,6 @@
 	
         <tr>
             
-                <td class="name"><code>names</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">The list of names or a name that should be checked.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">Function that should be called to process operation's result.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
                 <td class="name"><code>settings</code></td>
             
             
@@ -233,7 +168,73 @@
             
             
             
-            <td class="description last">Operation settings. See <a href="module-seeq.html#checkName">checkName</a> for details.</td>
+            <td class="description last">Operation settings. The object can have numeric <code>limit</code> field which value will be returned.     Otherwise value of <code>defaultValue</code> parameter will be returned.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>defaultValue</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Default value of limit. <code>maxValue</code> is used when parameter value is not passed.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>maxValue</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Maximum value of limit. <code>Number.MAX_VALUE</code> is used when parameter value is not passed.</td>
         </tr>
 	
 	
@@ -264,7 +265,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line160">line 160</a>
+        <a href="util.js.html">resource/util.js</a>, <a href="util.js.html#line22">line 22</a>
     </li></ul></dd>
     
     
@@ -285,6 +286,28 @@
     
     
     
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Value that corresponds to <code>limit</code> setting.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Number</span>
+
+
+	</dd>
+</dl>
+
+        
     
     
 </dd>
@@ -292,7 +315,7 @@
         
             
 <dt>
-    <h4 class="name" id="checkName"><span class="type-signature">&lt;static> </span>checkName<span class="signature">(name, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="isSearchSet"><span class="type-signature">&lt;static> </span>isSearchSet<span class="signature">(<span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
     
     
 </dt>
@@ -300,17 +323,7 @@
     
     
     <div class="description">
-        Check existence of name on specified resources.Result of checking will be passed into callback as object.Each field of the object is name of resource that was checked.Value of result's field is object with the following fields (name - type - description):
-   <ul>
-   <li><code>name</code> - <code>String</code> - resource name
-   <li><code>description</code> - <code>String</code> - resource description
-   <li><code>url</code> - <code>String</code> - URL of resource
-   <li><code>query</code> - <code>String</code> - name that was checked
-   <li><code>result</code> - <code>Array</code> - result that was received from resource; 
-           each item in the array is object that represents data about found name
-   <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
-           this field is present only when there was an error
-   </ul><code>null</code> will be passed into callback when the name is not given and resources with specified names are not found.
+        Check whether search should be made according to operation settings.
     </div>
     
 
@@ -346,68 +359,6 @@
 	
         <tr>
             
-                <td class="name"><code>name</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">The name that should be checked.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">Function that should be called to process operation's result.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
                 <td class="name"><code>settings</code></td>
             
             
@@ -434,24 +385,11 @@
             
             
             
-            <td class="description last">Operation settings. The following settings are supported (name - type - description):
+            <td class="description last">Operation settings.     The following settings are used to specify search (name - type - description):
         <ul>
-        <li><code>progressCallback</code> - <code>Function</code> - function that should be called after getting result
-                from each resource; object with the following fields will be passed into callback:
-                <ul>
-                <li><code>name</code> - <code>String</code> - name that was checked
-                <li><code>resource</code> - <code>String</code> - resource that was checked
-                <li><code>result</code> - <code>Object</code> - result of checking (see above)
-                <li><code>number</code> - <code>Integer</code> - index number of checking
-                <li><code>total</code> - <code>Integer</code> - total number of checks
-                <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
-                       this field is present only when there was an error
-                </ul>
-        <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
-                that should be checked; if setting's value is not specified, all resources will be checked
-        <li><code>settings</code> - <code>Object</code> - settings for resources usage;
-                fields are resource identifiers, values are objects representing settings for the corresponding resources;
-                value of <code>_general</code> field can be used to specify settings that should be applied to all resources
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
+            1 - allow at the beginning of matching strings, 2 - allow substring matching
         </ul></td>
         </tr>
 	
@@ -483,7 +421,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line74">line 74</a>
+        <a href="util.js.html">resource/util.js</a>, <a href="util.js.html#line48">line 48</a>
     </li></ul></dd>
     
     
@@ -504,6 +442,246 @@
     
     
     
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <code>true</code> if search should be made according to settings,     <code>false</code> otherwise.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Boolean</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="isStringMatch"><span class="type-signature">&lt;static> </span>isStringMatch<span class="signature">(value, searchValue, <span class="optional">settings</span>)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Check whether the given string is similar to the searched string.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">String that should be checked.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>searchValue</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Value that was searched for.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Operation settings.     The following settings are supported (name - type - description):
+        <ul>
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
+            1 - allow at the beginning of matching strings, 2 - allow substring matching
+        </ul></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="util.js.html">resource/util.js</a>, <a href="util.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <code>true</code> if the given string is similar to the searched string according to settings,     <code>false</code> otherwise.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Boolean</span>
+
+
+	</dd>
+</dl>
+
+        
     
     
 </dd>

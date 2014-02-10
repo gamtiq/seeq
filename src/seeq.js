@@ -60,21 +60,25 @@ function getCheckNameCallback(resource, position, callback) {
                 <li><code>result</code> - <code>Object</code> - result of checking (see above)
                 <li><code>number</code> - <code>Integer</code> - index number of checking
                 <li><code>total</code> - <code>Integer</code> - total number of checks
+                <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
+                       this field is present only when there was an error
                 </ul>
         <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
                 that should be checked; if setting's value is not specified, all resources will be checked
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;
-                fields are resource identifiers, values are objects representing settings for the corresponding resources
+                fields are resource identifiers, values are objects representing settings for the corresponding resources;
+                value of <code>_general</code> field can be used to specify settings that should be applied to all resources
         </ul>
  * @alias module:seeq.checkName
  */
 function checkName(name, callback, settings) {
+    /*jshint laxbreak:true*/
     
     // Gather results from resources
     function resultCallback(err, result, resource, position) {
         /*jshint boss:true*/
         var sResourceName = resource.name,
-            item, nI, nK, resultMap;
+            data, item, nI, nK, resultMap;
         nC--;
         item = resultList[position] = {
             name: sResourceName,
@@ -87,13 +91,17 @@ function checkName(name, callback, settings) {
             item.error = err;
         }
         if (settings.progressCallback) {
-            settings.progressCallback({
+            data = {
                 name: name,
                 resource: sResourceName,
                 result: item,
                 number: nTotal - nC,
                 total: nTotal
-            });
+            };
+            if (err) {
+                data.error = err;
+            }
+            settings.progressCallback(data);
         }
         if (nC === 0) {
             // Form result
@@ -108,17 +116,22 @@ function checkName(name, callback, settings) {
     }
     
     var resultList = [],
-        nC, nI, nTotal, resource, resourceList, resourceSettings;
+        generalSettings, nC, nI, nTotal, resource, resourceList, resourceSettings;
     if (! settings) {
         settings = {};
     }
     resourceSettings = settings.settings || {};
+    generalSettings = resourceSettings._general;
     resourceList = resourceLib.getList({selectResource: settings.resource, includeApi: true});
     if (name && (nC = resourceList.length)) {
         // Request data from resources
         for (nI = 0, nTotal = nC; nI < nTotal; nI++) {
             resource = resourceList[nI];
-            resource.api.detect(name, getCheckNameCallback(resource, nI, resultCallback), resourceSettings[resource.id]);
+            resource.api.detect(name, 
+                                getCheckNameCallback(resource, nI, resultCallback), 
+                                generalSettings 
+                                    ? mixing(resourceSettings[resource.id] || {}, generalSettings) 
+                                    : resourceSettings[resource.id]);
         }
     }
     else {

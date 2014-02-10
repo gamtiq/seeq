@@ -6,6 +6,7 @@
 "use strict";
 
 var github = require("octonode"),
+    util = require("../util"),
     remainingLimit = 1,
     delay = 60001;
 
@@ -13,20 +14,19 @@ var github = require("octonode"),
 function handler(err, data, headers) {
     /*jshint camelcase:false, validthis:true*/
     var result = [],
-        item, itemList, nI, nL, nLimit;
+        item, itemList, nI, nL, nLimit, settings, sSearchName;
     if (! err) {
         remainingLimit = Number(headers["x-ratelimit-remaining"]);
         delay = (Number(headers["x-ratelimit-reset"]) * 1000) - (new Date()).getTime() + 1;
         
-        nLimit = this.settings.limit;
-        if (typeof nLimit !== "number" || nLimit <= 0 || nLimit > 100) {
-            nLimit = 100;
-        }
+        settings = this.settings;
+        nLimit = util.getLimit(settings, 100, 100);
         
+        sSearchName = this.name;
         itemList = data.items;
         for (nI = 0, nL = itemList.length; nI < nL; nI++) {
             item = itemList[nI];
-            if (item.name.toLowerCase() === this.name) {
+            if ( util.isStringMatch(item.name, sSearchName, settings) ) {
                 item.api_url = item.url;
                 item.url = item.homepage ? null : item.html_url;
                 item.repository = item.clone_url;
@@ -100,6 +100,9 @@ exports.settings = {
  *      Operation settings.
  *      The following settings are supported (name - type - description):
         <ul>
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive search should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
+            1 - allow at the beginning of matching strings, 2 - allow substring matching
         <li><code>lang, language</code> - <code>String</code> - Search repositories that are written in the specified language
         <li><code>user</code> - <code>String</code> - GitHub username that should be used for authentication
         <li><code>password</code> - <code>String</code> - GitHub account password
@@ -128,7 +131,7 @@ exports.detect = function(name, callback, settings) {
     }
     request = {
         search: client.search(),
-        name: name.toLowerCase(),
+        name: settings.caseSensitive ? name : name.toLowerCase(),
         callback: callback,
         settings: settings
     };

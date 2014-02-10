@@ -26,16 +26,19 @@ Usage: seeq [name]... [options]
 name     Name that should be checked for presence on a resource
 
 Options:
-   -h, --help            Show usage information and exit
-   -r, --at              Comma-separated list of names (case-insensitive) of resources that should be checked; all resources by default
-   -l, --list-resource   Show information about all available resources
-   -V, --verbose         Enable verbose output
-   -v, --version         Show program version
-   --github-lang         Search GitHub repositories that are written in the specified language
-   --github-limit        Limit of quantity of GitHub results; default and maximum value is 100
-   --github-user         GitHub username that should be used for authentication
-   --github-password     GitHub account password
-   --github-token        GitHub OAuth2 token that should be used for authentication instead of username and password
+   -h, --help             Show usage information and exit
+   -r, --at               Comma-separated list of names (case-insensitive) of resources that should be checked; all resources by default
+   -l, --list-resource    Show information about all available resources
+   -p, --partial-match    Allow partial matching: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
+   -c, --case-sensitive   Use case-sensitive search
+   --limit                Limit of quantity of results per resource
+   -V, --verbose          Enable verbose output
+   -v, --version          Show program version
+   --github-lang          Search GitHub repositories that are written in the specified language
+   --github-limit         Limit of quantity of GitHub results; default and maximum value is 100
+   --github-user          GitHub username that should be used for authentication
+   --github-password      GitHub account password
+   --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
 Available resources:
@@ -64,11 +67,13 @@ Available resources:
 
 ### Examples
 
-Check `numgen`, `three` and `some-strange-name` at all resources and limit GitHub results up to 10.
+Check `numgen`, `three` and `some-strange-name` at all resources and limit results per resource up to 10.
 
 ```
-> seeq numgen three some-strange-name --github-limit 10
+> seeq numgen three some-strange-name --limit 10
 Checking GitHub, NPM, Component, Bower, Jam...
+Progress: 15/15 (100%)
+
 Results:
 
 1. numgen
@@ -156,19 +161,33 @@ Results:
         some-strange-name is not found.
 ```
 
-Check `mixing` and `flight` at GitHub and Bower, include only GitHub projects that are written in JavaScript,
+Check `mixing` and `flight` at GitHub and Bower, allow partial matching at the beginning, use case-sensitive search,
+limit Bower results up to 3 and GitHub results up to 5, include only GitHub projects that are written in JavaScript,
 show additional information about found items.
 
 ```
-> seeq mixing flight -r github,bower --github-lang js --verbose
+> seeq mixing flight -r github,bower --partial-match 1 -c --bower-limit 3 --github-limit 5 --github-lang js --verbose
 Checking github, bower...
+Progress: 4/4 (100%)
+
 Results:
 
 1. mixing
-    GitHub - 1
+    GitHub - 3
         mixing - Functions to mix objects
         url: https://github.com/gamtiq/mixing
         repository: https://github.com/gamtiq/mixing.git
+        language: JavaScript
+        stars: 2
+
+        mixingpanel
+        url: https://github.com/gguerrero/mixingpanel
+        repository: https://github.com/gguerrero/mixingpanel.git
+        language: JavaScript
+
+        mixingloom-profiler-example - an example of profiling by mixingloom-profiler
+        url: https://github.com/wighawag/mixingloom-profiler-example
+        repository: https://github.com/wighawag/mixingloom-profiler-example.git
         language: JavaScript
         stars: 2
     Bower - 1
@@ -176,31 +195,22 @@ Results:
         url: https://github.com/gamtiq/mixing
         keywords: mixin mix merge object
         version: 0.0.2
+        repository: git://github.com/gamtiq/mixing.git
         license: MIT
 
 2. flight
-    GitHub - 10
+    GitHub - 5
         flight - A component-based, event-driven JavaScript framework from Twitter
         url: http://flightjs.github.io/
         repository: https://github.com/flightjs/flight.git
         language: JavaScript
-        stars: 4866
+        stars: 4888
 
-        Flight - Unit testing for Pokemon Online
-        url: https://github.com/TheUnknownOne/Flight
-        repository: https://github.com/TheUnknownOne/Flight.git
+        flight-stream - Real Time Flight Updates w/ Node.js, Redis and WebSockets
+        url: https://github.com/waratuman/flight-stream
+        repository: https://github.com/waratuman/flight-stream.git
         language: JavaScript
-
-        flight - flight-framework is a jsfl script framework with a CommonJS-like module mechanism.
-        url: https://github.com/uzzu/flight
-        repository: https://github.com/uzzu/flight.git
-        language: JavaScript
-        stars: 3
-
-        flight
-        url: https://github.com/mrlong/flight
-        repository: https://github.com/mrlong/flight.git
-        language: JavaScript
+        stars: 32
 
         flight
         url: https://github.com/inage-toru/flight
@@ -212,28 +222,27 @@ Results:
         repository: https://github.com/aishwar/flight.git
         language: JavaScript
 
-        Flight
-        url: https://github.com/niuniu98/Flight
-        repository: https://github.com/niuniu98/Flight.git
-        language: JavaScript
-
-        flight
-        url: https://github.com/webjars/flight
-        repository: https://github.com/webjars/flight.git
-        language: JavaScript
-
         flight - Display CSN flight info @T2.BCIA
         url: https://github.com/yuanl/flight
         repository: https://github.com/yuanl/flight.git
         language: JavaScript
-
-        Flight - Different modes of flight
-        url: https://github.com/DevenSmith/Flight
-        repository: https://github.com/DevenSmith/Flight.git
-        language: JavaScript
-    Bower - 1
+    Bower - 3
         flight - Clientside component infrastructure
+        url: http://github.com/flightjs/flight
         version: 1.1.2
+        repository: git://github.com/flightjs/flight.git
+
+        flight-jasmine - Extensions to the Jasmine test framework for use with Flight
+        url: http://github.com/twitter/flight-jasmine
+        keywords: flight jasmine test
+        version: 2.2.0
+        repository: git://github.com/twitter/flight-jasmine.git
+
+        flight-mocha - Extensions to the Mocha test framework for use with Flight
+        url: http://github.com/naoina/flight-mocha
+        keywords: flight mocha test
+        version: 0.1.0
+        repository: git://github.com/naoina/flight-mocha.git
 ```
 
 ## API
@@ -253,6 +262,11 @@ seeq.check(["chronoman", "knockout", "joy"],
             {
                 resource: ["NPM", "Component", "Github"], 
                 settings: {
+                    _general: {
+                        limit: 5,
+                        partialMatch: 2,
+                        caseSensitive: true
+                    },
                     github: {
                         limit: 10,
                         language: "js"
