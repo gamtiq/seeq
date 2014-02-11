@@ -42,9 +42,17 @@ module.exports = function(grunt) {
         
         mochacli: {
             all: {}
+        },
+        
+        
+        push: {
+            options: {
+                commitMessage: "Release version %VERSION%",
+                commitFiles: ["-a"],
+                tagName: "%VERSION%",
+                tagMessage: "Version %VERSION%",
+            }
         }
-        
-        
         
     });
     
@@ -52,6 +60,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-jsdoc");
     grunt.loadNpmTasks("grunt-mocha-cli");
+    grunt.loadNpmTasks("grunt-push-release");
     
     // Tasks
     
@@ -59,4 +68,8 @@ module.exports = function(grunt) {
     grunt.registerTask("test", ["mochacli"]);
     grunt.registerTask("default", ["jshint", "mochacli"]);
     grunt.registerTask("all", ["default", "doc"]);
+    
+    grunt.registerTask("release", ["push"]);
+    grunt.registerTask("release-minor", ["push:minor"]);
+    grunt.registerTask("release-major", ["push:major"]);
 };
