@@ -12,35 +12,33 @@ describe("resource", function() {
     }
     
     
+    function checkResourceAbsence(sName) {
+        expect( resource.isAvailable(sName) )
+            .equal(false);
+    }
+    
+    function checkResourcePresence(sName) {
+        expect( resource.isAvailable(sName) )
+            .equal(true);
+    }
+    
+    
     describe(".isAvailable(name)", function() {
-        var isAvailable = resource.isAvailable;
-        
         it("should return true", function() {
-            expect( isAvailable("github") )
-                .equal(true);
-            expect( isAvailable("nPM") )
-                .equal(true);
-            expect( isAvailable("compoNent") )
-                .equal(true);
-            expect( isAvailable("Bower") )
-                .equal(true);
-            expect( isAvailable("JAM") )
-                .equal(true);
+            checkResourcePresence("github");
+            checkResourcePresence("nPM");
+            checkResourcePresence("compoNent");
+            checkResourcePresence("Bower");
+            checkResourcePresence("JAM");
         });
         
         it("should return false", function() {
-            expect( isAvailable(new Date().toString()) )
-                .equal(false);
-            expect( isAvailable("") )
-                .equal(false);
-            expect( isAvailable("GitRes") )
-                .equal(false);
-            expect( isAvailable("components") )
-                .equal(false);
-            expect( isAvailable("bow") )
-                .equal(false);
-            expect( isAvailable("Candy") )
-                .equal(false);
+            checkResourceAbsence(new Date().toString());
+            checkResourceAbsence("");
+            checkResourceAbsence("GitRes");
+            checkResourceAbsence("components");
+            checkResourceAbsence("bow");
+            checkResourceAbsence("Candy");
         });
     });
     
@@ -83,14 +81,12 @@ describe("resource", function() {
         
         it("should return list of resource names", function() {
             var nameList = getAllNameList(),
-                isAvailable = resource.isAvailable,
                 nI, nL;
             expect( nameList )
                 .be["instanceof"](Array);
             
             for (nI = 0, nL = nameList.length; nI < nL; nI++) {
-                expect( isAvailable(nameList[nI]) )
-                    .equal(true);
+                checkResourcePresence(nameList[nI]);
             }
         });
     });
@@ -309,11 +305,14 @@ describe("resource", function() {
         it("should add resource into the list of available resources", function() {
             var sName = "Test Resource",
                 list;
+        
+            checkResourceAbsence(sName);
             
-            add({name: sName, api: {}});
+            list = add({name: sName, api: {}});
             
-            expect( resource.isAvailable(sName) )
-                .equal(true);
+            checkResourcePresence(sName);
+            expect( list )
+                .equal(resource);
             
             list = resource.getList();
             expect( list.map(function(res) {return res.name;}) )
@@ -321,6 +320,10 @@ describe("resource", function() {
             
             expect( resource.getMap() )
                 .contain.key(sName.toLowerCase());
+            
+            resource.resetList();
+            
+            checkResourceAbsence(sName);
         });
         
         it("should throw an error", function() {
@@ -349,6 +352,34 @@ describe("resource", function() {
                 .to["throw"](/duplicate name/i);
             expect( a({name: "Jam", module: "path/to/jam"}) )
                 .to["throw"](/duplicate name/i);
+        });
+    });
+    
+    
+    describe(".resetList()", function() {
+        var resetList = resource.resetList;
+        
+        it("should set list of resources to initial state", function() {
+            var list = resource.getList(),
+                map = resource.getMap(),
+                sName = "resource at " + new Date().getTime(),
+                result;
+            
+            checkResourceAbsence(sName);
+            
+            resource.add({name: sName, module: "some/path"});
+            
+            checkResourcePresence(sName);
+            
+            result = resetList();
+            
+            checkResourceAbsence(sName);
+            expect( result )
+                .equal(resource);
+            expect( resource.getList() )
+                .eql(list);
+            expect( resource.getMap() )
+                .eql(map);
         });
     });
 });

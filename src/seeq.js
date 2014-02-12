@@ -205,3 +205,8 @@ function check(names, callback, settings) {
 
 exports.check = check;
 exports.checkName = checkName;
+
+/**
+ * Reference to {@link module:resource resource} module.
+ */
+exports.resource = resourceLib;

@@ -5,7 +5,8 @@
 
 "use strict";
 
-var resourceList = [],
+var sourceList = require("./list.json"),
+    resourceList = [],
     resourceMap = {};
 
 
@@ -177,9 +178,25 @@ function add(resource) {
     return exports;
 }
 
-// Form list of all available resources
-require("./list.json").forEach(add);
+/**
+ * Set list of resources to initial state containing data about all available resources.
+ * 
+ * @return {Object}
+ *      Object that represents module <code>exports</code>.
+ * @see {@link module:resource.add add}
+ */
+function resetList() {
+    // Delete current resources
+    resourceList.length = 0;
+    resourceMap = {};
+    // Form list of all available resources
+    sourceList.forEach(add);
+    return exports;
+}
 
+
+// Initialize list of resources
+resetList();
 
 //Exports
 
@@ -189,3 +206,4 @@ exports.getAllNameList = getAllNameList;
 exports.getList = getList;
 exports.getMap = getMap;
 exports.add = add;
+exports.resetList = resetList;
