@@ -1,5 +1,5 @@
 "use strict";
-/*global chai, describe, it*/
+/*global after, afterEach, chai, describe, it*/
 
 // Tests for resource/index.js
 describe("resource", function() {
@@ -21,6 +21,8 @@ describe("resource", function() {
         expect( resource.isAvailable(sName) )
             .equal(true);
     }
+    
+    afterEach(resource.resetList);
     
     
     describe(".isAvailable(name)", function() {
@@ -321,9 +323,9 @@ describe("resource", function() {
             expect( resource.getMap() )
                 .contain.key(sName.toLowerCase());
             
-            resource.resetList();
-            
-            checkResourceAbsence(sName);
+            after(function() {
+                checkResourceAbsence(sName);
+            });
         });
         
         it("should throw an error", function() {
@@ -356,9 +358,89 @@ describe("resource", function() {
     });
     
     
-    describe(".resetList()", function() {
-        var resetList = resource.resetList;
+    describe(".remove(name)", function() {
+        var remove = resource.remove;
         
+        it("should remove resource with given name from list of resources", function() {
+            var list = resource.getAllNameList(),
+                nL = list.length,
+                nI, result,  sName;
+            
+            expect( nL )
+                .above(0);
+            
+            for (nI = 0; nI < nL; nI++) {
+                sName = list[nI];
+                checkResourcePresence(sName);
+                
+                result = remove(sName);
+                
+                expect( result )
+                    .not.be.a("null");
+                expect( result )
+                    .be.an("object");
+                expect( result.name )
+                    .equal(sName);
+                
+                checkResourceAbsence(sName);
+                expect( resource.getList().length )
+                    .equal(nL - nI - 1);
+            }
+            expect( resource.getMap() )
+                .deep.equal({});
+        });
+        
+        it("should not remove anything", function() {
+            var sourceList = resource.getList(),
+                nL = sourceList.length,
+                resourceMap = resource.getMap(),
+                list;
+            
+            expect( nL )
+                .above(0);
+            
+            expect( remove("res-" + new Date().getTime()) )
+                .equal(null);
+            
+            expect( remove("Some Non-Existent Resource") )
+                .equal(null);
+            
+            list = resource.getList();
+            expect( list.length )
+                .equal(nL);
+            expect( list )
+                .deep.equal(sourceList);
+            expect( resource.getMap() )
+                .deep.equal(resourceMap);
+        });
+    });
+    
+    
+    describe(".removeAll()", function() {
+        var removeAll = resource.removeAll;
+        
+        it("should remove all resources from list", function() {
+            var list = resource.getAllNameList(),
+                nL = list.length,
+                nI;
+            
+            expect( nL )
+                .above(0);
+            
+            removeAll();
+            
+            for (nI = 0; nI < nL; nI++) {
+                checkResourceAbsence(list[nI]);
+            }
+            
+            list = resource.getList();
+            expect( list )
+                .eql([]);
+        });
+    });
+    
+    
+    describe(".resetList()", function() {
         it("should set list of resources to initial state", function() {
             var list = resource.getList(),
                 map = resource.getMap(),
@@ -371,7 +453,7 @@ describe("resource", function() {
             
             checkResourcePresence(sName);
             
-            result = resetList();
+            result = resource.resetList();
             
             checkResourceAbsence(sName);
             expect( result )

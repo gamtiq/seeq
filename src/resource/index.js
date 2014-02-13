@@ -179,16 +179,57 @@ function add(resource) {
 }
 
 /**
+ * Remove resource with given name from list of resources.
+ * 
+ * @param {String} name
+ *      Name of resource that should be removed (case-insensitive).
+ * @return {Object | null}
+ *      Object that represents removed resource
+ *      or <code>null</code> if no one of resources from list has the specified name.
+ * @alias module:resource.remove
+ */
+function remove(name) {
+    var sId = name.toLowerCase(),
+        nI, nL, resource;
+    if (sId in resourceMap) {
+        for (nI = 0, nL = resourceList.length; nI < nL; nI++) {
+            if ((resource = resourceList[nI]).id === sId) {
+                resourceList.splice(nI, 1);
+                delete resourceMap[sId];
+                return resource;
+            }
+        }
+    }
+    return null;
+}
+
+/**
+ * Clear list of resources.
+ * 
+ * @return {Object}
+ *      Object that represents module <code>exports</code>.
+ * @see {@link module:resource.add add}
+ * @alias module:resource.removeAll
+ */
+function removeAll() {
+    // Delete current resources
+    resourceList.length = 0;
+    resourceMap = {};
+    return exports;
+}
+
+/**
  * Set list of resources to initial state containing data about all available resources.
  * 
  * @return {Object}
  *      Object that represents module <code>exports</code>.
  * @see {@link module:resource.add add}
+ * @see {@link module:resource.removeAll removeAll}
+ * @alias module:resource.resetList
  */
 function resetList() {
     // Delete current resources
-    resourceList.length = 0;
-    resourceMap = {};
+    removeAll();
     // Form list of all available resources
     sourceList.forEach(add);
     return exports;
@@ -206,4 +247,6 @@ exports.getAllNameList = getAllNameList;
 exports.getList = getList;
 exports.getMap = getMap;
 exports.add = add;
+exports.remove = remove;
+exports.removeAll = removeAll;
 exports.resetList = resetList;
