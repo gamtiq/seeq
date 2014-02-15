@@ -1,7 +1,7 @@
 {
   "name": "seeq",
   "description": "Detect whether a name is registered or present on some resource (GitHub, NPM, Component, Bower, Jam, ...)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/gamtiq/seeq",
   "author": {
     "name": "Denis Sikuler"
