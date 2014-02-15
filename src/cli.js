@@ -60,7 +60,7 @@ function showResult(resultMap) {
         out = ["\nResults:"], 
         sIndent = "    ",
         sIndentTwice = "        ",
-        nameResult, nI, nK, nN, nQ, sName, sResourceName, resourceResult, result, value;
+        nameResult, nI, nK, nN, nQ, sName, sResourceName, resourceResult, resourceResultList, result, value;
     
     for (nI = 0, nK = nameList.length; nI < nK; nI++) {
         sName = nameList[nI];
@@ -69,12 +69,13 @@ function showResult(resultMap) {
         nameResult = resultMap[sName];
         for (sResourceName in nameResult) {
             out.push("\n", sIndent, sResourceName);
-            resourceResult = nameResult[sResourceName].result;
-            nQ = resourceResult.length;
+            resourceResult = nameResult[sResourceName];
+            resourceResultList = resourceResult.result;
+            nQ = resourceResultList.length;
             if (nQ) {
                 out.push(" - ", nQ);
                 for (nN = 0; nN < nQ; nN++) {
-                    result = resourceResult[nN];
+                    result = resourceResultList[nN];
                     nN &&
                         out.push("\n");
                     

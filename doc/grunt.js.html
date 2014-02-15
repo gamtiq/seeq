@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: resource/module/component.js</title>
+    <title>JSDoc: Source: resource/module/grunt.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: resource/module/component.js</h1>
+    <h1 class="page-title">Source: resource/module/grunt.js</h1>
     
     
 
@@ -26,14 +26,15 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * @module component
+ * @module grunt
  */
 
 
 "use strict";
 
-var component = require("component"),
-    util = require("../util");
+var request = require("request"),
+    util = require("../util"),
+    pluginList;
 
 /**
  * Check whether package with the specified name is existent.
@@ -55,29 +56,40 @@ var component = require("component"),
         &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results
         &lt;/ul>
  */
-exports.detect = function(name, callback, settings) {
-    component.search(name, function(err, resultList) {
-        var nI, nL, nLimit, pkg, result;
-        if (err) {
-            callback(err, []);
-        }
-        else {
-            result = [];
-            nLimit = util.getLimit(settings);
-            for (nI = 0, nL = resultList.length; nI &lt; nL; nI++) {
-                pkg = resultList[nI];
-                if ( util.isStringMatch(pkg.name, name, settings) ) {
-                    pkg.url = "https://github.com/" + pkg.repo;
-                    pkg.repo = pkg.url + ".git";
-                    result.push(pkg);
-                    if (result.length === nLimit) {
-                        break;
-                    }
+exports.detect = function detect(name, callback, settings) {
+    var result = [],
+        nI, nL, nLimit, plugin, sName;
+    if (pluginList && pluginList.length) {
+        nLimit = util.getLimit(settings);
+        for (nI = 0, nL = pluginList.length; nI &lt; nL; nI++) {
+            plugin = pluginList[nI];
+            sName = plugin.name;
+            if (sName.indexOf("grunt-") === 0) {
+                sName = plugin.name = sName.substring(6);
+            }
+            if ( util.isStringMatch(sName, name, settings) ) {
+                plugin.description = plugin.ds;
+                delete plugin.ds;
+                plugin.url = "https://npmjs.org/package/grunt-" + sName;
+                result.push(plugin);
+                if (result.length === nLimit) {
+                    break;
                 }
             }
-            callback(null, result);
         }
-    });
+        callback(null, result);
+    }
+    else {
+        request("http://gruntjs.com/plugin-list.json?_=" + new Date().getTime(), function(err, response, data) {
+            if (! err && response.statusCode === 200) {
+                pluginList = JSON.parse(data).aaData;
+                detect(name, callback, settings);
+            }
+            else {
+                callback(err, result);
+            }
+        });
+    }
 };
 </code></pre>
         </article>

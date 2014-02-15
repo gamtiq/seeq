@@ -34,5 +34,12 @@
         "url": "http://jamjs.org",
         "tag": ["js", "javascript", "package", "requirejs", "amd", "browser"],
         "module": "./module/jam"
+    },
+    {
+        "name": "Grunt",
+        "description": "Registry of Grunt plugins",
+        "url": "http://gruntjs.com/plugins",
+        "tag": ["js", "javascript", "grunt", "plugin", "registry", "node"],
+        "module": "./module/grunt"
     }
 ]

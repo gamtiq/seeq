@@ -7,6 +7,14 @@ Detect whether a name is registered or present on some resource ([GitHub](https:
 [![Build Status](https://travis-ci.org/gamtiq/seeq.png)](https://travis-ci.org/gamtiq/seeq)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
+## Available resources
+
+The following resources are available:
+[GitHub](https://github.com), [NPM](https://npmjs.org), [Component](https://github.com/component/component), 
+[Bower](http://bower.io), [Jam](http://jamjs.org), [Registry of Grunt plugins](http://gruntjs.com/plugins).
+
+You can see information about all available resources by running `seeq -l` (see below).
+
 ## Installation
 
 To install and use seeq [Node.js](http://nodejs.org) should be installed in your system.
@@ -51,18 +59,7 @@ Available resources:
     NPM - Node packaged modules registry
     url: https://npmjs.org
     tags: js javascript package library node
-
-    Component - Component client package manager registry
-    url: https://github.com/component/component
-    tags: js javascript package component browser
-
-    Bower - Bower package manager registry
-    url: http://bower.io
-    tags: js javascript package component library browser
-
-    Jam - Jam package manager repository
-    url: http://jamjs.org
-    tags: js javascript package requirejs amd browser
+    ...
 ```
 
 ### Examples
@@ -71,8 +68,8 @@ Check `numgen`, `three` and `some-strange-name` at all resources and limit resul
 
 ```
 > seeq numgen three some-strange-name --limit 10
-Checking GitHub, NPM, Component, Bower, Jam...
-Progress: 15/15 (100%)
+Checking GitHub, NPM, Component, Bower, Jam, Grunt...
+Progress: 18/18 (100%)
 
 Results:
 
@@ -102,6 +99,8 @@ Results:
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
+    Grunt
+        numgen is not found.
 
 2. three
     GitHub - 10
@@ -147,6 +146,8 @@ Results:
     Jam - 1
         three - JavaScript 3D library
         url: http://threejs.org
+    Grunt
+        three is not found.
 
 3. some-strange-name
     GitHub
@@ -158,6 +159,8 @@ Results:
     Bower
         some-strange-name is not found.
     Jam
+        some-strange-name is not found.
+    Grunt
         some-strange-name is not found.
 ```
 
