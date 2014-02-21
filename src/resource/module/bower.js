@@ -13,29 +13,28 @@ var RegistryClient = require("bower-registry-client"),
 
 
 /**
- * Check whether package with the specified name is existent.
+ * Check whether package with the specified name is existent, or make search for the specified string.
  * 
  * Data about found packages will be passed into callback as array.
  * If no package is found, empty array will be passed into callback.
  * 
  * @param {String} name
- *      Name of the package to check.
+ *      Name of the package to check or string to search for.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
  *      Operation settings.
  *      The following settings are supported (name - type - description):
         <ul>
-        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive search should be used
-        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
-            1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check/search should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching when checking name: 
+            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
         <li><code>limit</code> - <code>Integer</code> - Limit of quantity of results
         </ul>
  */
 exports.detect = function(name, callback, settings) {
-    var bSearch = util.isSearchSet(settings);
-    
-    registry[bSearch ? "search" : "lookup"](name, function(err, packageList) {
+    registry[util.isSearchSet(settings) ? "search" : "lookup"](name, function(err, packageList) {
         
         function getConfigCallback(err, response, data) {
             /*jshint validthis:true*/
@@ -57,19 +56,20 @@ exports.detect = function(name, callback, settings) {
         
         var nC = 0,
             result = [],
-            pkg, nI, nK, nL, nLimit, sUrl;
+            bRealSearch, pkg, nI, nK, nL, nLimit, sUrl;
         
         if (packageList) {
             if (! Array.isArray(packageList)) {
                 packageList = [packageList];
             }
+            bRealSearch = util.isRealSearchSet(settings);
             nLimit = util.getLimit(settings);
             for (nI = 0, nL = packageList.length; nI < nL; nI++) {
                 pkg = packageList[nI];
                 if (! pkg.name) {
                     pkg.name = name;
                 }
-                if ( util.isStringMatch(pkg.name, name, settings) ) {
+                if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
                     sUrl = pkg.url;
                     if (! pkg.repo && ! pkg.repository && sUrl) {
                         pkg.repo = sUrl;

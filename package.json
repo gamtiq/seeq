@@ -1,6 +1,6 @@
 {
   "name": "seeq",
-  "description": "Detect whether a name is registered or present on some resource (GitHub, NPM, Component, Bower, Jam, ...)",
+  "description": "Search or detect name on some resource (GitHub, NPM, Component, Bower, Jam, ...)",
   "version": "0.0.3",
   "homepage": "https://github.com/gamtiq/seeq",
   "author": {
@@ -38,12 +38,12 @@
     "grunt-push-release": ">=0.1.8"
   },
   "keywords": [
+    "search",
     "check",
     "detect",
     "discover",
     "seek",
     "lookup",
-    "search",
     "package",
     "project",
     "library",

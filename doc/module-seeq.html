@@ -132,7 +132,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line212">line 212</a>
+        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line217">line 217</a>
     </li></ul></dd>
     
     
@@ -156,7 +156,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="check"><span class="type-signature">&lt;static> </span>check<span class="signature">(names, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="search"><span class="type-signature">&lt;static> </span>search<span class="signature">(names, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -164,7 +164,7 @@
     
     
     <div class="description">
-        Check existence of each name from the list on specified resources.Result of checking will be passed into callback as object.Each field of the object is a name that was checked.Value of result's field is object that is returned by <a href="module-seeq.html#checkName">checkName</a> function.<code>null</code> will be passed into callback when no name is specified to check.
+        Check existence of each name from the list on specified resourcesor search for each string  on specified resources.Result of checking/searching will be passed into callback as object.Each field of the object is a name that was checked/searched.Value of result's field is object that is returned by <a href="module-seeq.html#searchName">searchName</a> function.<code>null</code> will be passed into callback when no name is specified to check/search.
     </div>
     
 
@@ -227,7 +227,7 @@
             
             
             
-            <td class="description last">The list of names or a name that should be checked.</td>
+            <td class="description last">The list of names or a name that should be checked/searched.</td>
         </tr>
 	
 	
@@ -291,7 +291,7 @@
             
             
             
-            <td class="description last">Operation settings. See <a href="module-seeq.html#checkName">checkName</a> for details.</td>
+            <td class="description last">Operation settings. See <a href="module-seeq.html#searchName">searchName</a> for details.</td>
         </tr>
 	
 	
@@ -322,7 +322,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line160">line 160</a>
+        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line165">line 165</a>
     </li></ul></dd>
     
     
@@ -350,7 +350,7 @@
         
             
 <dt>
-    <h4 class="name" id="checkName"><span class="type-signature">&lt;static> </span>checkName<span class="signature">(name, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="searchName"><span class="type-signature">&lt;static> </span>searchName<span class="signature">(name, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -358,17 +358,17 @@
     
     
     <div class="description">
-        Check existence of name on specified resources.Result of checking will be passed into callback as object.Each field of the object is name of resource that was checked.Value of result's field is object with the following fields (name - type - description):
+        Check existence of name or search for given string on specified resources.Result of checking/searching will be passed into callback as object.Each field of the object is name of resource that was checked/searched.Value of result's field is object with the following fields (name - type - description):
    <ul>
    <li><code>name</code> - <code>String</code> - resource name
    <li><code>description</code> - <code>String</code> - resource description
    <li><code>url</code> - <code>String</code> - URL of resource
-   <li><code>query</code> - <code>String</code> - name that was checked
+   <li><code>query</code> - <code>String</code> - name/string that was checked/searched
    <li><code>result</code> - <code>Array</code> - result that was received from resource; 
-           each item in the array is object that represents data about found name
+           each item in the array is object that represents data about found element
    <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
            this field is present only when there was an error
-   </ul><code>null</code> will be passed into callback when the name is not given and resources with specified names are not found.
+   </ul><code>null</code> will be passed into callback when the name is not given or resources with specified names are not found.
     </div>
     
 
@@ -428,7 +428,7 @@
             
             
             
-            <td class="description last">The name that should be checked.</td>
+            <td class="description last">The name that should be checked/searched.</td>
         </tr>
 	
 	
@@ -497,16 +497,16 @@
         <li><code>progressCallback</code> - <code>Function</code> - function that should be called after getting result
                 from each resource; object with the following fields will be passed into callback:
                 <ul>
-                <li><code>name</code> - <code>String</code> - name that was checked
+                <li><code>name</code> - <code>String</code> - name that was checked/searched
                 <li><code>resource</code> - <code>String</code> - resource that was checked
-                <li><code>result</code> - <code>Object</code> - result of checking (see above)
-                <li><code>number</code> - <code>Integer</code> - index number of checking
-                <li><code>total</code> - <code>Integer</code> - total number of checks
-                <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
+                <li><code>result</code> - <code>Object</code> - result of checking/searching (see above)
+                <li><code>number</code> - <code>Integer</code> - index number of checking/searching
+                <li><code>total</code> - <code>Integer</code> - total number of checks/searches
+                <li><code>error</code> - <code>Object | String</code> - error that was got while checking/searching resource;
                        this field is present only when there was an error
                 </ul>
         <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
-                that should be checked; if setting's value is not specified, all resources will be checked
+                that should be checked/searched; if setting's value is not specified, all resources will be checked/searched
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;
                 fields are resource identifiers, values are objects representing settings for the corresponding resources;
                 value of <code>_general</code> field can be used to specify settings that should be applied to all resources
@@ -541,7 +541,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line74">line 74</a>
+        <a href="seeq.js.html">seeq.js</a>, <a href="seeq.js.html#line75">line 75</a>
     </li></ul></dd>
     
     
@@ -588,7 +588,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Feb 15 2014 18:47:41 GMT+0400 (MSK)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 21 2014 22:49:30 GMT+0400 (MSK)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         
         jsdoc: {
             dist: {
-                src: ["<%= src %>"],
+                src: ["<%= src %>", "README.md"],
                 options: {
                     destination: "doc"
                 }
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                 commitMessage: "Release version %VERSION%",
                 commitFiles: ["-a"],
                 tagName: "%VERSION%",
-                tagMessage: "Version %VERSION%",
+                tagMessage: "Version %VERSION%"
             }
         }
         

@@ -12,8 +12,8 @@ describe("seeq", function() {
     }
     
     
-    describe(".checkName(name, callback, settings)", function() {
-        var checkName = seeq.checkName;
+    describe(".searchName(name, callback, settings)", function() {
+        var searchName = seeq.searchName;
         
         it("should return null", function() {
             function callback(result) {
@@ -21,14 +21,14 @@ describe("seeq", function() {
                     .equal(null);
             }
             
-            checkName(null, callback);
-            checkName("mixing", callback, {resource: ["unknown-resource", "another-unknown-resource"]});
+            searchName(null, callback);
+            searchName("mixing", callback, {resource: ["unknown-resource", "another-unknown-resource"]});
         });
     });
     
     
-    describe(".check(names, callback, settings)", function() {
-        var check = seeq.check;
+    describe(".search(names, callback, settings)", function() {
+        var search = seeq.search;
         
         it("should return null", function() {
             function callback(result) {
@@ -36,9 +36,9 @@ describe("seeq", function() {
                     .equal(null);
             }
             
-            check(null, callback);
-            check("", callback);
-            check([], callback);
+            search(null, callback);
+            search("", callback);
+            search([], callback);
         });
     });
 });

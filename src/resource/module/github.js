@@ -14,19 +14,20 @@ var github = require("octonode"),
 function handler(err, data, headers) {
     /*jshint camelcase:false, validthis:true*/
     var result = [],
-        item, itemList, nI, nL, nLimit, settings, sSearchName;
+        bRealSearch, item, itemList, nI, nL, nLimit, settings, sSearchName;
     if (! err) {
         remainingLimit = Number(headers["x-ratelimit-remaining"]);
         delay = (Number(headers["x-ratelimit-reset"]) * 1000) - (new Date()).getTime() + 1;
         
         settings = this.settings;
+        bRealSearch = util.isRealSearchSet(settings);
         nLimit = util.getLimit(settings, 100, 100);
         
         sSearchName = this.name;
         itemList = data.items;
         for (nI = 0, nL = itemList.length; nI < nL; nI++) {
             item = itemList[nI];
-            if ( util.isStringMatch(item.name, sSearchName, settings) ) {
+            if ( bRealSearch || util.isStringMatch(item.name, sSearchName, settings) ) {
                 item.api_url = item.url;
                 item.url = item.homepage ? null : item.html_url;
                 item.repository = item.clone_url;
@@ -52,8 +53,11 @@ function send() {
     /*jshint validthis:true*/
     var settings = this.settings,
         sLanguage = settings.lang || settings.language,
-        sQuery = this.name + "+in:name",
+        sQuery = this.name,
         nPageSize = settings.pageSize;
+    if (! util.isRealSearchSet(settings)) {
+        sQuery += "+in:name";
+    }
     if (sLanguage) {
         sQuery += "+language:" + sLanguage;
     }

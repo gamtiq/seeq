@@ -31,29 +31,47 @@ exports.getLimit = function(settings, defaultValue, maxValue) {
 };
 
 /**
+ * Determine whether search should be made instead of check according to operation settings.
+ * 
+ * @param {Object} [settings]
+ *      Operation settings.
+ *      The following settings are used to specify real search (name - type - description):
+        <ul>
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
+        </ul>
+ * @return {Boolean}
+ *      <code>true</code> if real search should be made according to settings,
+ *      <code>false</code> otherwise.
+ */
+exports.isRealSearchSet = function(settings) {
+    return Boolean( settings && settings.search );
+};
+
+/**
  * Check whether search should be made according to operation settings.
  * 
  * @param {Object} [settings]
  *      Operation settings.
  *      The following settings are used to specify search (name - type - description):
         <ul>
-        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check should be used
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check/search should be used
         <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
             1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
         </ul>
  * @return {Boolean}
  *      <code>true</code> if search should be made according to settings,
  *      <code>false</code> otherwise.
  */
 exports.isSearchSet = function(settings) {
-    return Boolean( settings && (settings.caseSensitive || settings.partialMatch) );
+    return Boolean( settings && (settings.caseSensitive || settings.partialMatch || settings.search) );
 };
 
 /**
- * Check whether the given string is similar to the searched string.
+ * Check whether one of given strings is similar to the searched string.
  * 
- * @param {String} value
- *      String that should be checked.
+ * @param {Array | String} value
+ *      String or array of strings that should be checked.
  * @param {String} searchValue
  *      Value that was searched for.
  * @param {Object} [settings]
@@ -63,22 +81,40 @@ exports.isSearchSet = function(settings) {
         <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check should be used
         <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
             1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
         </ul>
  * @return {Boolean}
- *      <code>true</code> if the given string is similar to the searched string according to settings,
+ *      <code>true</code> if one of given strings is similar to the searched string according to settings,
  *      <code>false</code> otherwise.
  */
 exports.isStringMatch = function(value, searchValue, settings) {
     /*jshint laxbreak:true*/
+    if (! Array.isArray(value)) {
+        value = [value];
+    }
     if (! settings) {
         settings = {};
     }
-    if (! settings.caseSensitive) {
-        value = value.toLowerCase();
+    
+    var bInsensitive = ! settings.caseSensitive,
+        nPartMatch = "partialMatch" in settings 
+                        ? settings.partialMatch 
+                        : (settings.search ? 2 : 0),
+        nL = value.length,
+        item, nI, nP;
+    
+    if (bInsensitive) {
         searchValue = searchValue.toLowerCase();
     }
-    var nPartMatch = settings.partialMatch,
-        nP;
-    return (! nPartMatch && value === searchValue) 
-            || (nPartMatch && (nP = value.indexOf(searchValue)) > -1 && (nPartMatch > 1 || nP === 0));
+    for (nI = 0; nI < nL; nI++) {
+        item = value[nI];
+        if (bInsensitive) {
+            item = item.toLowerCase();
+        }
+        if ((! nPartMatch && item === searchValue) 
+                || (nPartMatch && (nP = item.indexOf(searchValue)) > -1 && (nPartMatch > 1 || nP === 0))) {
+            return true;
+        }
+    }
+    return false;
 };

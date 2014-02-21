@@ -17,7 +17,8 @@
 "use strict";
 
 var mixing = require("mixing"),
-    resourceLib = require("./resource");
+    resourceLib = require("./resource"),
+    resourceUtil = require("./resource/util");
 
 
 function getCheckNameCallback(resource, position, callback) {
@@ -27,26 +28,26 @@ function getCheckNameCallback(resource, position, callback) {
 }
 
 /**
- * Check existence of name on specified resources.
+ * Check existence of name or search for given string on specified resources.
  * 
- * Result of checking will be passed into callback as object.
- * Each field of the object is name of resource that was checked.
+ * Result of checking/searching will be passed into callback as object.
+ * Each field of the object is name of resource that was checked/searched.
  * Value of result's field is object with the following fields (name - type - description):
    <ul>
    <li><code>name</code> - <code>String</code> - resource name
    <li><code>description</code> - <code>String</code> - resource description
    <li><code>url</code> - <code>String</code> - URL of resource
-   <li><code>query</code> - <code>String</code> - name that was checked
+   <li><code>query</code> - <code>String</code> - name/string that was checked/searched
    <li><code>result</code> - <code>Array</code> - result that was received from resource; 
-           each item in the array is object that represents data about found name
+           each item in the array is object that represents data about found element
    <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
            this field is present only when there was an error
    </ul>
  * 
- * <code>null</code> will be passed into callback when the name is not given and resources with specified names are not found.
+ * <code>null</code> will be passed into callback when the name is not given or resources with specified names are not found.
  * 
  * @param {String} name
- *      The name that should be checked.
+ *      The name that should be checked/searched.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
@@ -55,23 +56,23 @@ function getCheckNameCallback(resource, position, callback) {
         <li><code>progressCallback</code> - <code>Function</code> - function that should be called after getting result
                 from each resource; object with the following fields will be passed into callback:
                 <ul>
-                <li><code>name</code> - <code>String</code> - name that was checked
+                <li><code>name</code> - <code>String</code> - name that was checked/searched
                 <li><code>resource</code> - <code>String</code> - resource that was checked
-                <li><code>result</code> - <code>Object</code> - result of checking (see above)
-                <li><code>number</code> - <code>Integer</code> - index number of checking
-                <li><code>total</code> - <code>Integer</code> - total number of checks
-                <li><code>error</code> - <code>Object | String</code> - error that was got while checking resource;
+                <li><code>result</code> - <code>Object</code> - result of checking/searching (see above)
+                <li><code>number</code> - <code>Integer</code> - index number of checking/searching
+                <li><code>total</code> - <code>Integer</code> - total number of checks/searches
+                <li><code>error</code> - <code>Object | String</code> - error that was got while checking/searching resource;
                        this field is present only when there was an error
                 </ul>
         <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
-                that should be checked; if setting's value is not specified, all resources will be checked
+                that should be checked/searched; if setting's value is not specified, all resources will be checked/searched
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;
                 fields are resource identifiers, values are objects representing settings for the corresponding resources;
                 value of <code>_general</code> field can be used to specify settings that should be applied to all resources
         </ul>
- * @alias module:seeq.checkName
+ * @alias module:seeq.searchName
  */
-function checkName(name, callback, settings) {
+function searchName(name, callback, settings) {
     /*jshint laxbreak:true*/
     
     // Gather results from resources
@@ -116,7 +117,7 @@ function checkName(name, callback, settings) {
     }
     
     var resultList = [],
-        generalSettings, nC, nI, nTotal, resource, resourceList, resourceSettings;
+        api, bSearch, generalSettings, nC, nI, nTotal, resource, resourceList, resourceSettings;
     if (! settings) {
         settings = {};
     }
@@ -124,14 +125,17 @@ function checkName(name, callback, settings) {
     generalSettings = resourceSettings._general;
     resourceList = resourceLib.getList({selectResource: settings.resource, includeApi: true});
     if (name && (nC = resourceList.length)) {
+        bSearch = resourceUtil.isRealSearchSet(settings);
         // Request data from resources
         for (nI = 0, nTotal = nC; nI < nTotal; nI++) {
             resource = resourceList[nI];
-            resource.api.detect(name, 
-                                getCheckNameCallback(resource, nI, resultCallback), 
-                                generalSettings 
-                                    ? mixing(resourceSettings[resource.id] || {}, generalSettings) 
-                                    : resourceSettings[resource.id]);
+            api = resource.api;
+            api[bSearch && typeof api.search === "function" ? "search" : "detect"]
+                (name, 
+                 getCheckNameCallback(resource, nI, resultCallback), 
+                 generalSettings 
+                    ? mixing(resourceSettings[resource.id] || {}, generalSettings) 
+                    : resourceSettings[resource.id]);
         }
     }
     else {
@@ -141,27 +145,28 @@ function checkName(name, callback, settings) {
 
 
 /**
- * Check existence of each name from the list on specified resources.
+ * Check existence of each name from the list on specified resources
+ * or search for each string  on specified resources.
  * 
- * Result of checking will be passed into callback as object.
- * Each field of the object is a name that was checked.
- * Value of result's field is object that is returned by {@link module:seeq.checkName checkName} function.
+ * Result of checking/searching will be passed into callback as object.
+ * Each field of the object is a name that was checked/searched.
+ * Value of result's field is object that is returned by {@link module:seeq.searchName searchName} function.
  * 
- * <code>null</code> will be passed into callback when no name is specified to check.
+ * <code>null</code> will be passed into callback when no name is specified to check/search.
  * 
  * @param {Array | String} names
- *      The list of names or a name that should be checked.
+ *      The list of names or a name that should be checked/searched.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
- *      Operation settings. See {@link module:seeq.checkName checkName} for details.
- * @alias module:seeq.check
+ *      Operation settings. See {@link module:seeq.searchName searchName} for details.
+ * @alias module:seeq.search
  */
-function check(names, callback, settings) {
+function search(names, callback, settings) {
     /*jshint boss:true*/
     
     // Notify about operation progress
-    function checkNameProgress(data) {
+    function searchNameProgress(data) {
         data.number += data.total * nI;
         data.total *= nK;
         progressCallback(data);
@@ -173,7 +178,7 @@ function check(names, callback, settings) {
         nI++;
         if (nI < nK) {
             // Get results for the next name
-            checkName(names[nI], resultCallback, settings);
+            searchName(names[nI], resultCallback, settings);
         }
         else {
             // Return collected data
@@ -190,10 +195,10 @@ function check(names, callback, settings) {
     }
     if (names && (nK = names.length)) {
         if (progressCallback) {
-            settings = mixing({progressCallback: checkNameProgress}, settings, {except: "progressCallback"});
+            settings = mixing({progressCallback: searchNameProgress}, settings, {except: "progressCallback"});
         }
         // Get results for the first name
-        checkName(names[nI = 0], resultCallback, settings);
+        searchName(names[nI = 0], resultCallback, settings);
     }
     else {
         callback(null);
@@ -203,8 +208,8 @@ function check(names, callback, settings) {
 
 // Exports
 
-exports.check = check;
-exports.checkName = checkName;
+exports.search = search;
+exports.searchName = searchName;
 
 /**
  * Reference to {@link module:resource resource} module.

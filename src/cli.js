@@ -68,7 +68,7 @@ function showResult(resultMap) {
         
         nameResult = resultMap[sName];
         for (sResourceName in nameResult) {
-            out.push("\n", sIndent, sResourceName);
+            out.push("\n\n", sIndent, sResourceName);
             resourceResult = nameResult[sResourceName];
             resourceResultList = resourceResult.result;
             nQ = resourceResultList.length;
@@ -130,6 +130,12 @@ var fs = require("fs"),
     pkg = JSON.parse(fs.readFileSync(__dirname + "/../package.json", "utf8")),
     resourceList = resourceUnit.getList({includeApi: true}),
     sResourceListInfo = resourceListToString(resourceList),
+    generalSettingName = {
+        "partialMatch": null, 
+        "caseSensitive": null, 
+        "search": null, 
+        "limit": null
+    },
     nameList,
     resourceNameList,
     resourceSettings,
@@ -147,7 +153,7 @@ var fs = require("fs"),
                     "name": {
                         position: 0,
                         list: true,
-                        help: "Name that should be checked for presence on a resource"
+                        help: "Name/string that should be searched for or checked for presence on a resource"
                     },
                     "help": {
                         abbr: "h",
@@ -156,7 +162,7 @@ var fs = require("fs"),
                     "resource": {
                         abbr: "r",
                         full: "at",
-                        help: "Comma-separated list of names (case-insensitive) of resources that should be checked; all resources by default"
+                        help: "Comma-separated list of names (case-insensitive) of resources that should be checked/searched; all resources by default"
                     },
                     "listResource": {
                         abbr: "l",
@@ -167,14 +173,19 @@ var fs = require("fs"),
                     "partialMatch": {
                         abbr: "p",
                         full: "partial-match",
-                        help: "Allow partial matching: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching",
+                        help: "Allow partial matching when checking name: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching",
                         choices: [0, 1, 2]
                     },
                     "caseSensitive": {
                         abbr: "c",
                         full: "case-sensitive",
                         flag: true,
-                        help: "Use case-sensitive search"
+                        help: "Use case-sensitive check/search when possible"
+                    },
+                    "search": {
+                        abbr: "s",
+                        flag: true,
+                        help: "Make search instead of check"
                     },
                     "limit": {
                         help: "Limit of quantity of results per resource",
@@ -211,7 +222,6 @@ for (nI = 0, nL = resourceList.length; nI < nL; nI++) {
 
 // Parse arguments
 args = args.parse();
-
 
 if (args.version) {
     console.log("Version: " + pkg.version);
@@ -256,7 +266,7 @@ if (args.name && args.name.length) {
         for (sName in args) {
             value = args[sName];
             // General settings
-            if (sName === "partialMatch" || sName === "caseSensitive" || sName === "limit") {
+            if (sName in generalSettingName) {
                 (resourceSettings._general || (resourceSettings._general = {}))[sName] = value;
             }
             // Resource-specific settings
@@ -276,7 +286,7 @@ if (args.name && args.name.length) {
         else {
             value = null;
         }
-        seeq.check(nameList, showResult, 
+        seeq.search(nameList, showResult, 
                     {
                         resource: resourceNameList, 
                         settings: resourceSettings,

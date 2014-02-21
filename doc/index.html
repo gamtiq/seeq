@@ -40,6 +40,371 @@
 
 
 
+    <section>
+        <article><h1>seeq</h1>
+<p>Detect whether a name is registered or present on some resource (<a href="https://github.com">GitHub</a>, <a href="https://npmjs.org">NPM</a>,
+<a href="https://github.com/component/component">Component</a>, <a href="http://bower.io">Bower</a>, <a href="http://jamjs.org">Jam</a>, ...).</p>
+<p>Also allows searching for string on specified resources.</p>
+<p><a href="http://badge.fury.io/js/seeq"><img src="https://badge.fury.io/js/seeq.png" alt="NPM version"></a>
+<a href="https://travis-ci.org/gamtiq/seeq"><img src="https://travis-ci.org/gamtiq/seeq.png" alt="Build Status"></a>
+<a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
+<h2>Available resources</h2>
+<p>The following resources are available:</p>
+<ul>
+<li><a href="https://github.com">GitHub</a></li>
+<li><a href="https://npmjs.org">NPM</a></li>
+<li><a href="https://github.com/component/component">Component</a></li>
+<li><a href="http://bower.io">Bower</a></li>
+<li><a href="http://jamjs.org">Jam</a></li>
+<li><a href="http://gruntjs.com/plugins">Registry of Grunt plugins</a></li>
+</ul>
+<p>You can see information about all available resources by running <code>seeq -l</code> (see below).</p>
+<h2>Installation</h2>
+<p>To install and use seeq <a href="http://nodejs.org">Node.js</a> should be installed in your system.
+Run the following command to install seeq:</p>
+<pre><code>npm install -g seeq</code></pre>
+<h2>Usage</h2>
+<p>Run <code>seeq</code> to show usage information.</p>
+<pre><code>&gt; seeq
+
+Usage: seeq [name]... [options]
+
+name     Name/string that should be searched for or checked for presence on a resource
+
+Options:
+   -h, --help             Show usage information and exit
+   -r, --at               Comma-separated list of names (case-insensitive) of resources that should be checked/searched; all resources by default
+   -l, --list-resource    Show information about all available resources
+   -p, --partial-match    Allow partial matching when checking name: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
+   -c, --case-sensitive   Use case-sensitive check/search when possible
+   -s, --search           Make search instead of check
+   --limit                Limit of quantity of results per resource
+   -V, --verbose          Enable verbose output
+   -v, --version          Show program version
+   --github-lang          Search GitHub repositories that are written in the specified language
+   --github-limit         Limit of quantity of GitHub results; default and maximum value is 100
+   --github-user          GitHub username that should be used for authentication
+   --github-password      GitHub account password
+   --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
+
+
+Available resources:
+
+    GitHub - GitHub repositories
+    url: https://github.com
+    tags: repository project library framework package
+    For requests using Basic Authentication or OAuth token, you can make up to 20 requests per minute. For unauthenticated requests, the rate limit allows you to make up to 5 requests per minute.
+
+    NPM - Node packaged modules registry
+    url: https://npmjs.org
+    tags: js javascript package library node
+    ...</code></pre>
+<h3>Examples</h3>
+<p>Check <code>numgen</code>, <code>three</code> and <code>some-strange-name</code> at all resources and limit results per resource up to 10.</p>
+<pre><code>&gt; seeq numgen three some-strange-name --limit 10
+Checking GitHub, NPM, Component, Bower, Jam, Grunt...
+Progress: 18/18 (100%)
+
+Results:
+
+1. numgen
+
+    GitHub - 3
+        numgen
+        url: https://github.com/grancier/numgen
+
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+
+        NumGen - A number generating mobile app to use for awarding prizes at user groups
+        url: https://github.com/scryan7371/NumGen
+
+    NPM - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Component - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Bower - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Jam - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Grunt
+        numgen is not found.
+
+2. three
+
+    GitHub - 10
+        three - An easy-to-use Python wrapper for the Open311 API.
+        url: three.codeforamerica.org
+
+        three
+        url: https://github.com/f22jay/three
+
+        three
+        url: https://github.com/liaoxiaojia/three
+
+        three - f
+        url: https://github.com/bjliliang4/three
+
+        three
+        url: https://github.com/kaouadi/three
+
+        three - phot
+        url: https://github.com/rajivkumar/three
+
+        three - Experiments with Three.js and WebGL.
+        url: https://github.com/superhighfives/three
+
+        Three
+        url: https://github.com/sreedhe/Three
+
+        three
+        url: https://github.com/gcortesp/three
+
+        three - third
+        url: https://github.com/jiidaozhongguo/three
+
+    NPM - 1
+        three - JavaScript 3D library
+        url: http://threejs.org/
+        keywords: 3D WebGL Three ThreeJS CSS engine rendering geometry math
+
+    Component - 1
+        three - Three.js component
+        url: https://github.com/cvdlab/three
+        keywords: webgl three.js 3d
+
+    Bower
+        three is not found.
+
+    Jam - 1
+        three - JavaScript 3D library
+        url: http://threejs.org
+
+    Grunt
+        three is not found.
+
+3. some-strange-name
+
+    GitHub
+        some-strange-name is not found.
+
+    NPM
+        some-strange-name is not found.
+
+    Component
+        some-strange-name is not found.
+
+    Bower
+        some-strange-name is not found.
+
+    Jam
+        some-strange-name is not found.
+
+    Grunt
+        some-strange-name is not found.</code></pre>
+<p>Check <code>mixing</code> and <code>flight</code> at GitHub and Bower, allow partial matching at the beginning, use case-sensitive search,
+limit Bower results up to 3 and GitHub results up to 5, include only GitHub projects that are written in JavaScript,
+show additional information about found items.</p>
+<pre><code>&gt; seeq mixing flight -r github,bower --partial-match 1 -c --bower-limit 3 --github-limit 5 --github-lang js --verbose
+Checking github, bower...
+Progress: 4/4 (100%)
+
+Results:
+
+1. mixing
+
+    GitHub - 3
+        mixing - Functions to mix objects
+        url: https://github.com/gamtiq/mixing
+        repository: https://github.com/gamtiq/mixing.git
+        language: JavaScript
+        stars: 2
+
+        mixingpanel
+        url: https://github.com/gguerrero/mixingpanel
+        repository: https://github.com/gguerrero/mixingpanel.git
+        language: JavaScript
+        stars: 1
+
+        mixingloom-profiler-example - an example of profiling by mixingloom-profiler
+        url: https://github.com/wighawag/mixingloom-profiler-example
+        repository: https://github.com/wighawag/mixingloom-profiler-example.git
+        language: JavaScript
+        stars: 2
+
+    Bower - 1
+        mixing - Functions to mix objects
+        url: https://github.com/gamtiq/mixing
+        keywords: mixin mix merge object
+        version: 0.0.2
+        repository: git://github.com/gamtiq/mixing.git
+        license: MIT
+
+2. flight
+
+    GitHub - 5
+        flight - A component-based, event-driven JavaScript framework from Twitter
+        url: http://flightjs.github.io/
+        repository: https://github.com/flightjs/flight.git
+        language: JavaScript
+        stars: 4927
+
+        flight-stream - Real Time Flight Updates w/ Node.js, Redis and WebSockets
+        url: https://github.com/waratuman/flight-stream
+        repository: https://github.com/waratuman/flight-stream.git
+        language: JavaScript
+        stars: 32
+
+        flightplan - Node.js library for streamlining application deployment or systems administration tasks.
+        url: https://npmjs.org/package/flightplan
+        repository: https://github.com/pstadler/flightplan.git
+        language: JavaScript
+        stars: 174
+
+        flight - flight-framework is a jsfl script framework with a CommonJS-like module mechanism.
+        url: https://github.com/uzzu/flight
+        repository: https://github.com/uzzu/flight.git
+        language: JavaScript
+        stars: 3
+
+        flight
+        url: https://github.com/mrlong/flight
+        repository: https://github.com/mrlong/flight.git
+        language: JavaScript
+
+    Bower - 3
+        flight - Clientside component infrastructure
+        url: http://github.com/flightjs/flight
+        version: 1.1.2
+        repository: git://github.com/flightjs/flight.git
+
+        flight-jasmine - Extensions to the Jasmine test framework for use with Flight
+        url: http://github.com/twitter/flight-jasmine
+        keywords: flight jasmine test
+        version: 2.2.0
+        repository: git://github.com/twitter/flight-jasmine.git
+
+        flight-mocha - Extensions to the Mocha test framework for use with Flight
+        url: http://github.com/naoina/flight-mocha
+        keywords: flight mocha test
+        version: 0.1.0
+        repository: git://github.com/naoina/flight-mocha.git</code></pre>
+<p>Search for <code>unicorn</code> at all resources and limit results per resource up to 5.</p>
+<pre><code>&gt; seeq unicorn -s --limit 5
+Checking GitHub, NPM, Component, Bower, Jam, Grunt...
+Progress: 6/6 (100%)
+
+Results:
+
+1. unicorn
+
+    GitHub - 5
+        unicorn - Unofficial Unicorn Mirror.
+        url: http://unicorn.bogomips.org/
+
+        capistrano-unicorn - Capistrano integration for Unicorn!
+        url: https://github.com/sosedoff/capistrano-unicorn
+
+        unicorn - Development repository for Opscode Cookbook unicorn
+        url: http://community.opscode.com/cookbooks/unicorn
+
+        lolcat - Rainbows and unicorns!
+        url: https://github.com/busyloop/lolcat
+
+        unicorn-worker-killer - Automatically restart Unicorn workers based on 1) max number of requests and 2) max memory
+        url: https://rubygems.org/gems/unicorn-worker-killer
+
+    NPM - 5
+        alibaba-dev - alibaba developer
+        url: https://npmjs.org/package/alibaba-dev
+        keywords: tianma unicorn alibaba developer autosave
+
+        ascii-art-reverse - reverses ascii art. caution, uses magic.
+        url: https://npmjs.org/package/ascii-art-reverse
+        keywords: magic unicorn ascii art
+
+        cornify - A super magical unicorn module
+        url: https://npmjs.org/package/cornify
+        keywords: cornify
+
+        fugue - Unicorn for node
+        url: https://npmjs.org/package/fugue
+
+        grunt-unicorn - Always use grunt, unless you can use grunt-unicorn. Then always use grunt-unicorn.
+        url: https://npmjs.org/package/grunt-unicorn
+        keywords: gruntplugin
+
+    Component
+        unicorn is not found.
+
+    Bower - 1
+        angular-unicorn-directive
+        url: git://github.com/btford/angular-unicorn-directive.git
+
+    Jam
+        unicorn is not found.
+
+    Grunt - 1
+        unicorn - Always use grunt&amp;comma; unless you can use grunt-unicorn&amp;period; Then always use grunt-unicorn&amp;period;
+        url: https://npmjs.org/package/grunt-unicorn</code></pre>
+<h2>API</h2>
+<p>In your program you can use API provided by seeq in the following way:</p>
+<pre><code class="lang-javascript">var seeq = require(&quot;seeq&quot;);
+...
+function onProgress(data) {
+    console.log([data.number, &quot;/&quot;, data.total, &quot;: checked &quot;, data.name, &quot; at &quot;, data.resource, 
+                    &quot;, results - &quot;, data.result.result.length].join(&quot;&quot;));
+}
+
+seeq.search([&quot;chronoman&quot;, &quot;knockout&quot;, &quot;joy&quot;], 
+            callback, 
+            {
+                resource: [&quot;NPM&quot;, &quot;Component&quot;, &quot;Github&quot;], 
+                settings: {
+                    _general: {
+                        limit: 5,
+                        partialMatch: 2,
+                        caseSensitive: true
+                    },
+                    github: {
+                        limit: 10,
+                        language: &quot;js&quot;
+                    }
+                },
+                progressCallback: onProgress
+            });
+...
+seeq.searchName(&quot;duratiform&quot;,
+                callback,
+                {resource: [&quot;Bower&quot;, &quot;Jam&quot;]});
+seeq.searchName(&quot;cheerio&quot;,
+                callback,
+                {
+                    settings: {
+                        _general: {search: true}
+                    }
+                });</code></pre>
+<p>See JSDoc-generated documentation in <code>doc</code> folder.</p>
+<h2>Contributing</h2>
+<p>In lieu of a formal styleguide, take care to maintain the existing coding style.
+Add unit tests for any new or changed functionality.
+Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
+<h2>License</h2>
+<p>Copyright (c) 2014 Denis Sikuler<br>Licensed under the MIT license.</p></article>
+    </section>
+
 
 
 
@@ -54,7 +419,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Feb 15 2014 18:47:41 GMT+0400 (MSK)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 21 2014 22:49:30 GMT+0400 (MSK)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -13,22 +13,23 @@ var repository = require("jamjs/lib/repository"),
     util = require("../util");
 
 /**
- * Check whether package with the specified name is existent.
+ * Check whether package with the specified name is existent, or make search for the specified string.
  * 
  * Data about found packages will be passed into callback as array.
  * If no package is found, empty array will be passed into callback.
  * 
  * @param {String} name
- *      Name of the package to check.
+ *      Name of the package to check or string to search for.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
  *      Operation settings.
  *      The following settings are supported (name - type - description):
         <ul>
-        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive search should be used
-        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
-            1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check/search should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching when checking name: 
+            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
         <li><code>limit</code> - <code>Integer</code> - Limit of quantity of results
         </ul>
  */
@@ -36,8 +37,9 @@ exports.detect = function(name, callback, settings) {
     
     function resultCallback(err, data) {
         var result = [],
-            nI, nL, pkg, version;
+            bRealSearch, nI, nL, pkg, version;
         if (data) {
+            bRealSearch = util.isRealSearchSet(settings);
             if (bSearch) {
                 data = data.rows;
             }
@@ -49,7 +51,7 @@ exports.detect = function(name, callback, settings) {
                 if (bSearch) {
                     pkg = pkg.doc;
                 }
-                if ( util.isStringMatch(pkg.name, name, settings) ) {
+                if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
                     result.push(pkg);
                     if (pkg.tags && (version = pkg.tags.latest) && (version = pkg.versions[version])) {
                         mixing(pkg, version);
