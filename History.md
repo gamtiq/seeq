@@ -1,3 +1,7 @@
+### 0.1.0 / 2014-02-21
+
+* Add ability to make search for given string (`--search` option)
+
 ### 0.0.3 / 2014-02-15
 
 * Add resource for registry of Grunt plugins
