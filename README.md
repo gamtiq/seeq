@@ -59,15 +59,12 @@ Options:
 
 Available resources:
 
-    GitHub - GitHub repositories
-    url: https://github.com
-    tags: repository project library framework package
-    For requests using Basic Authentication or OAuth token, you can make up to 20 requests per minute. For unauthenticated requests, the rate limit allows you to make up to 5 requests per minute.
-
-    NPM - Node packaged modules registry
-    url: https://npmjs.org
-    tags: js javascript package library node
-    ...
+    * GitHub (https://github.com) - GitHub repositories
+    * NPM (https://npmjs.org) - Node packaged modules registry
+    * Component (https://github.com/component/component) - Component client package manager registry
+    * Bower (http://bower.io) - Bower package manager registry
+    * Jam (http://jamjs.org) - Jam package manager repository
+    * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
 ```
 
 ### Examples

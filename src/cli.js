@@ -7,18 +7,24 @@
 /*jshint boss:true, latedef:false, laxbreak:true*/
 
 
-function resourceListToString(resourceList) {
+function resourceListToString(resourceList, short) {
     var result = ["\nAvailable resources:\n"],
         sIndent = "    ",
         nI, nK, resource;
     for (nI = 0, nK = resourceList.length; nI < nK; nI++) {
         resource = resourceList[nI];
-        result.push("\n",
+        if (short) {
+            result.push("\n",
+                    sIndent, "* ", resource.name, " (", resource.url, ") - ", resource.description);
+        }
+        else {
+            result.push("\n",
                     sIndent, resource.name, " - ", resource.description, "\n",
                     sIndent, "url: ", resource.url, "\n",
                     sIndent, "tags: ", resource.tag.join(" "), "\n");
-        if (resource.note) {
-            result.push(sIndent, resource.note, "\n");
+            if (resource.note) {
+                result.push(sIndent, resource.note, "\n");
+            }
         }
     }
     return result.join("");
@@ -129,7 +135,6 @@ var fs = require("fs"),
     bShowUsage = true,
     pkg = JSON.parse(fs.readFileSync(__dirname + "/../package.json", "utf8")),
     resourceList = resourceUnit.getList({includeApi: true}),
-    sResourceListInfo = resourceListToString(resourceList),
     generalSettingName = {
         "partialMatch": null, 
         "caseSensitive": null, 
@@ -206,7 +211,7 @@ var fs = require("fs"),
                         help: "Show program version"
                     }
                 })
-                .help(sResourceListInfo);
+                .help(resourceListToString(resourceList, true));
 
 
 // Add options of resources
@@ -229,7 +234,7 @@ if (args.version) {
 }
 
 if (args.listResource) {
-    console.log(sResourceListInfo);
+    console.log(resourceListToString(resourceList));
     bShowUsage = false;
 }
 
