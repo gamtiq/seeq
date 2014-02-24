@@ -1,0 +1,11 @@
+{
+    "templates": {
+        "default": {
+            "outputSourceFiles": true
+        },
+        "systemName": "seeq",
+        "copyright": "Copyright (c) 2014 Denis Sikuler",
+        "theme": "spacelab",
+        "linenums": true
+    }
+}
