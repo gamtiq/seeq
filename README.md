@@ -373,12 +373,11 @@ seeq.search(["chronoman", "knockout", "joy"],
 seeq.searchName("duratiform",
                 callback,
                 {resource: ["Bower", "Jam"]});
+...
 seeq.searchName("cheerio",
                 callback,
                 {
-                    settings: {
-                        _general: {search: true}
-                    }
+                    search: true
                 });
 ```
 

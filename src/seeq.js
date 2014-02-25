@@ -66,6 +66,8 @@ function getCheckNameCallback(resource, position, callback) {
                 </ul>
         <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
                 that should be checked/searched; if setting's value is not specified, all resources will be checked/searched
+        <li><code>search</code> - <code>Boolean</code> - whether search should be made instead of check;
+                it is used only when <code>search</code> setting for a resource is not specified (see below)
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;
                 fields are resource identifiers, values are objects representing settings for the corresponding resources;
                 value of <code>_general</code> field can be used to specify settings that should be applied to all resources
@@ -117,7 +119,7 @@ function searchName(name, callback, settings) {
     }
     
     var resultList = [],
-        api, bSearch, generalSettings, nC, nI, nTotal, resource, resourceList, resourceSettings;
+        api, generalSettings, nC, nI, nTotal, realSettings, resource, resourceList, resourceSettings;
     if (! settings) {
         settings = {};
     }
@@ -125,17 +127,20 @@ function searchName(name, callback, settings) {
     generalSettings = resourceSettings._general;
     resourceList = resourceLib.getList({selectResource: settings.resource, includeApi: true});
     if (name && (nC = resourceList.length)) {
-        bSearch = resourceUtil.isRealSearchSet(settings);
         // Request data from resources
         for (nI = 0, nTotal = nC; nI < nTotal; nI++) {
             resource = resourceList[nI];
+            realSettings = generalSettings 
+                            ? mixing({}, [resourceSettings[resource.id] || {}, generalSettings]) 
+                            : (resourceSettings[resource.id] || {});
+            if (! ("search" in realSettings) && ("search" in settings)) {
+                realSettings.search = settings.search;
+            }
             api = resource.api;
-            api[bSearch && typeof api.search === "function" ? "search" : "detect"]
+            api[resourceUtil.isRealSearchSet(realSettings) && typeof api.search === "function" ? "search" : "detect"]
                 (name, 
                  getCheckNameCallback(resource, nI, resultCallback), 
-                 generalSettings 
-                    ? mixing(resourceSettings[resource.id] || {}, generalSettings) 
-                    : resourceSettings[resource.id]);
+                 realSettings);
         }
     }
     else {
