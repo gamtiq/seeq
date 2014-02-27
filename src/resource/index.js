@@ -48,89 +48,6 @@ function getIdByName(name) {
 }
 
 /**
- * Return list that contains names of all available resources.
- * 
- * @return {Array}
- *      List that contains names of all available resources.
- * @alias module:resource.getAllNameList
- */
-function getAllNameList() {
-    return resourceList.map(getResourceName);
-}
-
-
-/**
- * Return list of specified resources.
- * If no selection criteria is set then returns list of all available resources.
- * 
- * @param {Object} [settings]
- *      Specifies which data items should be returned.
- *      The following settings are supported (name - type - description):
-        <ul>
-        <li><code>includeApi</code> - <code>Boolean</code> - whether API object for resource should be included into data item
-                under <code>api</code> field; <code>false</code> by default
-        <li><code>selectResource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
-                that should be included into result; if setting's value is not specified, all resources will be included into result
-        </ul>
- * @return {Array}
- *      List that contains objects presenting data about selected resources.
- * @alias module:resource.getList
- */
-function getList(settings) {
-    /*jshint boss:true*/
-    var resList = resourceList,
-        result = [],
-        bIncludeApi, nI, nL, resource, selectedIds;
-    // Prepare settings
-    if (! settings) {
-        settings = {};
-    }
-    if (selectedIds = settings.selectResource) {
-        if (typeof selectedIds === "string") {
-            selectedIds = [ selectedIds.toLowerCase() ];
-        }
-        else {
-            selectedIds = selectedIds.map(function(name) {
-                return name.toLowerCase();
-            });
-        }
-    }
-    bIncludeApi = settings.includeApi;
-    // Form result list
-    for (nI = 0, nL = resList.length; nI < nL; nI++) {
-        resource = resList[nI];
-        if (! selectedIds || selectedIds.indexOf(resource.id) > -1) {
-            if (bIncludeApi && ! resource.api) {
-                resource.api = require(resource.module);
-            }
-            result.push(resource);
-        }
-    }
-    return result;
-}
-
-/**
- * Return object that represents specified resources.
- * If no selection criteria is set then returns object that contains data about all available resources.
- * 
- * @param {Object} [settings]
- *      Specifies which data items should be returned.
- *      See {@link module:resource.getList getList} for details.
- * @return {Object}
- *      Object that contains data about selected resources.
- *      Fields are resource keys, values are objects representing data about resources.
- * @alias module:resource.getMap
- * @see {@link module:resource.getList getList}
- */
-function getMap(settings) {
-    var result = {};
-    getList(settings).forEach(function(item) {
-        result[item.id] = item;
-    });
-    return result;
-}
-
-/**
  * Add data about a resource into the list of available resources.
  * 
  * @param {Object} resource
@@ -218,21 +135,122 @@ function removeAll() {
     return exports;
 }
 
+
+/**
+ * Return list that contains names of all available resources.
+ * 
+ * @return {Array}
+ *      List that contains names of all available resources.
+ * @alias module:resource.getAllNameList
+ */
+function getAllNameList() {
+    return resourceList.map(getResourceName);
+}
+
+/**
+ * Return list of specified resources.
+ * If no selection criteria is set then returns list of all available resources.
+ * 
+ * @param {Object} [settings]
+ *      Specifies which data items should be returned.
+ *      The following settings are supported (name - type - description):
+        <ul>
+        <li><code>includeApi</code> - <code>Boolean</code> - whether API object for resource should be included into data item
+                under <code>api</code> field; <code>false</code> by default
+        <li><code>selectResource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
+                that should be included into result; if setting's value is not specified, all resources will be included into result
+        </ul>
+ * @return {Array}
+ *      List that contains objects presenting data about selected resources.
+ * @alias module:resource.getList
+ */
+function getList(settings) {
+    /*jshint boss:true*/
+    var resList = resourceList,
+        result = [],
+        bIncludeApi, nI, nL, resource, selectedIds;
+    // Prepare settings
+    if (! settings) {
+        settings = {};
+    }
+    if (selectedIds = settings.selectResource) {
+        if (typeof selectedIds === "string") {
+            selectedIds = [ selectedIds.toLowerCase() ];
+        }
+        else {
+            selectedIds = selectedIds.map(function(name) {
+                return name.toLowerCase();
+            });
+        }
+    }
+    bIncludeApi = settings.includeApi;
+    // Form result list
+    for (nI = 0, nL = resList.length; nI < nL; nI++) {
+        resource = resList[nI];
+        if (! selectedIds || selectedIds.indexOf(resource.id) > -1) {
+            if (bIncludeApi && ! resource.api) {
+                resource.api = require(resource.module);
+            }
+            result.push(resource);
+        }
+    }
+    return result;
+}
+
+/**
+ * Change list of available resources.
+ * <br>
+ * In essence this method [removes all]{@link module:resource.removeAll} available resources
+ * and [adds]{@link module:resource.add} data about each given resource into the list of available resources.
+ * 
+ * @param {Array | Object} list
+ *      List that contains objects presenting data about resources,
+ *      or object with data about an resource.
+ * @return {Object}
+ *      Object that represents module <code>exports</code>.
+ * @see {@link module:resource.add add}
+ * @see {@link module:resource.removeAll removeAll}
+ * @alias module:resource.setList
+ */
+function setList(list) {
+    // Delete current resources
+    removeAll();
+    // Form list of available resources
+    (Array.isArray(list) ? list : [list]).forEach(add);
+    return exports;
+}
+
+/**
+ * Return object that represents specified resources.
+ * If no selection criteria is set then returns object that contains data about all available resources.
+ * 
+ * @param {Object} [settings]
+ *      Specifies which data items should be returned.
+ *      See {@link module:resource.getList getList} for details.
+ * @return {Object}
+ *      Object that contains data about selected resources.
+ *      Fields are resource keys, values are objects representing data about resources.
+ * @alias module:resource.getMap
+ * @see {@link module:resource.getList getList}
+ */
+function getMap(settings) {
+    var result = {};
+    getList(settings).forEach(function(item) {
+        result[item.id] = item;
+    });
+    return result;
+}
+
 /**
  * Set list of resources to initial state containing data about all available resources.
  * 
  * @return {Object}
  *      Object that represents module <code>exports</code>.
- * @see {@link module:resource.add add}
- * @see {@link module:resource.removeAll removeAll}
+ * @see {@link module:resource.setList setList}
  * @alias module:resource.resetList
  */
 function resetList() {
-    // Delete current resources
-    removeAll();
-    // Form list of all available resources
-    sourceList.forEach(add);
-    return exports;
+    return setList(sourceList);
 }
 
 
@@ -245,6 +263,7 @@ exports.isAvailable = isAvailable;
 exports.getIdByName = getIdByName;
 exports.getAllNameList = getAllNameList;
 exports.getList = getList;
+exports.setList = setList;
 exports.getMap = getMap;
 exports.add = add;
 exports.remove = remove;

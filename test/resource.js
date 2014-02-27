@@ -200,6 +200,72 @@ describe("resource", function() {
     });
     
     
+    describe(".setList", function() {
+        var setList = resource.setList;
+        
+        describe("setList([])", function() {
+            it("should remove all resources", function() {
+                setList([]);
+                
+                expect( resource.getList() )
+                    .have.length(0);
+            });
+        });
+        
+        describe("setList(list)", function() {
+            it("should change list of available resources", function() {
+                var oldList = resource.getList(),
+                    resourceList;
+                
+                expect( oldList )
+                    .have.length.above(0);
+                
+                setList([
+                         {
+                             name: "res1",
+                             module: "path/to/res1"
+                         },
+                         {
+                             name: "res2",
+                             module: "path/to/res2"
+                         }
+                         ]);
+                
+                resourceList = resource.getList();
+                expect( resourceList )
+                    .have.length(2);
+                expect( resourceList )
+                    .not.eql(oldList);
+                
+                checkResourcePresence("res1");
+                checkResourcePresence("res2");
+            });
+        });
+        
+        describe("setList(resource)", function() {
+            it("should set list of available resources to one-item list", function() {
+                var res = {
+                        name: "res",
+                        module: "path/to/res1"
+                    },
+                    resourceList;
+                
+                setList(res);
+                
+                resourceList = resource.getList();
+                expect( resourceList )
+                    .have.length(1);
+                expect( resourceList[0] )
+                    .have.property("name", res.name);
+                expect( resourceList[0] )
+                    .have.property("module", res.module);
+                
+                checkResourcePresence(res.name);
+            });
+        });
+    });
+    
+    
     describe(".getMap", function() {
         var getMap = resource.getMap;
         
