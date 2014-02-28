@@ -5,7 +5,7 @@
 
 "use strict";
 
-var sourceList = require("./list.json"),
+var sourceList = [],
     resourceList = [],
     resourceMap = {};
 
@@ -253,9 +253,28 @@ function resetList() {
     return setList(sourceList);
 }
 
+/**
+ * Set initial list of all available resources.
+ * <br>
+ * This list is used to [reset]{@link module:resource.resetList} to initial state.
+ * 
+ * @param {Array | Object} list
+ *      List that contains objects presenting data about resources,
+ *      or object with data about an resource.
+ * @return {Object}
+ *      Object that represents module <code>exports</code>.
+ * @see {@link module:resource.resetList resetList}
+ * @see {@link module:resource.setList setList}
+ * @alias module:resource.initList
+ */
+function initList(list) {
+    sourceList = Array.isArray(list) ? list : [list];
+    return resetList();
+}
+
 
 // Initialize list of resources
-resetList();
+initList(require("./list.json"));
 
 //Exports
 
@@ -269,3 +288,4 @@ exports.add = add;
 exports.remove = remove;
 exports.removeAll = removeAll;
 exports.resetList = resetList;
+exports.initList = initList;

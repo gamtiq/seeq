@@ -530,4 +530,49 @@ describe("resource", function() {
                 .eql(map);
         });
     });
+    
+    
+    describe(".initList()", function() {
+        var initList = resource.initList,
+            sourceList = resource.getList();
+        
+        afterEach(function() {
+            initList(sourceList);
+        });
+        
+        it("should set initial list of available resources", function() {
+            var sName = "resource at " + new Date().getTime(),
+                sName2 = sName + "_",
+                res = {name: sName, module: "some/path"},
+                res2 = {name: sName2, module: "some/path2"},
+                result;
+            
+            checkResourceAbsence(sName);
+            resource.add(res);
+            checkResourcePresence(sName);
+            
+            initList(sourceList);
+            expect( resource.getList() )
+                .eql(sourceList);
+            
+            initList(res);
+            checkResourcePresence(sName);
+            expect( resource.getAllNameList() )
+                .eql([sName]);
+            
+            resource.add(res2);
+            checkResourcePresence(sName2);
+            resource.resetList();
+            expect( resource.getAllNameList() )
+                .eql([sName]);
+            
+            result = initList([res, res2]);
+            checkResourcePresence(sName);
+            checkResourcePresence(sName2);
+            expect( resource.getAllNameList() )
+                .eql([sName, sName2]);
+            expect( result )
+                .equal(resource);
+        });
+    });
 });
