@@ -1,8 +1,13 @@
+### 0.1.2 / 2014-03-01
+
+* Add resource for [MicroJS](http://microjs.com)
+* Add the following methods in `resource` module: `initList`, `setList`
+
 ### 0.1.1 / 2014-02-26
 
-* Update dependencies: `npm` to 1.4.4, `request` to 2.34.0
 * Add support for `search` setting for `seeq.searchName`
 * Change format of list of resources that is displayed in usage message
+* Update dependencies: `npm` to 1.4.4, `request` to 2.34.0
 
 ### 0.1.0 / 2014-02-21
 
