@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/module/jam.js</title>
+	<title>seeq Source: resource/module/microjs.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -89,32 +89,29 @@
 					
 
 
-		<h1 class="page-title">Source: resource/module/jam.js</h1>
+		<h1 class="page-title">Source: resource/module/microjs.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * @module jam
+ * @module microjs
  */
 
 
 "use strict";
 
-require("jamjs");
-
-var repository = require("jamjs/lib/repository"),
-    repositoryUrl = require("jamjs/lib/jamrc").DEFAULTS.repositories[0],
-    mixing = require("mixing"),
-    util = require("../util");
+var request = require("request"),
+    util = require("../util"),
+    libraryList;
 
 /**
- * Check whether package with the specified name is existent, or make search for the specified string.
+ * Check whether library with the specified name is existent, or make search for the specified string.
  * 
- * Data about found packages will be passed into callback as array.
- * If no package is found, empty array will be passed into callback.
+ * Data about found libraries will be passed into callback as array.
+ * If no library is found, empty array will be passed into callback.
  * 
  * @param {String} name
- *      Name of the package to check or string to search for.
+ *      Name of the library to check or string to search for.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
@@ -128,45 +125,46 @@ var repository = require("jamjs/lib/repository"),
         &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results
         &lt;/ul>
  */
-exports.detect = function(name, callback, settings) {
-    
-    function resultCallback(err, data) {
-        var result = [],
-            bRealSearch, nI, nL, pkg, version;
-        if (data) {
-            bRealSearch = util.isRealSearchSet(settings);
-            if (bSearch) {
-                data = data.rows;
-            }
-            else {
-                data = [data];
-            }
-            for (nI = 0, nL = data.length; nI &lt; nL; nI++) {
-                pkg = data[nI];
-                if (bSearch) {
-                    pkg = pkg.doc;
-                }
-                if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
-                    result.push(pkg);
-                    if (pkg.tags && (version = pkg.tags.latest) && (version = pkg.versions[version])) {
-                        mixing(pkg, version);
-                    }
-                    if (result.length === nLimit) {
-                        break;
-                    }
+exports.detect = function detect(name, callback, settings) {
+    var result = [],
+        bRealSearch, nI, nL, nLimit, library, sName;
+    if (libraryList && libraryList.length) {
+        bRealSearch = util.isRealSearchSet(settings);
+        nLimit = util.getLimit(settings);
+        for (nI = 0, nL = libraryList.length; nI &lt; nL; nI++) {
+            library = libraryList[nI];
+            sName = library.name;
+            if ( util.isStringMatch(bRealSearch ? [sName, library.description].concat(library.tags) : sName, 
+                                    name, settings) ) {
+                library.keywords = library.tags;
+                delete library.tags;
+                library.stars = library.ghwatchers;
+                delete library.ghwatchers;
+                result.push(library);
+                if (result.length === nLimit) {
+                    break;
                 }
             }
         }
-        callback(err, result);
-    }
-    
-    var bSearch = util.isSearchSet(settings),
-        nLimit = util.getLimit(settings, 100);
-    if (bSearch) {
-        repository.search(repositoryUrl, name, nLimit &lt; 50 ? 100 : nLimit * 2, resultCallback);
+        callback(null, result);
     }
     else {
-        repository.get(repositoryUrl, name, resultCallback);
+        request("http://microjs.com/data-min.js", function(err, response, data) {
+            if (! err && response.statusCode === 200) {
+                nI = data.indexOf("[");
+                nL = data.lastIndexOf("]");
+                if (nI > -1 && nL > nI) {
+                    libraryList = JSON.parse(data.substring(nI, nL + 1));
+                    detect(name, callback, settings);
+                }
+                else {
+                    callback("Incorrect format of data about list of libraries", result);
+                }
+            }
+            else {
+                callback(err, result);
+            }
+        });
     }
 };
 </pre>

@@ -19,6 +19,7 @@ The following resources are available:
 * [Bower](http://bower.io)
 * [Jam](http://jamjs.org)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
+* [MicroJS](http://microjs.com)
 
 You can see information about all available resources by running `seeq -l` (see below).
 
@@ -65,16 +66,17 @@ Available resources:
     * Bower (http://bower.io) - Bower package manager registry
     * Jam (http://jamjs.org) - Jam package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
+    * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
 ```
 
 ### Examples
 
-Check `numgen`, `three` and `some-strange-name` at all resources and limit results per resource up to 10.
+Check `numgen`, `three` and `some-strange-name` at all resources and limit results per resource up to 5.
 
 ```
-> seeq numgen three some-strange-name --limit 10
-Checking GitHub, NPM, Component, Bower, Jam, Grunt...
-Progress: 18/18 (100%)
+> seeq numgen three some-strange-name --limit 5
+Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS...
+Progress: 21/21 (100%)
 
 Results:
 
@@ -113,9 +115,14 @@ Results:
     Grunt
         numgen is not found.
 
+    MicroJS - 1
+        numgen - Creates objects that generate number sequences.
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator progression Fibonacci
+
 2. three
 
-    GitHub - 10
+    GitHub - 5
         three - An easy-to-use Python wrapper for the Open311 API.
         url: three.codeforamerica.org
 
@@ -130,21 +137,6 @@ Results:
 
         three
         url: https://github.com/kaouadi/three
-
-        three - phot
-        url: https://github.com/rajivkumar/three
-
-        three - Experiments with Three.js and WebGL.
-        url: https://github.com/superhighfives/three
-
-        Three
-        url: https://github.com/sreedhe/Three
-
-        three
-        url: https://github.com/gcortesp/three
-
-        three - third
-        url: https://github.com/jiidaozhongguo/three
 
     NPM - 1
         three - JavaScript 3D library
@@ -166,6 +158,9 @@ Results:
     Grunt
         three is not found.
 
+    MicroJS
+        three is not found.
+
 3. some-strange-name
 
     GitHub
@@ -184,6 +179,9 @@ Results:
         some-strange-name is not found.
 
     Grunt
+        some-strange-name is not found.
+
+    MicroJS
         some-strange-name is not found.
 ```
 
@@ -282,8 +280,8 @@ Search for `unicorn` at all resources and limit results per resource up to 5.
 
 ```
 > seeq unicorn -s --limit 5
-Checking GitHub, NPM, Component, Bower, Jam, Grunt...
-Progress: 6/6 (100%)
+Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS...
+Progress: 7/7 (100%)
 
 Results:
 
@@ -330,7 +328,7 @@ Results:
 
     Bower - 1
         angular-unicorn-directive
-        url: git://github.com/btford/angular-unicorn-directive.git
+        url: http://github.com/btford/angular-unicorn-directive
 
     Jam
         unicorn is not found.
@@ -338,6 +336,9 @@ Results:
     Grunt - 1
         unicorn - Always use grunt&comma; unless you can use grunt-unicorn&period; Then always use grunt-unicorn&period;
         url: https://npmjs.org/package/grunt-unicorn
+
+    MicroJS
+        unicorn is not found.
 ```
 
 ## API

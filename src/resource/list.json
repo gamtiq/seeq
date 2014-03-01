@@ -41,5 +41,12 @@
         "url": "http://gruntjs.com/plugins",
         "tag": ["js", "javascript", "grunt", "plugin", "registry", "node"],
         "module": "./module/grunt"
+    },
+    {
+        "name": "MicroJS",
+        "description": "List of micro-frameworks and micro-libraries",
+        "url": "http://microjs.com",
+        "tag": ["js", "javascript", "library", "framework", "micro"],
+        "module": "./module/microjs"
     }
 ]
