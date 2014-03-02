@@ -43,8 +43,10 @@ name     Name/string that should be searched for or checked for presence on a re
 
 Options:
    -h, --help             Show usage information and exit
-   -r, --at               Comma-separated list of names (case-insensitive) of resources that should be checked/searched; all resources by default
    -l, --list-resource    Show information about all available resources
+   -r, --at               Filter for available resources by name: comma-separated list of names (case-insensitive) of resources that should be checked/searched
+   -t, --tag              Filter for available resources by tag: comma-separated list of tags (case-insensitive) of resources that should be checked/searched
+   --all-tag              Whether a resource should be checked/searched only when it has all tags
    -p, --partial-match    Allow partial matching when checking name: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
@@ -191,7 +193,7 @@ show additional information about found items.
 
 ```
 > seeq mixing flight -r github,bower --partial-match 1 -c --bower-limit 3 --github-limit 5 --github-lang js --verbose
-Checking github, bower...
+Checking GitHub, Bower...
 Progress: 4/4 (100%)
 
 Results:
@@ -378,7 +380,8 @@ seeq.searchName("duratiform",
 seeq.searchName("cheerio",
                 callback,
                 {
-                    search: true
+                    search: true,
+                    resourceTag: ["library", "node"]
                 });
 ```
 

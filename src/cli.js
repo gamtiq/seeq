@@ -147,7 +147,6 @@ var fs = require("fs"),
     list,
     nI,
     nL,
-    sMessage,
     sName,
     value,
     
@@ -164,16 +163,26 @@ var fs = require("fs"),
                         abbr: "h",
                         help: "Show usage information and exit"
                     },
-                    "resource": {
-                        abbr: "r",
-                        full: "at",
-                        help: "Comma-separated list of names (case-insensitive) of resources that should be checked/searched; all resources by default"
-                    },
                     "listResource": {
                         abbr: "l",
                         full: "list-resource",
                         flag: true,
                         help: "Show information about all available resources"
+                    },
+                    "resource": {
+                        abbr: "r",
+                        full: "at",
+                        help: "Filter for available resources by name: comma-separated list of names (case-insensitive) of resources that should be checked/searched"
+                    },
+                    "resourceTag": {
+                        abbr: "t",
+                        full: "tag",
+                        help: "Filter for available resources by tag: comma-separated list of tags (case-insensitive) of resources that should be checked/searched"
+                    },
+                    "checkAllTags": {
+                        full: "all-tag",
+                        flag: true,
+                        help: "Whether a resource should be checked/searched only when it has all tags"
                     },
                     "partialMatch": {
                         abbr: "p",
@@ -243,28 +252,18 @@ if (args.name && args.name.length) {
     nameList = args.name;
     // Determine resources to check
     if (args.resource) {
-        list = [];
-        resourceNameList = args.resource.split(",").filter(function(name) {
-            if (resourceUnit.isAvailable(name)) {
-                return true;
-            }
-            list.push(name);
-            return false;
-        });
-        if (resourceNameList.length) {
-            sMessage = resourceNameList.join(", ");
-        }
-        if (nI = list.length) {
-            console.log(nI > 1
-                            ? "The following resources are unknown: " + list.join(", ")
-                            : list[0] + " is unknown resource");
-        }
+        args.resource = args.resource.split(",");
     }
-    else {
-        sMessage = resourceUnit.getAllNameList().join(", ");
+    if (args.resourceTag) {
+        args.resourceTag = args.resourceTag.split(",");
     }
+    resourceNameList = resourceUnit.getNameList({
+                                                    selectName: args.resource, 
+                                                    selectTag: args.resourceTag,
+                                                    checkAllTags: args.checkAllTags
+                                                });
     // Make check if resources are specified
-    if (sMessage) {
+    if (resourceNameList.length) {
         // Prepare resources settings
         resourceSettings = {
         };
@@ -282,8 +281,8 @@ if (args.name && args.name.length) {
             }
         }
         // Start checking
-        console.log("Checking " + sMessage + "...");
-        if (nameList.length > 1 || (resourceNameList || resourceList).length > 1) {
+        console.log("Checking " + resourceNameList.join(", ") + "...");
+        if (nameList.length > 1 || resourceNameList.length > 1) {
             value = showProgress;
             charm.pipe(process.stdout);
             charm.write("Progress: 0 %");
@@ -297,6 +296,21 @@ if (args.name && args.name.length) {
                         settings: resourceSettings,
                         progressCallback: value
                     });
+    }
+    // If no resource is found
+    else {
+        console.log("No resource is found.");
+        if (args.resource) {
+            list = args.resource.filter(function(name) {
+                return ! resourceUnit.isAvailable(name);
+            });
+            if (nI = list.length) {
+                console.log(nI > 1
+                                ? "The following resources are unknown: " + list.join(", ")
+                                : list[0] + " is unknown resource");
+            }
+        }
+        console.log("Run `" + pkg.name + " -l` to see information about all available resources.");
     }
 }
 else if (bShowUsage) {

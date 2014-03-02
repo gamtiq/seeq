@@ -14,6 +14,10 @@ function getResourceName(resource) {
     return resource.name;
 }
 
+function toLowerCase(value) {
+    return value.toLowerCase();
+}
+
 
 /**
  * Check whether there is a resource with given name.
@@ -45,6 +49,45 @@ function getIdByName(name) {
     return sId in resourceMap
             ? sId
             : null;
+}
+
+/**
+ * Check whether resource has one or all specified tags.
+ * 
+ * @param {Object} resource
+ *      Represents data about a resource that should be checked.
+ * @param {Array} tagList
+ *      List of tags (in lower case) that should be checked on presence in resource tags.
+ * @param {Boolean} [checkAllTags]
+ *      Whether all tags specified in <code>tagList</code> should be checked on presence in resource tags.
+ * @return {Boolean}
+ *      <code>true</code> if resource has one or all specified tags (depending on <code>checkAllTags</code> value),
+ *      <code>false</code> otherwise.
+ * @alias module:resource.checkResourceTags
+ */
+function checkResourceTags(resource, tagList, checkAllTags) {
+ var bResult = true,
+     resTags = resource.tag,
+     nK = resTags.length,
+     nL = tagList.length,
+     nI;
+ if (nK && nL) {
+     for (nI = 0; nI < nL; nI++) {
+         if (resTags.indexOf(tagList[nI]) === -1) {
+             if (checkAllTags) {
+                 return false;
+             }
+         }
+         else if (! checkAllTags) {
+             return true;
+         }
+     }
+     bResult = Boolean(checkAllTags);
+ }
+ else if (nK === 0 && nL > 0) {
+     bResult = false;
+ }
+ return bResult;
 }
 
 /**
@@ -137,17 +180,6 @@ function removeAll() {
 
 
 /**
- * Return list that contains names of all available resources.
- * 
- * @return {Array}
- *      List that contains names of all available resources.
- * @alias module:resource.getAllNameList
- */
-function getAllNameList() {
-    return resourceList.map(getResourceName);
-}
-
-/**
  * Return list of specified resources.
  * If no selection criteria is set then returns list of all available resources.
  * 
@@ -157,37 +189,56 @@ function getAllNameList() {
         <ul>
         <li><code>includeApi</code> - <code>Boolean</code> - whether API object for resource should be included into data item
                 under <code>api</code> field; <code>false</code> by default
-        <li><code>selectResource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
-                that should be included into result; if setting's value is not specified, all resources will be included into result
+        <li><code>selectName</code> - <code>Array | String</code> - specifies filter for available resources by name;
+                list of names of resources or name of resource (case-insensitive) that should be included into result
+        <li><code>selectTag</code> - <code>Array | String</code> - specifies filter for available resources by tag;
+                list of tags or tag (case-insensitive) that should be used to select resources into result;
+                resources that have one or all specified tags (depending on <code>checkAllTags</code> setting)
+                will be included in result
+        <li><code>checkAllTags</code> - <code>Boolean</code> - specifies (when <code>true</code>) that a resource
+                should be included into result only when it has all tags set by <code>selectTag</code> setting
         </ul>
+        Filter by name (<code>selectName</code>) and filter by tag (<code>selectTag</code>)
+        can be used separately or together.
+        If no filter is specified, all resources will be included into result.
  * @return {Array}
  *      List that contains objects presenting data about selected resources.
  * @alias module:resource.getList
+ * @see {@link module:resource.checkResourceTags checkResourceTags}
  */
 function getList(settings) {
-    /*jshint boss:true*/
+    /*jshint boss:true, laxbreak:true*/
     var resList = resourceList,
         result = [],
-        bIncludeApi, nI, nL, resource, selectedIds;
+        bCheckAllTags, bIncludeApi, nI, nL, resource, selectedIds, selectedTags;
     // Prepare settings
     if (! settings) {
         settings = {};
     }
-    if (selectedIds = settings.selectResource) {
+    if (selectedIds = settings.selectName) {
         if (typeof selectedIds === "string") {
             selectedIds = [ selectedIds.toLowerCase() ];
         }
         else {
-            selectedIds = selectedIds.map(function(name) {
-                return name.toLowerCase();
-            });
+            selectedIds = selectedIds.map(toLowerCase);
         }
     }
+    if (selectedTags = settings.selectTag) {
+        if (typeof selectedTags === "string") {
+            selectedTags = [ selectedTags.toLowerCase() ];
+        }
+        else {
+            selectedTags = selectedTags.map(toLowerCase);
+        }
+    }
+    bCheckAllTags = settings.checkAllTags;
     bIncludeApi = settings.includeApi;
     // Form result list
     for (nI = 0, nL = resList.length; nI < nL; nI++) {
         resource = resList[nI];
-        if (! selectedIds || selectedIds.indexOf(resource.id) > -1) {
+        if ((! selectedIds && ! selectedTags) 
+                || (selectedIds && selectedIds.indexOf(resource.id) > -1)
+                || (selectedTags && checkResourceTags(resource, selectedTags, bCheckAllTags))) {
             if (bIncludeApi && ! resource.api) {
                 resource.api = require(resource.module);
             }
@@ -218,6 +269,37 @@ function setList(list) {
     // Form list of available resources
     (Array.isArray(list) ? list : [list]).forEach(add);
     return exports;
+}
+
+/**
+ * Return list that contains names of all available resources.
+ * 
+ * @return {Array}
+ *      List that contains names of all available resources.
+ * @alias module:resource.getAllNameList
+ * @see {@link module:resource.getNameList getNameList}
+ */
+function getAllNameList() {
+    return resourceList.map(getResourceName);
+}
+
+/**
+ * Return list that contains names of selected resources.
+ * <br>
+ * If no selection criteria is set then returns list of names of all available resources.
+ * 
+ * @param {Object} [settings]
+ *      Specifies selection criteria. The following settings can be used to select resources:
+ *      <code>selectName, selectTag, checkAllTags</code>.
+ *      See {@link module:resource.getList getList} for details.
+ * @return {Array}
+ *      List that contains names of selected resources.
+ * @alias module:resource.getNameList
+ * @see {@link module:resource.getAllNameList getAllNameList}
+ * @see {@link module:resource.getList getList}
+ */
+function getNameList(settings) {
+    return getList(settings).map(getResourceName);
 }
 
 /**
@@ -281,6 +363,8 @@ initList(require("./list.json"));
 exports.isAvailable = isAvailable;
 exports.getIdByName = getIdByName;
 exports.getAllNameList = getAllNameList;
+exports.getNameList = getNameList;
+exports.checkResourceTags = checkResourceTags;
 exports.getList = getList;
 exports.setList = setList;
 exports.getMap = getMap;

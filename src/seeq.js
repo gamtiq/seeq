@@ -64,14 +64,23 @@ function getCheckNameCallback(resource, position, callback) {
                 <li><code>error</code> - <code>Object | String</code> - error that was got while checking/searching resource;
                        this field is present only when there was an error
                 </ul>
-        <li><code>resource</code> - <code>Array | String</code> - list of names of resources or name of resource (case-insensitive)
-                that should be checked/searched; if setting's value is not specified, all resources will be checked/searched
+        <li><code>resource</code> - <code>Array | String</code> - specifies filter for available resources by name;
+                list of names of resources or name of resource (case-insensitive) that should be checked/searched
+        <li><code>resourceTag</code> - <code>Array | String</code> - specifies filter for available resources by tag;
+                list of tags or tag (case-insensitive) that should be used to select resources;
+                resources that have one or all specified tags (depending on <code>checkAllTags</code> setting)
+                will be included checked/searched
+        <li><code>checkAllTags</code> - <code>Boolean</code> - specifies (when <code>true</code>) that a resource
+                should be checked/searched only when it has all tags set by <code>resourceTag</code> setting
         <li><code>search</code> - <code>Boolean</code> - whether search should be made instead of check;
                 it is used only when <code>search</code> setting for a resource is not specified (see below)
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;
                 fields are resource identifiers, values are objects representing settings for the corresponding resources;
                 value of <code>_general</code> field can be used to specify settings that should be applied to all resources
         </ul>
+        Filter by name (<code>resource</code>) and filter by tag (<code>resourceTag</code>)
+        can be used separately or together.
+        If no filter is specified, all resources will be checked/searched.
  * @alias module:seeq.searchName
  */
 function searchName(name, callback, settings) {
@@ -125,7 +134,12 @@ function searchName(name, callback, settings) {
     }
     resourceSettings = settings.settings || {};
     generalSettings = resourceSettings._general;
-    resourceList = resourceLib.getList({selectResource: settings.resource, includeApi: true});
+    resourceList = resourceLib.getList({
+                                        selectName: settings.resource, 
+                                        selectTag: settings.resourceTag,
+                                        checkAllTags: settings.checkAllTags,
+                                        includeApi: true
+                                        });
     if (name && (nC = resourceList.length)) {
         // Request data from resources
         for (nI = 0, nTotal = nC; nI < nTotal; nI++) {
