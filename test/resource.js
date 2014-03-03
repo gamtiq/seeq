@@ -595,6 +595,56 @@ describe("resource", function() {
     });
     
     
+    describe(".filterList(settings)", function() {
+        function checkResNames(settings, resultNames) {
+            var list = filterList(settings).getList(),
+                nL = list.length,
+                nI;
+            
+            if (Array.isArray(resultNames)) {
+                resultNames = resultNames.map(toLowerCase);
+            }
+            else {
+                resultNames = [resultNames.toLowerCase()];
+            }
+            
+            expect( list )
+                .instanceOf(Array);
+            expect( nL )
+                .equal(resultNames.length);
+            for (nI = 0; nI < nL; nI++) {
+                expect( resultNames.indexOf(list[nI].name.toLowerCase()) )
+                    .above(-1);
+            }
+        }
+        
+        var filterList = resource.filterList;
+        
+        it("should filter list of available resources", function() {
+            checkResNames({selectTag: "package"}, ["Github", "Npm", "Component", "Bower", "Jam"]);
+            checkResNames({selectTag: "library"}, ["Github", "Npm", "Bower"]);
+            checkResNames({selectTag: ["node", "browser"]}, ["Npm", "Bower"]);
+            checkResNames({selectTag: "node"}, ["Npm"]);
+            checkResNames({selectTag: "pro"}, []);
+            
+            resource.resetList();
+            
+            checkResNames({selectName: ["Github", "Microjs"], selectTag: ["package", "browser"], checkAllTags: true}, 
+                            ["Github", "Component", "Bower", "Jam", "Microjs"]);
+            checkResNames({selectName: ["Component", "Jam"], selectTag: ["js", "library"], checkAllTags: true}, 
+                            ["Component", "Bower", "Jam", "Microjs"]);
+            checkResNames({selectName: "Jam", selectTag: ["component", "browser"], checkAllTags: true}, 
+                            ["Component", "Bower", "Jam"]);
+            checkResNames({selectName: "Component", selectTag: ["package", "amd"], checkAllTags: true}, 
+                            ["Component", "Jam"]);
+            checkResNames({selectName: "Jam", selectTag: ["browser", "library"], checkAllTags: true}, 
+                            ["Jam"]);
+            checkResNames({selectName: "Fruit", selectTag: ["amd", "project"], checkAllTags: true}, 
+                            []);
+        });
+    });
+    
+    
     describe(".getMap", function() {
         function checkResNames(settings, resultNames) {
             var resMap = getMap(settings),

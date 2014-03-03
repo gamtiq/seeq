@@ -272,6 +272,30 @@ function setList(list) {
 }
 
 /**
+ * Apply filter on list of currently available resources.
+ * <br>
+ * After operation only resources conforming to filter will be available.
+ * <br>
+ * In essence, this method is a wrapper for the following code:
+ * <br>
+ * <code>setList( getList(settings) )</code>
+ * 
+ * @param {Object} [settings]
+ *      Specifies which resources should be selected.
+ *      The following settings can be used to select resources:
+ *      <code>selectName, selectTag, checkAllTags</code>.
+ *      See {@link module:resource.getList getList} for details.
+ * @return {Object}
+ *      Object that represents module <code>exports</code>.
+ * @alias module:resource.filterList
+ * @see {@link module:resource.getList getList}
+ * @see {@link module:resource.resetList resetList}
+ * @see {@link module:resource.setList setList}
+ */
+function filterList(settings) {
+    return setList( getList(settings) );
+}
+/**
  * Return list that contains names of all available resources.
  * 
  * @return {Array}
@@ -367,6 +391,7 @@ exports.getNameList = getNameList;
 exports.checkResourceTags = checkResourceTags;
 exports.getList = getList;
 exports.setList = setList;
+exports.filterList = filterList;
 exports.getMap = getMap;
 exports.add = add;
 exports.remove = remove;
