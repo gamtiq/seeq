@@ -1,3 +1,9 @@
+### 0.1.3 / 2014-03-08
+
+* Add possibility to filter resources by tag
+* Add `filterList` method in `resource` module
+* Add `-m` shortcut for `--limit` option
+
 ### 0.1.2 / 2014-03-01
 
 * Add resource for [MicroJS](http://microjs.com)
