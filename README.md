@@ -50,7 +50,7 @@ Options:
    -p, --partial-match    Allow partial matching when checking name: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
-   --limit                Limit of quantity of results per resource
+   -m, --limit            Limit of quantity of results per resource
    -V, --verbose          Enable verbose output
    -v, --version          Show program version
    --github-lang          Search GitHub repositories that are written in the specified language
@@ -281,7 +281,7 @@ Results:
 Search for `unicorn` at all resources and limit results per resource up to 5.
 
 ```
-> seeq unicorn -s --limit 5
+> seeq unicorn -s -m 5
 Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS...
 Progress: 7/7 (100%)
 

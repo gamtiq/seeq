@@ -202,6 +202,7 @@ var fs = require("fs"),
                         help: "Make search instead of check"
                     },
                     "limit": {
+                        abbr: "m",
                         help: "Limit of quantity of results per resource",
                         callback: function(value) {
                             if (value < 1) {
