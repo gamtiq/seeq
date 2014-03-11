@@ -44,7 +44,7 @@ exports.detect = function detect(name, callback, settings) {
             }
             if ( util.isStringMatch(bRealSearch ? [sName, plugin.ds] : sName, 
                                     name, settings) ) {
-                plugin.description = plugin.ds;
+                plugin.description = util.decodeHtmlEntity(plugin.ds);
                 delete plugin.ds;
                 plugin.url = "https://npmjs.org/package/grunt-" + sName;
                 result.push(plugin);

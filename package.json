@@ -47,6 +47,7 @@
     "package",
     "project",
     "library",
+    "framework",
     "name",
     "npm",
     "component",
@@ -63,6 +64,7 @@
     "request": "~2.34.0",
     "mixing": "0.0.2",
     "octonode": "~0.5.0",
-    "charm": "~0.2.0"
+    "charm": "~0.2.0",
+    "he": "~0.3.6"
   }
 }

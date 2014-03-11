@@ -4,6 +4,20 @@
  * @module util
  */
 
+var he = require("he");
+
+/**
+ * Decode HTML entities in given string.
+ * 
+ * @param {String} str
+ *      String that should be processed.
+ * @return {String}
+ *      Decoded string.
+ */
+exports.decodeHtmlEntity = function(str) {
+    return he.decode(str);
+};
+
 /**
  * Return value of <code>limit</code> setting.
  * 
