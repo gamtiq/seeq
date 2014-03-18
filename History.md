@@ -1,3 +1,8 @@
+### 0.1.4 / 2014-03-18
+
+* Add resources for [CDNJS](http://cdnjs.com) and [jsDelivr](http://www.jsdelivr.com)
+* Decode HTML entities in description of Grunt plugin
+
 ### 0.1.3 / 2014-03-08
 
 * Add possibility to filter resources by tag
