@@ -8,10 +8,11 @@
 
 
 function resourceListToString(resourceList, short) {
-    var result = ["\nAvailable resources:\n"],
+    var nK = resourceList.length,
+        result = ["\nAvailable resources (", nK, "):\n"],
         sIndent = "    ",
-        nI, nK, resource;
-    for (nI = 0, nK = resourceList.length; nI < nK; nI++) {
+        nI, resource;
+    for (nI = 0; nI < nK; nI++) {
         resource = resourceList[nI];
         if (short) {
             result.push("\n",

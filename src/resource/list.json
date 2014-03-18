@@ -48,5 +48,19 @@
         "url": "http://microjs.com",
         "tag": ["microjs", "js", "javascript", "library", "framework", "micro"],
         "module": "./module/microjs"
+    },
+    {
+        "name": "CDNJS",
+        "description": "Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets",
+        "url": "http://cdnjs.com",
+        "tag": ["cdnjs", "cdn", "js", "javascript", "library", "framework", "css"],
+        "module": "./module/cdn/cdnjs"
+    },
+    {
+        "name": "jsDelivr",
+        "description": "Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.",
+        "url": "http://www.jsdelivr.com",
+        "tag": ["jsdelivr", "cdn", "js", "javascript", "library", "framework", "plugin", "css", "font"],
+        "module": "./module/cdn/jsdelivr"
     }
 ]

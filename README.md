@@ -20,6 +20,8 @@ The following resources are available:
 * [Jam](http://jamjs.org)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
 * [MicroJS](http://microjs.com)
+* [CDNJS](http://cdnjs.com)
+* [jsDelivr](http://www.jsdelivr.com)
 
 You can see information about all available resources by running `seeq -l` (see below).
 
@@ -60,7 +62,7 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources:
+Available resources (9):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
@@ -69,6 +71,8 @@ Available resources:
     * Jam (http://jamjs.org) - Jam package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
+    * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
+    * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
 ```
 
 ### Examples
@@ -77,8 +81,8 @@ Check `numgen`, `three` and `some-strange-name` at all resources and limit resul
 
 ```
 > seeq numgen three some-strange-name --limit 5
-Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS...
-Progress: 21/21 (100%)
+Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS, CDNJS, jsDelivr...
+Progress: 27/27 (100%)
 
 Results:
 
@@ -122,6 +126,12 @@ Results:
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator progression Fibonacci
 
+    CDNJS
+        numgen is not found.
+
+    jsDelivr
+        numgen is not found.
+
 2. three
 
     GitHub - 5
@@ -163,6 +173,12 @@ Results:
     MicroJS
         three is not found.
 
+    CDNJS
+        three is not found.
+
+    jsDelivr
+        three is not found.
+
 3. some-strange-name
 
     GitHub
@@ -184,6 +200,12 @@ Results:
         some-strange-name is not found.
 
     MicroJS
+        some-strange-name is not found.
+
+    CDNJS
+        some-strange-name is not found.
+
+    jsDelivr
         some-strange-name is not found.
 ```
 
@@ -282,8 +304,8 @@ Search for `unicorn` at all resources and limit results per resource up to 5.
 
 ```
 > seeq unicorn -s -m 5
-Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS...
-Progress: 7/7 (100%)
+Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS, CDNJS, jsDelivr...
+Progress: 9/9 (100%)
 
 Results:
 
@@ -340,6 +362,12 @@ Results:
         url: https://npmjs.org/package/grunt-unicorn
 
     MicroJS
+        unicorn is not found.
+
+    CDNJS
+        unicorn is not found.
+
+    jsDelivr
         unicorn is not found.
 ```
 

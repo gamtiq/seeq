@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/index.js</title>
+	<title>seeq Source: resource/module/cdn/index.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,6 +33,14 @@
 						</li>
 						
 						<li>
+							<a href="module-cdn.html">cdn</a>
+						</li>
+						
+						<li>
+							<a href="module-cdnjs.html">cdnjs</a>
+						</li>
+						
+						<li>
 							<a href="module-cli.html">cli</a>
 						</li>
 						
@@ -50,6 +58,10 @@
 						
 						<li>
 							<a href="module-jam.html">jam</a>
+						</li>
+						
+						<li>
+							<a href="module-jsdelivr.html">jsdelivr</a>
 						</li>
 						
 						<li>
@@ -89,410 +101,103 @@
 					
 
 
-		<h1 class="page-title">Source: resource/index.js</h1>
+		<h1 class="page-title">Source: resource/module/cdn/index.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * @module resource
+ * @module cdn
  */
 
 
 "use strict";
 
-var sourceList = [],
-    resourceList = [],
-    resourceMap = {};
+var request = require("request"),
+    util = require("../../util"),
+    packageMap = {};
 
-
-function getResourceName(resource) {
-    return resource.name;
-}
-
-function toLowerCase(value) {
-    return value.toLowerCase();
-}
-
-
-/**
- * Check whether there is a resource with given name.
- * 
- * @param {String} name
- *      A name that should be checked (case-insensitive).
- * @return {Boolean}
- *      &lt;code>true&lt;/code> if there is a resource with the given name,
- *      &lt;code>false&lt;/code> if no one of available resources has the specified name.
- * @alias module:resource.isAvailable
- */
-function isAvailable(name) {
-    return name.toLowerCase() in resourceMap;
-}
-
-/**
- * Return identifier of resource with given name.
- * 
- * @param {String} name
- *      A resource name (case-insensitive).
- * @return {String | null}
- *      Identifier of resource that has the given name
- *      or &lt;code>null&lt;/code> if no one of available resources has the specified name.
- * @alias module:resource.getIdByName
- */
-function getIdByName(name) {
-    /*jshint laxbreak:true*/
-    var sId = name.toLowerCase();
-    return sId in resourceMap
-            ? sId
-            : null;
-}
-
-/**
- * Check whether resource has one or all specified tags.
- * 
- * @param {Object} resource
- *      Represents data about a resource that should be checked.
- * @param {Array} tagList
- *      List of tags (in lower case) that should be checked on presence in resource tags.
- * @param {Boolean} [checkAllTags]
- *      Whether all tags specified in &lt;code>tagList&lt;/code> should be checked on presence in resource tags.
- * @return {Boolean}
- *      &lt;code>true&lt;/code> if resource has one or all specified tags (depending on &lt;code>checkAllTags&lt;/code> value),
- *      &lt;code>false&lt;/code> otherwise.
- * @alias module:resource.checkResourceTags
- */
-function checkResourceTags(resource, tagList, checkAllTags) {
- var bResult = true,
-     resTags = resource.tag,
-     nK = resTags.length,
-     nL = tagList.length,
-     nI;
- if (nK && nL) {
-     for (nI = 0; nI &lt; nL; nI++) {
-         if (resTags.indexOf(tagList[nI]) === -1) {
-             if (checkAllTags) {
-                 return false;
-             }
-         }
-         else if (! checkAllTags) {
-             return true;
-         }
-     }
-     bResult = Boolean(checkAllTags);
- }
- else if (nK === 0 && nL > 0) {
-     bResult = false;
- }
- return bResult;
-}
-
-/**
- * Add data about a resource into the list of available resources.
- * 
- * @param {Object} resource
- *      Represents data about a resource that should be added.
- *      Object should contain the following fields (name - type - description):
-        &lt;ul>
-        &lt;li>&lt;code>name&lt;/code> - &lt;code>String&lt;/code> - resource name (required)
-        &lt;li>&lt;code>description&lt;/code> - &lt;code>String&lt;/code> - resource description
-        &lt;li>&lt;code>url&lt;/code> - &lt;code>String&lt;/code> - URL of resource's site
-        &lt;li>&lt;code>tag&lt;/code> - &lt;code>Array of String&lt;/code> - tags/keywords of resource
-        &lt;li>&lt;code>note&lt;/code> - &lt;code>String&lt;/code> - additional information about resource usage
-        &lt;li>&lt;code>module&lt;/code> - &lt;code>String&lt;/code> - path to the module that should be used to work with resource;
-                the module should implement necessary API 
-        &lt;li>&lt;code>api&lt;/code> - &lt;code>Object&lt;/code> - object that implements necessary API to work with resource
-        &lt;/ul>
-        The only mandatory field is &lt;code>name&lt;/code>. Also &lt;code>module&lt;/code> or &lt;code>api&lt;/code> field should be specified.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @throws Will throw an error if resource name is not specified.
- * @throws Will throw an error if resource API object and path to resource module are not specified.
- * @throws Will throw an error if there is a resource with the same name.
- * @alias module:resource.add
- * @see {@link module:resource.isAvailable isAvailable}
- */
-function add(resource) {
-    /*jshint newcap:false*/
-    var sName = resource.name,
-        sId;
-    if (! sName) {
-        throw Error("Unknown name: resource name is not specified");
-    }
-    if ((! resource.api || typeof resource.api !== "object") && (! resource.module || typeof resource.module !== "string")) {
-        throw Error("Unknown API: resource API object or path to resource module must be specified");
-    }
-    if (isAvailable(sName)) {
-        throw Error("Duplicate name: there is a resource with the same name");
-    }
+// Make search in packages of specified CDN
+function search(name, callback, settings) {
+    var bRealSearch = util.isRealSearchSet(settings),
+        nLimit = util.getLimit(settings),
+        packageList = packageMap[settings.cdn.toLowerCase()],
+        nL = packageList.length,
+        result = [],
+        nI, pkg, sName;
     
-    sId = resource.id = sName.toLowerCase();
-    if (! resource.tag) {
-        resource.tag = [];
-    }
-    resourceList.push(resource);
-    resourceMap[sId] = resource;
-    return exports;
-}
-
-/**
- * Remove resource with given name from list of resources.
- * 
- * @param {String} name
- *      Name of resource that should be removed (case-insensitive).
- * @return {Object | null}
- *      Object that represents removed resource
- *      or &lt;code>null&lt;/code> if no one of resources from list has the specified name.
- * @alias module:resource.remove
- */
-function remove(name) {
-    var sId = name.toLowerCase(),
-        nI, nL, resource;
-    if (sId in resourceMap) {
-        for (nI = 0, nL = resourceList.length; nI &lt; nL; nI++) {
-            if ((resource = resourceList[nI]).id === sId) {
-                resourceList.splice(nI, 1);
-                delete resourceMap[sId];
-                return resource;
+    for (nI = 0; nI &lt; nL; nI++) {
+        pkg = packageList[nI];
+        sName = pkg.name;
+        if ( util.isStringMatch(bRealSearch ? [sName, pkg.description || ""] : sName, 
+                                name, settings) ) {
+            pkg.version = pkg.lastversion;
+            result.push(pkg);
+            if (result.length === nLimit) {
+                break;
             }
         }
     }
-    return null;
+    callback(null, result);
 }
 
+
 /**
- * Clear list of resources.
- * 
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.add add}
- * @alias module:resource.removeAll
+ * List of supported CDNs.
  */
-function removeAll() {
-    // Delete current resources
-    resourceList.length = 0;
-    resourceMap = {};
-    return exports;
-}
-
+exports.supportedCdn = ["cdnjs", "jsdelivr"];
 
 /**
- * Return list of specified resources.
- * If no selection criteria is set then returns list of all available resources.
+ * Check whether package with the specified name is existent, or make search for the specified string.
  * 
- * @param {Object} [settings]
- *      Specifies which data items should be returned.
+ * Data about found packages will be passed into callback as array.
+ * If no package is found, empty array will be passed into callback.
+ * 
+ * @param {String} name
+ *      Name of the package to check or string to search for.
+ * @param {Function} callback
+ *      Function that should be called to process operation's result.
+ * @param {Object} settings
+ *      Operation settings.
  *      The following settings are supported (name - type - description):
         &lt;ul>
-        &lt;li>&lt;code>includeApi&lt;/code> - &lt;code>Boolean&lt;/code> - whether API object for resource should be included into data item
-                under &lt;code>api&lt;/code> field; &lt;code>false&lt;/code> by default
-        &lt;li>&lt;code>selectName&lt;/code> - &lt;code>Array | String&lt;/code> - specifies filter for available resources by name;
-                list of names of resources or name of resource (case-insensitive) that should be included into result
-        &lt;li>&lt;code>selectTag&lt;/code> - &lt;code>Array | String&lt;/code> - specifies filter for available resources by tag;
-                list of tags or tag (case-insensitive) that should be used to select resources into result;
-                resources that have one or all specified tags (depending on &lt;code>checkAllTags&lt;/code> setting)
-                will be included in result
-        &lt;li>&lt;code>checkAllTags&lt;/code> - &lt;code>Boolean&lt;/code> - specifies (when &lt;code>true&lt;/code>) that a resource
-                should be included into result only when it has all tags set by &lt;code>selectTag&lt;/code> setting
+        &lt;li>&lt;code>cdn&lt;/code> - &lt;code>String&lt;/code> - CDN in which check/search should be made:
+            &lt;code>cdnjs&lt;/code> or &lt;code>jsdelivr&lt;/code> (case-insensitive)
+        &lt;li>&lt;code>caseSensitive&lt;/code> - &lt;code>Boolean&lt;/code> - Whether case-sensitive check/search should be used
+        &lt;li>&lt;code>partialMatch&lt;/code> - &lt;code>Integer&lt;/code> - Allow partial matching when checking name: 
+            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
+        &lt;li>&lt;code>search&lt;/code> - &lt;code>Boolean&lt;/code> - Whether search should be made instead of check
+        &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results
         &lt;/ul>
-        Filter by name (&lt;code>selectName&lt;/code>) and filter by tag (&lt;code>selectTag&lt;/code>)
-        can be used separately or together.
-        If no filter is specified, all resources will be included into result.
- * @return {Array}
- *      List that contains objects presenting data about selected resources.
- * @alias module:resource.getList
- * @see {@link module:resource.checkResourceTags checkResourceTags}
+        The only mandatory setting is &lt;code>cdn&lt;/code>.
  */
-function getList(settings) {
-    /*jshint boss:true, laxbreak:true*/
-    var resList = resourceList,
-        result = [],
-        bCheckAllTags, bIncludeApi, nI, nL, resource, selectedIds, selectedTags;
-    // Prepare settings
-    if (! settings) {
-        settings = {};
-    }
-    if (selectedIds = settings.selectName) {
-        if (typeof selectedIds === "string") {
-            selectedIds = [ selectedIds.toLowerCase() ];
-        }
-        else {
-            selectedIds = selectedIds.map(toLowerCase);
-        }
-    }
-    if (selectedTags = settings.selectTag) {
-        if (typeof selectedTags === "string") {
-            selectedTags = [ selectedTags.toLowerCase() ];
-        }
-        else {
-            selectedTags = selectedTags.map(toLowerCase);
-        }
-    }
-    bCheckAllTags = settings.checkAllTags;
-    bIncludeApi = settings.includeApi;
-    // Form result list
-    for (nI = 0, nL = resList.length; nI &lt; nL; nI++) {
-        resource = resList[nI];
-        if ((! selectedIds && ! selectedTags) 
-                || (selectedIds && selectedIds.indexOf(resource.id) > -1)
-                || (selectedTags && checkResourceTags(resource, selectedTags, bCheckAllTags))) {
-            if (bIncludeApi && ! resource.api) {
-                resource.api = require(resource.module);
+exports.detect = function(name, callback, settings) {
+    var sCdn;
+    if (settings && settings.cdn) {
+        sCdn = settings.cdn.toLowerCase();
+        if (exports.supportedCdn.indexOf(sCdn) > -1) {
+            if (packageMap[sCdn]) {
+                search(name, callback, settings);
             }
-            result.push(resource);
+            else {
+                request("http://api.jsdelivr.com/v1/" + sCdn + "/libraries", function(err, response, data) {
+                    if (! err && response.statusCode === 200) {
+                        packageMap[sCdn] = JSON.parse(data);
+                        search(name, callback, settings);
+                    }
+                    else {
+                        callback(err, []);
+                    }
+                });
+            }
+        }
+        else {
+            callback(new Error("'" + sCdn + "' CDN is not supported"), []);
         }
     }
-    return result;
-}
-
-/**
- * Change list of available resources.
- * &lt;br>
- * In essence this method [removes all]{@link module:resource.removeAll} available resources
- * and [adds]{@link module:resource.add} data about each given resource into the list of available resources.
- * 
- * @param {Array | Object} list
- *      List that contains objects presenting data about resources,
- *      or object with data about an resource.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.add add}
- * @see {@link module:resource.removeAll removeAll}
- * @alias module:resource.setList
- */
-function setList(list) {
-    // Delete current resources
-    removeAll();
-    // Form list of available resources
-    (Array.isArray(list) ? list : [list]).forEach(add);
-    return exports;
-}
-
-/**
- * Apply filter on list of currently available resources.
- * &lt;br>
- * After operation only resources conforming to filter will be available.
- * &lt;br>
- * In essence, this method is a wrapper for the following code:
- * &lt;br>
- * &lt;code>setList( getList(settings) )&lt;/code>
- * 
- * @param {Object} [settings]
- *      Specifies which resources should be selected.
- *      The following settings can be used to select resources:
- *      &lt;code>selectName, selectTag, checkAllTags&lt;/code>.
- *      See {@link module:resource.getList getList} for details.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @alias module:resource.filterList
- * @see {@link module:resource.getList getList}
- * @see {@link module:resource.resetList resetList}
- * @see {@link module:resource.setList setList}
- */
-function filterList(settings) {
-    return setList( getList(settings) );
-}
-/**
- * Return list that contains names of all available resources.
- * 
- * @return {Array}
- *      List that contains names of all available resources.
- * @alias module:resource.getAllNameList
- * @see {@link module:resource.getNameList getNameList}
- */
-function getAllNameList() {
-    return resourceList.map(getResourceName);
-}
-
-/**
- * Return list that contains names of selected resources.
- * &lt;br>
- * If no selection criteria is set then returns list of names of all available resources.
- * 
- * @param {Object} [settings]
- *      Specifies selection criteria. The following settings can be used to select resources:
- *      &lt;code>selectName, selectTag, checkAllTags&lt;/code>.
- *      See {@link module:resource.getList getList} for details.
- * @return {Array}
- *      List that contains names of selected resources.
- * @alias module:resource.getNameList
- * @see {@link module:resource.getAllNameList getAllNameList}
- * @see {@link module:resource.getList getList}
- */
-function getNameList(settings) {
-    return getList(settings).map(getResourceName);
-}
-
-/**
- * Return object that represents specified resources.
- * If no selection criteria is set then returns object that contains data about all available resources.
- * 
- * @param {Object} [settings]
- *      Specifies which data items should be returned.
- *      See {@link module:resource.getList getList} for details.
- * @return {Object}
- *      Object that contains data about selected resources.
- *      Fields are resource keys, values are objects representing data about resources.
- * @alias module:resource.getMap
- * @see {@link module:resource.getList getList}
- */
-function getMap(settings) {
-    var result = {};
-    getList(settings).forEach(function(item) {
-        result[item.id] = item;
-    });
-    return result;
-}
-
-/**
- * Set list of resources to initial state containing data about all available resources.
- * 
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.setList setList}
- * @alias module:resource.resetList
- */
-function resetList() {
-    return setList(sourceList);
-}
-
-/**
- * Set initial list of all available resources.
- * &lt;br>
- * This list is used to [reset]{@link module:resource.resetList} to initial state.
- * 
- * @param {Array | Object} list
- *      List that contains objects presenting data about resources,
- *      or object with data about an resource.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.resetList resetList}
- * @see {@link module:resource.setList setList}
- * @alias module:resource.initList
- */
-function initList(list) {
-    sourceList = Array.isArray(list) ? list : [list];
-    return resetList();
-}
-
-
-// Initialize list of resources
-initList(require("./list.json"));
-
-//Exports
-
-exports.isAvailable = isAvailable;
-exports.getIdByName = getIdByName;
-exports.getAllNameList = getAllNameList;
-exports.getNameList = getNameList;
-exports.checkResourceTags = checkResourceTags;
-exports.getList = getList;
-exports.setList = setList;
-exports.filterList = filterList;
-exports.getMap = getMap;
-exports.add = add;
-exports.remove = remove;
-exports.removeAll = removeAll;
-exports.resetList = resetList;
-exports.initList = initList;
+    else {
+        callback(new Error("CDN is not specified"), []);
+    }
+};
 </pre>
         </article>
     </section>
@@ -514,7 +219,7 @@ exports.initList = initList;
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Tue Mar 11 2014 21:25:49 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Tue Mar 18 2014 20:43:26 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
