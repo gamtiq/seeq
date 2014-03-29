@@ -145,7 +145,7 @@ function searchName(name, callback, settings) {
         for (nI = 0, nTotal = nC; nI < nTotal; nI++) {
             resource = resourceList[nI];
             realSettings = generalSettings 
-                            ? mixing({}, [resourceSettings[resource.id] || {}, generalSettings]) 
+                            ? mixing({}, [resourceSettings[resource.id], generalSettings]) 
                             : (resourceSettings[resource.id] || {});
             if (! ("search" in realSettings) && ("search" in settings)) {
                 realSettings.search = settings.search;

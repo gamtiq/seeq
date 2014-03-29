@@ -32,5 +32,5 @@ var mixing = require("mixing"),
         </ul>
  */
 exports.detect = function(name, callback, settings) {
-    cdn.detect(name, callback, mixing({cdn: "cdnjs"}, settings || {}));
+    cdn.detect(name, callback, mixing({cdn: "cdnjs"}, settings));
 };
