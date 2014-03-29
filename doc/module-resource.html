@@ -276,7 +276,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-118">line 118</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-133">line 133</a>
     </li></ul></dd>
     
 
@@ -374,7 +374,7 @@
     
     
     <div class="description">
-        Check whether resource has one or all specified tags.
+        Check resource on presence or absence of specified tags.
     </div>
     
 
@@ -465,7 +465,7 @@
 
             
 
-            <td class="description last">List of tags (in lower case) that should be checked on presence in resource tags.</td>
+            <td class="description last">List of tags (in lower case) that should be checked on presence or absence in resource tags.     Tag in form "name" (without quotes; a positive tag) means that resource should be checked on presence of "name" tag.     Tag in form "-name" (without quotes; a negative tag) means that resource should be checked on absence of "name" tag.</td>
         </tr>
 
 	
@@ -498,7 +498,7 @@
 
             
 
-            <td class="description last">Whether all tags specified in <code>tagList</code> should be checked on presence in resource tags.</td>
+            <td class="description last">Whether all tags specified in <code>tagList</code> should be checked on presence/absence in resource tags.     When parameter has <code>true</code> value it means that resource should have all positive tags      and should not have any negative tag.     When parameter has <code>false</code> value (by default) it means that resource should have one of positive tags      and should not have one of negative tags.</td>
         </tr>
 
 	
@@ -530,7 +530,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-68">line 68</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-74">line 74</a>
     </li></ul></dd>
     
 
@@ -555,7 +555,7 @@
     
             
 <div class="param-desc">
-    <code>true</code> if resource has one or all specified tags (depending on <code>checkAllTags</code> value),     <code>false</code> otherwise.
+    <code>true</code> if resource tags satisfy to specified tags (depending on <code>checkAllTags</code> value),     <code>false</code> otherwise.
 </div>
 
 
@@ -683,7 +683,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-295">line 295</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-310">line 310</a>
     </li></ul></dd>
     
 
@@ -786,7 +786,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-306">line 306</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-321">line 321</a>
     </li></ul></dd>
     
 
@@ -1066,10 +1066,10 @@
                 list of names of resources or name of resource (case-insensitive) that should be included into result
         <li><code>selectTag</code> - <code>Array | String</code> - specifies filter for available resources by tag;
                 list of tags or tag (case-insensitive) that should be used to select resources into result;
-                resources that have one or all specified tags (depending on <code>checkAllTags</code> setting)
-                will be included in result
-        <li><code>checkAllTags</code> - <code>Boolean</code> - specifies (when <code>true</code>) that a resource
-                should be included into result only when it has all tags set by <code>selectTag</code> setting
+                resources that satisfy to specified tags (depending on <code>checkAllTags</code> setting)
+                will be included in result; see <a href="module-resource.html#checkResourceTags">checkResourceTags</a> for details
+        <li><code>checkAllTags</code> - <code>Boolean</code> - whether all tags specified in <code>selectTag</code>
+                 should be checked; see <a href="module-resource.html#checkResourceTags">checkResourceTags</a> for details
         </ul>
         Filter by name (<code>selectName</code>) and filter by tag (<code>selectTag</code>)
         can be used separately or together.
@@ -1105,7 +1105,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-209">line 209</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-224">line 224</a>
     </li></ul></dd>
     
 
@@ -1265,7 +1265,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-342">line 342</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-357">line 357</a>
     </li></ul></dd>
     
 
@@ -1425,7 +1425,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-325">line 325</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-340">line 340</a>
     </li></ul></dd>
     
 
@@ -1578,7 +1578,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-376">line 376</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-391">line 391</a>
     </li></ul></dd>
     
 
@@ -1869,7 +1869,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-151">line 151</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-166">line 166</a>
     </li></ul></dd>
     
 
@@ -1964,7 +1964,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-174">line 174</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-189">line 189</a>
     </li></ul></dd>
     
 
@@ -2063,7 +2063,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-358">line 358</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-373">line 373</a>
     </li></ul></dd>
     
 
@@ -2214,7 +2214,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-266">line 266</a>
+        <a href="index.js_.html">resource/index.js</a>, <a href="index.js_.html#sunlight-1-line-281">line 281</a>
     </li></ul></dd>
     
 
@@ -2297,7 +2297,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Tue Mar 18 2014 20:43:27 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sat Mar 29 2014 20:23:43 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

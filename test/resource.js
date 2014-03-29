@@ -219,6 +219,46 @@ describe("resource", function() {
             });
         });
         
+        describe("checkResourceTags(resource, ['-tag1', '-tag2', ...])", function() {
+            it("should return true", function() {
+                expect( checkResourceTags(res, ["-d"]) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["-a", "-omega"]) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["-a", "-b", "-c", "-delta", "-gamma"]) )
+                    .equal(true);
+            });
+            
+            it("should return false", function() {
+                expect( checkResourceTags(res, ["-a"]) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["-a", "-b"]) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["-c", "-b", "-a"]) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["-c", "-b", "-delta", "-a"]) )
+                    .equal(false);
+            });
+        });
+        
+        describe("checkResourceTags(resource, ['tag1', 'tag2', '-tag3', '-tag4', ...])", function() {
+            it("should return true", function() {
+                expect( checkResourceTags(res, ["b", "-1"]) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["delta", "-day", "-c"]) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["a", "c", "-teta", "-eta"]) )
+                    .equal(true);
+            });
+            
+            it("should return false", function() {
+                expect( checkResourceTags(res, ["A", "-b"]) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["A", "bool", "-b", "-delta"]) )
+                    .equal(false);
+            });
+        });
+        
         describe("checkResourceTags(resource, tagList, true)", function() {
             it("should return true", function() {
                 expect( checkResourceTags(resNoTag, [], true) )
@@ -243,6 +283,50 @@ describe("resource", function() {
                 expect( checkResourceTags(res, ["a", "Delta", "b"], true) )
                     .equal(false);
                 expect( checkResourceTags(res, ["a", "b", "c", "delta", "gamma"], true) )
+                    .equal(false);
+            });
+        });
+        
+        describe("checkResourceTags(resource, ['-tag1', '-tag2', ...], true)", function() {
+            it("should return true", function() {
+                expect( checkResourceTags(res, ["-x"], true) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["-x", "-y", "-z"], true) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["-1", "-2", "-3", "-A"], true) )
+                    .equal(true);
+            });
+            
+            it("should return false", function() {
+                expect( checkResourceTags(res, ["-delta"], true) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["-d", "-a"], true) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["-b", "-X", "-v"], true) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["-one", "-c", "-z", "-version"], true) )
+                    .equal(false);
+            });
+        });
+        
+        describe("checkResourceTags(resource, ['tag1', 'tag2', '-tag3', '-tag4', ...], true)", function() {
+            it("should return true", function() {
+                expect( checkResourceTags(res, ["a", "-omega"], true) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["a", "delta", "-d", "-f"], true) )
+                    .equal(true);
+                expect( checkResourceTags(res, ["a", "delta", "b", "c", "-i", "-j", "-k", "-last", "-chance"], true) )
+                    .equal(true);
+            });
+            
+            it("should return false", function() {
+                expect( checkResourceTags(res, ["a", "-b"], true) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["a", "b", "-c", "-d", "-e"], true) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["a", "b", "c", "d", "-e", "-f", "-g"], true) )
+                    .equal(false);
+                expect( checkResourceTags(res, ["delta", "b", "c", "-quattro", "-x-drive", "-a"], true) )
                     .equal(false);
             });
         });
@@ -380,6 +464,45 @@ describe("resource", function() {
             });
         });
         
+        describe("getList({selectTag: ['tag1', '-tag2', ...]})", function() {
+            it("should return list of resources filtered by tags", function() {
+                var resList, tags;
+                
+                tags = ["Node", "-Plugin"];
+                resList = getList({selectTag: tags});
+                checkResTags(resList, tags);
+                expect( resList.length )
+                    .equal(1);
+                
+                tags = ["package", "browser", "-library"];
+                resList = getList({selectTag: tags});
+                checkResTags(resList, tags);
+                expect( resList.length )
+                    .equal(2);
+                
+                tags = ["-Framework", "PACKAGE", "Library", "component"];
+                resList = getList({selectTag: tags});
+                checkResTags(resList, tags);
+                expect( resList.length )
+                    .equal(4);
+            });
+            
+            it("should return empty array", function() {
+                var list = getList({selectTag: ["abc", "-node"]});
+            
+                expect( list )
+                    .be["instanceof"](Array);
+                expect( list.length )
+                    .equal(0);
+                
+                list = getList({selectTag: ["component", "-browser"]});
+                expect( list )
+                    .be["instanceof"](Array);
+                expect( list.length )
+                    .equal(0);
+            });
+        });
+        
         describe("getList({selectTag: 'tag' | ['tag1', 'tag2', ...], checkAllTags: true})", function() {
             it("should return list of resources with all specified tags", function() {
                 var resList, tags;
@@ -445,6 +568,39 @@ describe("resource", function() {
                     .equal(0);
                 
                 list = getList({selectTag: ["amd", "browser", "plugin"], checkAllTags: true});
+                expect( list )
+                    .be["instanceof"](Array);
+                expect( list.length )
+                    .equal(0);
+            });
+        });
+        
+        describe("getList({selectTag: ['tag1', '-tag2', ...], checkAllTags: true})", function() {
+            it("should return list of resources filtered by tags", function() {
+                var resList, tags;
+                
+                tags = ["JS", "Browser", "Package", "-Amd"];
+                resList = getList({selectTag: tags, checkAllTags: true});
+                checkResTags(resList, tags, true);
+                expect( resList.length )
+                    .equal(2);
+                
+                tags = ["library", "framework", "-BROWSER", "-NODE"];
+                resList = getList({selectTag: tags, checkAllTags: true});
+                checkResTags(resList, tags, true);
+                expect( resList.length )
+                    .equal(2);
+            });
+            
+            it("should return empty array", function() {
+                var list = getList({selectTag: ["component", "-js"], checkAllTags: true});
+            
+                expect( list )
+                    .be["instanceof"](Array);
+                expect( list.length )
+                    .equal(0);
+                
+                list = getList({selectTag: ["library", "framework", "package", "-project", "-component"], checkAllTags: true});
                 expect( list )
                     .be["instanceof"](Array);
                 expect( list.length )

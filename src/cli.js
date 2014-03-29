@@ -178,12 +178,12 @@ var fs = require("fs"),
                     "resourceTag": {
                         abbr: "t",
                         full: "tag",
-                        help: "Filter for available resources by tag: comma-separated list of tags (case-insensitive) of resources that should be checked/searched"
+                        help: "Filter for available resources by tag: comma-separated list of tags (case-insensitive); -tag means that resource should not have the tag"
                     },
                     "checkAllTags": {
                         full: "all-tag",
                         flag: true,
-                        help: "Whether a resource should be checked/searched only when it has all tags"
+                        help: "Whether all specified tags should be checked for a resource"
                     },
                     "partialMatch": {
                         abbr: "p",

@@ -68,10 +68,10 @@ function getCheckNameCallback(resource, position, callback) {
                 list of names of resources or name of resource (case-insensitive) that should be checked/searched
         <li><code>resourceTag</code> - <code>Array | String</code> - specifies filter for available resources by tag;
                 list of tags or tag (case-insensitive) that should be used to select resources;
-                resources that have one or all specified tags (depending on <code>checkAllTags</code> setting)
-                will be included checked/searched
-        <li><code>checkAllTags</code> - <code>Boolean</code> - specifies (when <code>true</code>) that a resource
-                should be checked/searched only when it has all tags set by <code>resourceTag</code> setting
+                resources that satisfy to specified tags (depending on <code>checkAllTags</code> setting)
+                will be checked/searched; see {@link module:resource.checkResourceTags checkResourceTags} for details
+        <li><code>checkAllTags</code> - <code>Boolean</code> - whether all tags specified in <code>resourceTag</code>
+                should be used to select resources; see {@link module:resource.checkResourceTags checkResourceTags} for details
         <li><code>search</code> - <code>Boolean</code> - whether search should be made instead of check;
                 it is used only when <code>search</code> setting for a resource is not specified (see below)
         <li><code>settings</code> - <code>Object</code> - settings for resources usage;

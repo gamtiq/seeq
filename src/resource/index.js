@@ -52,42 +52,57 @@ function getIdByName(name) {
 }
 
 /**
- * Check whether resource has one or all specified tags.
+ * Check resource on presence or absence of specified tags.
  * 
  * @param {Object} resource
  *      Represents data about a resource that should be checked.
  * @param {Array} tagList
- *      List of tags (in lower case) that should be checked on presence in resource tags.
+ *      List of tags (in lower case) that should be checked on presence or absence in resource tags.
+ *      Tag in form "name" (without quotes; a positive tag) means that resource should be checked on presence of "name" tag.
+ *      Tag in form "-name" (without quotes; a negative tag) means that resource should be checked on absence of "name" tag.
  * @param {Boolean} [checkAllTags]
- *      Whether all tags specified in <code>tagList</code> should be checked on presence in resource tags.
+ *      Whether all tags specified in <code>tagList</code> should be checked on presence/absence in resource tags.
+ *      When parameter has <code>true</code> value it means that resource should have all positive tags 
+ *      and should not have any negative tag.
+ *      When parameter has <code>false</code> value (by default) it means that resource should have one of positive tags 
+ *      and should not have one of negative tags.
  * @return {Boolean}
- *      <code>true</code> if resource has one or all specified tags (depending on <code>checkAllTags</code> value),
+ *      <code>true</code> if resource tags satisfy to specified tags (depending on <code>checkAllTags</code> value),
  *      <code>false</code> otherwise.
  * @alias module:resource.checkResourceTags
  */
 function checkResourceTags(resource, tagList, checkAllTags) {
- var bResult = true,
-     resTags = resource.tag,
-     nK = resTags.length,
-     nL = tagList.length,
-     nI;
- if (nK && nL) {
-     for (nI = 0; nI < nL; nI++) {
-         if (resTags.indexOf(tagList[nI]) === -1) {
-             if (checkAllTags) {
-                 return false;
-             }
-         }
-         else if (! checkAllTags) {
-             return true;
-         }
-     }
-     bResult = Boolean(checkAllTags);
- }
- else if (nK === 0 && nL > 0) {
-     bResult = false;
- }
- return bResult;
+    /*jshint laxbreak:true*/
+    var resTags = resource.tag,
+        nL = tagList.length,
+        nAbsent = 0,
+        nAbsentMatch = 0,
+        nPresent = 0,
+        nPresentMatch = 0,
+        nI, sTag;
+    
+    for (nI = 0; nI < nL; nI++) {
+        sTag = tagList[nI];
+        if (sTag.charAt(0) === "-") {
+            nAbsent++;
+            sTag = sTag.substring(1);
+            if (resTags.indexOf(sTag) === -1) {
+                nAbsentMatch++;
+            }
+        }
+        else {
+            nPresent++;
+            if (resTags.indexOf(sTag) > -1) {
+                nPresentMatch++;
+            }
+        }
+        if (! checkAllTags && nPresentMatch && nAbsentMatch) {
+            return true;
+        }
+    }
+    return checkAllTags
+            ? (nPresent === nPresentMatch && nAbsent === nAbsentMatch)
+            : Boolean((! nPresent || nPresentMatch) && (! nAbsent || nAbsentMatch));
 }
 
 /**
@@ -193,10 +208,10 @@ function removeAll() {
                 list of names of resources or name of resource (case-insensitive) that should be included into result
         <li><code>selectTag</code> - <code>Array | String</code> - specifies filter for available resources by tag;
                 list of tags or tag (case-insensitive) that should be used to select resources into result;
-                resources that have one or all specified tags (depending on <code>checkAllTags</code> setting)
-                will be included in result
-        <li><code>checkAllTags</code> - <code>Boolean</code> - specifies (when <code>true</code>) that a resource
-                should be included into result only when it has all tags set by <code>selectTag</code> setting
+                resources that satisfy to specified tags (depending on <code>checkAllTags</code> setting)
+                will be included in result; see {@link module:resource.checkResourceTags checkResourceTags} for details
+        <li><code>checkAllTags</code> - <code>Boolean</code> - whether all tags specified in <code>selectTag</code>
+                 should be checked; see {@link module:resource.checkResourceTags checkResourceTags} for details
         </ul>
         Filter by name (<code>selectName</code>) and filter by tag (<code>selectTag</code>)
         can be used separately or together.

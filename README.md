@@ -47,8 +47,8 @@ Options:
    -h, --help             Show usage information and exit
    -l, --list-resource    Show information about all available resources
    -r, --at               Filter for available resources by name: comma-separated list of names (case-insensitive) of resources that should be checked/searched
-   -t, --tag              Filter for available resources by tag: comma-separated list of tags (case-insensitive) of resources that should be checked/searched
-   --all-tag              Whether a resource should be checked/searched only when it has all tags
+   -t, --tag              Filter for available resources by tag: comma-separated list of tags (case-insensitive); -tag means that resource should not have the tag
+   --all-tag              Whether all specified tags should be checked for a resource
    -p, --partial-match    Allow partial matching when checking name: 0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
@@ -300,12 +300,13 @@ Results:
         repository: git://github.com/naoina/flight-mocha.git
 ```
 
-Search for `unicorn` at all resources and limit results per resource up to 5.
+Search for `unicorn` at resources that have tag `library` and do not have tags `node` and `cdn`,
+and limit results per resource up to 5.
 
 ```
-> seeq unicorn -s -m 5
-Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS, CDNJS, jsDelivr...
-Progress: 9/9 (100%)
+> seeq unicorn -s -m 5 --tag library,-node,-cdn --all-tag
+Checking GitHub, Bower, MicroJS...
+Progress: 3/3 (100%)
 
 Results:
 
@@ -327,47 +328,11 @@ Results:
         unicorn-worker-killer - Automatically restart Unicorn workers based on 1) max number of requests and 2) max memory
         url: https://rubygems.org/gems/unicorn-worker-killer
 
-    NPM - 5
-        alibaba-dev - alibaba developer
-        url: https://npmjs.org/package/alibaba-dev
-        keywords: tianma unicorn alibaba developer autosave
-
-        ascii-art-reverse - reverses ascii art. caution, uses magic.
-        url: https://npmjs.org/package/ascii-art-reverse
-        keywords: magic unicorn ascii art
-
-        cornify - A super magical unicorn module
-        url: https://npmjs.org/package/cornify
-        keywords: cornify
-
-        fugue - Unicorn for node
-        url: https://npmjs.org/package/fugue
-
-        grunt-unicorn - Always use grunt, unless you can use grunt-unicorn. Then always use grunt-unicorn.
-        url: https://npmjs.org/package/grunt-unicorn
-        keywords: gruntplugin
-
-    Component
-        unicorn is not found.
-
     Bower - 1
         angular-unicorn-directive
         url: http://github.com/btford/angular-unicorn-directive
 
-    Jam
-        unicorn is not found.
-
-    Grunt - 1
-        unicorn - Always use grunt&comma; unless you can use grunt-unicorn&period; Then always use grunt-unicorn&period;
-        url: https://npmjs.org/package/grunt-unicorn
-
     MicroJS
-        unicorn is not found.
-
-    CDNJS
-        unicorn is not found.
-
-    jsDelivr
         unicorn is not found.
 ```
 
@@ -409,7 +374,7 @@ seeq.searchName("cheerio",
                 callback,
                 {
                     search: true,
-                    resourceTag: ["library", "node"]
+                    resourceTag: ["library", "-cdn"]
                 });
 ```
 
