@@ -1,3 +1,8 @@
+### 0.1.5 / 2014-03-30
+
+* Add resource for [JSter](http://jster.net)
+* Add ability to select resources not having a tag
+
 ### 0.1.4 / 2014-03-18
 
 * Add resources for [CDNJS](http://cdnjs.com) and [jsDelivr](http://www.jsdelivr.com)
