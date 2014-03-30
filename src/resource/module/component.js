@@ -1,4 +1,6 @@
 /**
+ * Module that provides means to check/search in {@link https://github.com/component/component Component}.
+ * 
  * @module component
  */
 

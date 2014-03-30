@@ -1,4 +1,6 @@
 /**
+ * API to work with resources.
+ * 
  * @module resource
  */
 

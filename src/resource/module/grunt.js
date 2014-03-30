@@ -1,4 +1,6 @@
 /**
+ * Module that provides means to check/search in {@link http://gruntjs.com/plugins registry of Grunt plugins}.
+ * 
  * @module grunt
  */
 

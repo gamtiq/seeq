@@ -1,4 +1,6 @@
 /**
+ * Module that provides means to check/search in {@link http://jamjs.org Jam}.
+ * 
  * @module jam
  */
 

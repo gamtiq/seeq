@@ -1,7 +1,7 @@
 /**
- * Module that provides means to check/search in {@link http://microjs.com MicroJS}.
+ * Module that provides means to check/search in {@link http://jster.net JSter}.
  * 
- * @module microjs
+ * @module jster
  */
 
 
@@ -41,12 +41,14 @@ exports.detect = function detect(name, callback, settings) {
         for (nI = 0, nL = libraryList.length; nI < nL; nI++) {
             library = libraryList[nI];
             sName = library.name;
-            if ( util.isStringMatch(bRealSearch ? [sName, library.description].concat(library.tags) : sName, 
+            if ( util.isStringMatch(bRealSearch ? [sName, library.description] : sName, 
                                     name, settings) ) {
-                library.keywords = library.tags;
-                delete library.tags;
-                library.stars = library.ghwatchers;
-                delete library.ghwatchers;
+                if (library.github) {
+                    library.repository = library.github + ".git";
+                    if (! library.homepage) {
+                        library.homepage = library.github;
+                    }
+                }
                 result.push(library);
                 if (result.length === nLimit) {
                     break;
@@ -56,17 +58,10 @@ exports.detect = function detect(name, callback, settings) {
         callback(null, result);
     }
     else {
-        request("http://microjs.com/data-min.js", function(err, response, data) {
+        request("http://api.jster.net/v1/libraries", function(err, response, data) {
             if (! err && response.statusCode === 200) {
-                nI = data.indexOf("[");
-                nL = data.lastIndexOf("]");
-                if (nI > -1 && nL > nI) {
-                    libraryList = JSON.parse(data.substring(nI, nL + 1));
-                    detect(name, callback, settings);
-                }
-                else {
-                    callback("Incorrect format of data about list of libraries", result);
-                }
+                libraryList = JSON.parse(data);
+                detect(name, callback, settings);
             }
             else {
                 callback(err, result);

@@ -8,7 +8,7 @@
 
 
 /**
- * Utility to detect whether a name is registered or present on some resource.
+ * Detect whether a name is registered or present on some resource, or make search for string on specified resources.
  * 
  * @module seeq
  */

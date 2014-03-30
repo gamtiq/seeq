@@ -43,6 +43,13 @@
         "module": "./module/grunt"
     },
     {
+        "name": "JSter",
+        "description": "Catalog of JavaScript libraries and tools for web development",
+        "url": "http://jster.net",
+        "tag": ["jster", "js", "javascript", "catalog", "library", "framework", "tool"],
+        "module": "./module/jster"
+    },
+    {
         "name": "MicroJS",
         "description": "List of micro-frameworks and micro-libraries",
         "url": "http://microjs.com",

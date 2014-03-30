@@ -19,6 +19,7 @@ The following resources are available:
 * [Bower](http://bower.io)
 * [Jam](http://jamjs.org)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
+* [JSter](http://jster.net)
 * [MicroJS](http://microjs.com)
 * [CDNJS](http://cdnjs.com)
 * [jsDelivr](http://www.jsdelivr.com)
@@ -62,7 +63,7 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources (9):
+Available resources (10):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
@@ -70,6 +71,7 @@ Available resources (9):
     * Bower (http://bower.io) - Bower package manager registry
     * Jam (http://jamjs.org) - Jam package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
+    * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
     * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
@@ -77,12 +79,12 @@ Available resources (9):
 
 ### Examples
 
-Check `numgen`, `three` and `some-strange-name` at all resources and limit results per resource up to 5.
+Check `numgen`, `three` and `some-strange-name` at resources having `package` tag and limit results per resource up to 5.
 
 ```
-> seeq numgen three some-strange-name --limit 5
-Checking GitHub, NPM, Component, Bower, Jam, Grunt, MicroJS, CDNJS, jsDelivr...
-Progress: 27/27 (100%)
+> seeq numgen three some-strange-name --tag package --limit 5
+Checking GitHub, NPM, Component, Bower, Jam...
+Progress: 15/15 (100%)
 
 Results:
 
@@ -118,28 +120,11 @@ Results:
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
 
-    Grunt
-        numgen is not found.
-
-    MicroJS - 1
-        numgen - Creates objects that generate number sequences.
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator progression Fibonacci
-
-    CDNJS
-        numgen is not found.
-
-    jsDelivr
-        numgen is not found.
-
 2. three
 
     GitHub - 5
         three - An easy-to-use Python wrapper for the Open311 API.
         url: three.codeforamerica.org
-
-        three
-        url: https://github.com/f22jay/three
 
         three
         url: https://github.com/liaoxiaojia/three
@@ -149,6 +134,9 @@ Results:
 
         three
         url: https://github.com/kaouadi/three
+
+        three - phot
+        url: https://github.com/rajivkumar/three
 
     NPM - 1
         three - JavaScript 3D library
@@ -167,18 +155,6 @@ Results:
         three - JavaScript 3D library
         url: http://threejs.org
 
-    Grunt
-        three is not found.
-
-    MicroJS
-        three is not found.
-
-    CDNJS
-        three is not found.
-
-    jsDelivr
-        three is not found.
-
 3. some-strange-name
 
     GitHub
@@ -194,18 +170,6 @@ Results:
         some-strange-name is not found.
 
     Jam
-        some-strange-name is not found.
-
-    Grunt
-        some-strange-name is not found.
-
-    MicroJS
-        some-strange-name is not found.
-
-    CDNJS
-        some-strange-name is not found.
-
-    jsDelivr
         some-strange-name is not found.
 ```
 
@@ -244,8 +208,8 @@ Results:
     Bower - 1
         mixing - Functions to mix objects
         url: https://github.com/gamtiq/mixing
-        keywords: mixin mix merge object
-        version: 0.0.2
+        keywords: mixin mix merge object filter
+        version: 0.0.3
         repository: git://github.com/gamtiq/mixing.git
         license: MIT
 
@@ -256,7 +220,13 @@ Results:
         url: http://flightjs.github.io/
         repository: https://github.com/flightjs/flight.git
         language: JavaScript
-        stars: 4927
+        stars: 5131
+
+        flightplan - Node.js library for streamlining application deployment or systems administration tasks.
+        url: https://npmjs.org/package/flightplan
+        repository: https://github.com/pstadler/flightplan.git
+        language: JavaScript
+        stars: 346
 
         flight-stream - Real Time Flight Updates w/ Node.js, Redis and WebSockets
         url: https://github.com/waratuman/flight-stream
@@ -264,11 +234,11 @@ Results:
         language: JavaScript
         stars: 32
 
-        flightplan - Node.js library for streamlining application deployment or systems administration tasks.
-        url: https://npmjs.org/package/flightplan
-        repository: https://github.com/pstadler/flightplan.git
+        flight627 - prototype work towards cloud-based developer tooling
+        url: https://github.com/spring-projects/flight627
+        repository: https://github.com/spring-projects/flight627.git
         language: JavaScript
-        stars: 174
+        stars: 29
 
         flight - flight-framework is a jsfl script framework with a CommonJS-like module mechanism.
         url: https://github.com/uzzu/flight
@@ -276,15 +246,10 @@ Results:
         language: JavaScript
         stars: 3
 
-        flight
-        url: https://github.com/mrlong/flight
-        repository: https://github.com/mrlong/flight.git
-        language: JavaScript
-
     Bower - 3
         flight - Clientside component infrastructure
         url: http://github.com/flightjs/flight
-        version: 1.1.2
+        version: 1.1.3
         repository: git://github.com/flightjs/flight.git
 
         flight-jasmine - Extensions to the Jasmine test framework for use with Flight
@@ -305,8 +270,8 @@ and limit results per resource up to 5.
 
 ```
 > seeq unicorn -s -m 5 --tag library,-node,-cdn --all-tag
-Checking GitHub, Bower, MicroJS...
-Progress: 3/3 (100%)
+Checking GitHub, Bower, JSter, MicroJS...
+Progress: 4/4 (100%)
 
 Results:
 
@@ -331,6 +296,9 @@ Results:
     Bower - 1
         angular-unicorn-directive
         url: http://github.com/btford/angular-unicorn-directive
+
+    JSter
+        unicorn is not found.
 
     MicroJS
         unicorn is not found.

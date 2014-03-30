@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/module/cdn/cdnjs.js</title>
+	<title>seeq Source: resource/module/jster.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -105,30 +105,31 @@
 					
 
 
-		<h1 class="page-title">Source: resource/module/cdn/cdnjs.js</h1>
+		<h1 class="page-title">Source: resource/module/jster.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * Module that provides means to check/search in {@link http://cdnjs.com/ CDNJS}.
+ * Module that provides means to check/search in {@link http://jster.net JSter}.
  * 
- * @module cdnjs
+ * @module jster
  */
 
 
 "use strict";
 
-var mixing = require("mixing"),
-    cdn = require("./index");
+var request = require("request"),
+    util = require("../util"),
+    libraryList;
 
 /**
- * Check whether package with the specified name is existent, or make search for the specified string.
+ * Check whether library with the specified name is existent, or make search for the specified string.
  * 
- * Data about found packages will be passed into callback as array.
- * If no package is found, empty array will be passed into callback.
+ * Data about found libraries will be passed into callback as array.
+ * If no library is found, empty array will be passed into callback.
  * 
  * @param {String} name
- *      Name of the package to check or string to search for.
+ *      Name of the library to check or string to search for.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
@@ -142,8 +143,42 @@ var mixing = require("mixing"),
         &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results
         &lt;/ul>
  */
-exports.detect = function(name, callback, settings) {
-    cdn.detect(name, callback, mixing({cdn: "cdnjs"}, settings));
+exports.detect = function detect(name, callback, settings) {
+    var result = [],
+        bRealSearch, nI, nL, nLimit, library, sName;
+    if (libraryList && libraryList.length) {
+        bRealSearch = util.isRealSearchSet(settings);
+        nLimit = util.getLimit(settings);
+        for (nI = 0, nL = libraryList.length; nI &lt; nL; nI++) {
+            library = libraryList[nI];
+            sName = library.name;
+            if ( util.isStringMatch(bRealSearch ? [sName, library.description] : sName, 
+                                    name, settings) ) {
+                if (library.github) {
+                    library.repository = library.github + ".git";
+                    if (! library.homepage) {
+                        library.homepage = library.github;
+                    }
+                }
+                result.push(library);
+                if (result.length === nLimit) {
+                    break;
+                }
+            }
+        }
+        callback(null, result);
+    }
+    else {
+        request("http://api.jster.net/v1/libraries", function(err, response, data) {
+            if (! err && response.statusCode === 200) {
+                libraryList = JSON.parse(data);
+                detect(name, callback, settings);
+            }
+            else {
+                callback(err, result);
+            }
+        });
+    }
 };
 </pre>
         </article>
