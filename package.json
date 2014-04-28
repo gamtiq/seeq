@@ -21,7 +21,8 @@
   ],
   "main": "src/seeq",
   "bin": {
-    "seeq": "./bin/seeq"
+    "seeq": "./bin/seeq",
+    "sees": "./bin/sees"
   },
   "preferGlobal": true,
   "engines": {
