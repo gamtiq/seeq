@@ -49,6 +49,10 @@ exports.detect = function detect(name, callback, settings) {
                         library.homepage = library.github;
                     }
                 }
+                if (library.tags && library.tags.length) {
+                    library.keywords = library.tags;
+                    delete library.tags;
+                }
                 result.push(library);
                 if (result.length === nLimit) {
                     break;
