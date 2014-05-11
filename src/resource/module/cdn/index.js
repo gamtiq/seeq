@@ -26,6 +26,7 @@ function search(name, callback, settings) {
         if ( util.isStringMatch(bRealSearch ? [sName, pkg.description || ""] : sName, 
                                 name, settings) ) {
             pkg.version = pkg.lastversion;
+            pkg.url = pkg.homepage || pkg.github || "";
             result.push(pkg);
             if (result.length === nLimit) {
                 break;

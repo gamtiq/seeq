@@ -45,9 +45,9 @@ exports.detect = function detect(name, callback, settings) {
                                     name, settings) ) {
                 if (library.github) {
                     library.repository = library.github + ".git";
-                    if (! library.homepage) {
-                        library.homepage = library.github;
-                    }
+                }
+                if (! library.url) {
+                    library.url = library.homepage || library.github;
                 }
                 if (library.tags && library.tags.length) {
                     library.keywords = library.tags;

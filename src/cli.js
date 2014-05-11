@@ -194,7 +194,7 @@ function showResult(resultMap, nameList, args) {
                     out.push("\n", sIndentTwice, result.name);
                     result.description &&
                         out.push(" - ", result.description);
-                    (value = result.url || result.homepage) &&
+                    (value = result.url) &&
                         out.push("\n", sIndentTwice, "url: ", value);
                     (value = result.keywords) && value.length &&
                         out.push("\n", sIndentTwice, "keywords: ", value.join(" "));
@@ -202,7 +202,7 @@ function showResult(resultMap, nameList, args) {
                     if (bVerbose) {
                         result.version &&
                             out.push("\n", sIndentTwice, "version: ", result.version);
-                        if (value = result.repo || result.repository) {
+                        if (value = result.repository) {
                             if (typeof value === "object") {
                                 value = value.url;
                             }
@@ -211,7 +211,7 @@ function showResult(resultMap, nameList, args) {
                         }
                         result.language &&
                             out.push("\n", sIndentTwice, "language: ", result.language);
-                        (value = result.license || result.licence) &&
+                        (value = result.license) &&
                             out.push("\n", sIndentTwice, "license: ", licenseToString(value));
                         result.stars &&
                             out.push("\n", sIndentTwice, "stars: ", result.stars);

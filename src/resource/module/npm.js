@@ -60,7 +60,11 @@ exports.detect = function detect(name, callback, settings) {
                 }
                 else {
                     for (sName in data) {
-                        result.push(data[sName]);
+                        pkg = data[sName];
+                        if (! pkg.url && pkg.homepage) {
+                            pkg.url = pkg.homepage;
+                        }
+                        result.push(pkg);
                         break;
                     }
                 }

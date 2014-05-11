@@ -73,8 +73,8 @@ exports.detect = function(name, callback, settings) {
                 }
                 if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
                     sUrl = pkg.url;
-                    if (! pkg.repo && ! pkg.repository && sUrl) {
-                        pkg.repo = sUrl;
+                    if (! pkg.repository && sUrl) {
+                        pkg.repository = pkg.repo || sUrl;
                     }
                     result.push(pkg);
                     nK = result.length;

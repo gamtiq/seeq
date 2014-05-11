@@ -58,6 +58,9 @@ exports.detect = function(name, callback, settings) {
                     if (pkg.tags && (version = pkg.tags.latest) && (version = pkg.versions[version])) {
                         mixing(pkg, version);
                     }
+                    if (pkg.homepage && ! pkg.url) {
+                        pkg.url = pkg.homepage;
+                    }
                     if (result.length === nLimit) {
                         break;
                     }

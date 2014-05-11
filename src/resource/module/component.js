@@ -45,7 +45,8 @@ exports.detect = function(name, callback, settings) {
                 pkg = resultList[nI];
                 if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
                     pkg.url = "https://github.com/" + pkg.repo;
-                    pkg.repo = pkg.url + ".git";
+                    pkg.repository = pkg.url + ".git";
+                    delete pkg.repo;
                     result.push(pkg);
                     if (result.length === nLimit) {
                         break;
