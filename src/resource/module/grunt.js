@@ -44,10 +44,12 @@ exports.detect = function detect(name, callback, settings) {
             if (sName.indexOf("grunt-") === 0) {
                 sName = plugin.name = sName.substring(6);
             }
-            if ( util.isStringMatch(bRealSearch ? [sName, plugin.ds] : sName, 
+            if ( util.isStringMatch(bRealSearch ? [sName, plugin.ds || plugin.description || ""] : sName, 
                                     name, settings) ) {
-                plugin.description = util.decodeHtmlEntity(plugin.ds);
-                delete plugin.ds;
+                if (! ("description" in plugin) && plugin.ds) {
+                    plugin.description = util.decodeHtmlEntity(plugin.ds);
+                    delete plugin.ds;
+                }
                 plugin.url = "https://npmjs.org/package/grunt-" + sName;
                 result.push(plugin);
                 if (result.length === nLimit) {

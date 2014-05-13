@@ -18,7 +18,7 @@
         "name": "Component",
         "description": "Component client package manager registry",
         "url": "https://github.com/component/component",
-        "tag": ["component", "js", "javascript", "package", "browser"],
+        "tag": ["componentjs", "component", "js", "javascript", "package", "browser"],
         "module": "./module/component"
     },
     {
