@@ -1,0 +1,587 @@
+{
+    "numgen": {
+        "GitHub": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences",
+                    "url": "https://github.com/gamtiq/numgen",
+                    "repository": "https://github.com/gamtiq/numgen.git",
+                    "language": "JavaScript"
+                },
+                {
+                    "name": "numgen",
+                    "url": "https://github.com/grancier/numgen",
+                    "repository": "https://github.com/grancier/numgen.git",
+                    "language": "C"
+                },
+                {
+                    "name": "NumGen",
+                    "description": "A number generating mobile app to use for awarding prizes at user groups",
+                    "url": "https://github.com/scryan7371/NumGen",
+                    "repository": "https://github.com/scryan7371/NumGen.git",
+                    "language": "JavaScript",
+                    "stars": 1
+                },
+                {
+                    "name": "gamtiq-numgen",
+                    "url": "https://github.com/npmcomponent/gamtiq-numgen",
+                    "repository": "https://github.com/npmcomponent/gamtiq-numgen.git",
+                    "language": "JavaScript"
+                },
+                {
+                    "name": "C-Sharp-NumGen",
+                    "description": "Written in C#",
+                    "url": "https://github.com/CirnoTheGenius/C-Sharp-NumGen",
+                    "repository": "https://github.com/CirnoTheGenius/C-Sharp-NumGen.git",
+                    "language": "C#"
+                }
+            ]
+        },
+        "NPM": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences",
+                    "url": "https://npmjs.org/package/numgen",
+                    "keywords": [
+                        "number",
+                        "sequence",
+                        "generator"
+                    ],
+                    "version": "0.0.3"
+                }
+            ]
+        },
+        "Component": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences",
+                    "url": "https://github.com/gamtiq/numgen",
+                    "keywords": [
+                        "number",
+                        "sequence",
+                        "generator"
+                    ],
+                    "version": "0.0.3",
+                    "repository": "https://github.com/gamtiq/numgen.git",
+                    "license": [
+                        "MIT"
+                    ]
+                }
+            ]
+        },
+        "Bower": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences",
+                    "url": "https://github.com/gamtiq/numgen",
+                    "keywords": [
+                        "number",
+                        "sequence",
+                        "generator"
+                    ],
+                    "version": "0.0.3",
+                    "repository": "git://github.com/gamtiq/numgen.git",
+                    "license": [
+                        "MIT"
+                    ]
+                }
+            ]
+        },
+        "Jam": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences",
+                    "url": "https://github.com/gamtiq/numgen",
+                    "keywords": [
+                        "number",
+                        "sequence",
+                        "generator"
+                    ],
+                    "version": "0.0.3",
+                    "repository": "https://github.com/gamtiq/numgen.git",
+                    "license": [
+                        "MIT"
+                    ]
+                }
+            ]
+        },
+        "Grunt": {
+            "result": []
+        },
+        "JSter": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences",
+                    "url": "https://github.com/gamtiq/numgen",
+                    "keywords": [
+                        "Fibonacci",
+                        "generator",
+                        "number",
+                        "progression",
+                        "sequence"
+                    ],
+                    "repository": "https://github.com/gamtiq/numgen.git"
+                }
+            ]
+        },
+        "MicroJS": {
+            "result": [
+                {
+                    "name": "numgen",
+                    "description": "Creates objects that generate number sequences.",
+                    "url": "https://github.com/gamtiq/numgen",
+                    "keywords": [
+                        "number",
+                        "sequence",
+                        "generator",
+                        "progression",
+                        "Fibonacci"
+                    ]
+                }
+            ]
+        },
+        "CDNJS": {
+            "result": []
+        },
+        "jsDelivr": {
+            "result": []
+        }
+    },
+    "three": {
+        "GitHub": {
+            "result": [
+                {
+                    "name": "three.js",
+                    "description": "JavaScript 3D library.",
+                    "url": "http://threejs.org/",
+                    "repository": "https://github.com/mrdoob/three.js.git",
+                    "language": "JavaScript",
+                    "stars": 15163
+                },
+                {
+                    "name": "three20",
+                    "description": "Three20 is an Objective-C library for iPhone developers",
+                    "url": "https://github.com/facebook/three20",
+                    "repository": "https://github.com/facebook/three20.git",
+                    "language": "Objective-C",
+                    "stars": 7430
+                },
+                {
+                    "name": "Meny",
+                    "description": "A three dimensional and space effecient menu",
+                    "url": "http://lab.hakim.se/meny/",
+                    "repository": "https://github.com/hakimel/Meny.git",
+                    "language": "JavaScript",
+                    "stars": 1792
+                },
+                {
+                    "name": "three.dart",
+                    "description": "Dart port of three.js",
+                    "url": "http://threedart.github.com/three.dart/",
+                    "repository": "https://github.com/threeDart/three.dart.git",
+                    "language": "Dart",
+                    "stars": 198
+                },
+                {
+                    "name": "ThreeNodes.js",
+                    "description": "vvvv \"clone\" in javascript/webgl",
+                    "url": "http://idflood.github.com/ThreeNodes.js/ ",
+                    "repository": "https://github.com/idflood/ThreeNodes.js.git",
+                    "language": "JavaScript",
+                    "stars": 686
+                }
+            ]
+        },
+        "NPM": {
+            "result": [
+                {
+                    "name": "appway",
+                    "description": "The proserver is inspired by heroku a deployment mechanism and is designed for rubynas",
+                    "url": "https://npmjs.org/package/appway",
+                    "version": "0.1.2"
+                },
+                {
+                    "name": "ardrone-browser-3d",
+                    "description": "3D display of the AR.Drone in a browser.",
+                    "url": "https://npmjs.org/package/ardrone-browser-3d",
+                    "keywords": [
+                        "3D",
+                        "AR.Drone",
+                        "ardrone-webflight",
+                        "browser",
+                        "diy drone",
+                        "drone",
+                        "nodecopter",
+                        "parrot",
+                        "plugin",
+                        "three.js",
+                        "webflight"
+                    ],
+                    "version": "0.1.1"
+                },
+                {
+                    "name": "argg",
+                    "description": "A poor man's test runner for tap, tape, or similar, that also can be used with istanbul. It's just three lines of code to require all globs or pathnames provided as command line arguments.",
+                    "url": "https://npmjs.org/package/argg",
+                    "keywords": [
+                        "tap",
+                        "tape",
+                        "istanbul"
+                    ],
+                    "version": "0.0.1"
+                },
+                {
+                    "name": "authstarter",
+                    "description": "Add mongodb based authentication to an express web app with three lines of code",
+                    "url": "https://npmjs.org/package/authstarter",
+                    "version": "0.0.7"
+                },
+                {
+                    "name": "bowser-cli",
+                    "description": "A command line interface to create bowser-engine based games with ease.",
+                    "url": "https://npmjs.org/package/bowser-cli",
+                    "keywords": [
+                        "game",
+                        "webgl",
+                        "pixel",
+                        "three",
+                        "engine",
+                        "3d",
+                        "2d"
+                    ],
+                    "version": "0.0.0"
+                }
+            ]
+        },
+        "Component": {
+            "result": [
+                {
+                    "name": "three",
+                    "description": "Three.js component",
+                    "url": "https://github.com/cvdlab/three",
+                    "keywords": [
+                        "webgl",
+                        "three.js",
+                        "3d"
+                    ],
+                    "version": "0.60.0",
+                    "repository": "https://github.com/cvdlab/three.git",
+                    "license": [
+                        "MIT"
+                    ]
+                },
+                {
+                    "name": "three-stats",
+                    "description": "Three.js stats component",
+                    "url": "https://github.com/cvdlab/three-stats",
+                    "keywords": [
+                        "three.js",
+                        "stats"
+                    ],
+                    "version": "0.1.0",
+                    "repository": "https://github.com/cvdlab/three-stats.git",
+                    "license": [
+                        "MIT"
+                    ]
+                },
+                {
+                    "name": "three-trackball",
+                    "description": "Three.js trackball component",
+                    "url": "https://github.com/cvdlab/three-trackball",
+                    "keywords": [
+                        "three.js",
+                        "trackball camera"
+                    ],
+                    "version": "0.1.0",
+                    "repository": "https://github.com/cvdlab/three-trackball.git",
+                    "license": [
+                        "MIT"
+                    ]
+                },
+                {
+                    "name": "three-detector",
+                    "description": "Three.js detector component",
+                    "url": "https://github.com/cvdlab/three-detector",
+                    "keywords": [
+                        "three.js",
+                        "detector"
+                    ],
+                    "version": "0.1.0",
+                    "repository": "https://github.com/cvdlab/three-detector.git",
+                    "license": [
+                        "MIT"
+                    ]
+                }
+            ]
+        },
+        "Bower": {
+            "result": [
+                {
+                    "name": "threejs",
+                    "description": "JavaScript 3D library",
+                    "url": "http://threejs.org/",
+                    "keywords": [
+                        "three",
+                        "threejs",
+                        "three.js",
+                        "3D",
+                        "webgl"
+                    ],
+                    "version": "0.0.67",
+                    "repository": "git://github.com/mrdoob/three.js.git",
+                    "license": [
+                        "MIT"
+                    ]
+                },
+                {
+                    "name": "threejs-examples",
+                    "url": "http://github.com/bodylabs/threejs-examples",
+                    "version": "r67",
+                    "repository": "git://github.com/bodylabs/threejs-examples.git"
+                },
+                {
+                    "name": "threejs-build",
+                    "url": "http://github.com/bodylabs/threejs-build",
+                    "version": "r67",
+                    "repository": "git://github.com/bodylabs/threejs-build.git"
+                },
+                {
+                    "name": "threejs-stats",
+                    "description": "JavaScript Performance Monitor",
+                    "url": "https://github.com/mrdoob/stats.js",
+                    "keywords": [
+                        "three.js",
+                        "webgl"
+                    ],
+                    "version": "0.0.11",
+                    "repository": "git://github.com/jiyinyiyong/threejs-stats.git",
+                    "license": [
+                        "MIT"
+                    ]
+                },
+                {
+                    "name": "three.js",
+                    "description": "JavaScript 3D library",
+                    "url": "http://threejs.org/",
+                    "keywords": [
+                        "threejs",
+                        "3d",
+                        "webgl"
+                    ],
+                    "version": "0.0.64",
+                    "repository": "git://github.com/jiyinyiyong/three.js.git",
+                    "license": [
+                        "MIT"
+                    ]
+                }
+            ]
+        },
+        "Jam": {
+            "result": [
+                {
+                    "name": "anythingslider",
+                    "description": "Just what the world needs, another jQuery slider. YAWN. I know, check this one out though, it's got lots of cool features.\n\nHere on CSS-Tricks, I've created a number of different sliders. Three, in fact. A \"featured content\" slider, a \"start/stop slider\", and \"moving boxes\". Each of them had some cool interesting feature that I needed to build at the time. All were well-received, but as is the case with these things, people want them to do X, Y, and Z in addition to what they already did.\n\nThis new AnythingSlider is an attempt at bringing together the functionality of all of those previous sliders and adding new features. In other words, to create a really \"full featured\" slider that could be widely useful. This is the first time (on CSS-Tricks) that one of these sliders is an actual plugin as well, which should make implementing it and customizing it much easier.",
+                    "url": "http://css-tricks.com/3412-anythingslider-jquery-plugin/",
+                    "keywords": [
+                        "customizable",
+                        "effects",
+                        "slider",
+                        "video"
+                    ],
+                    "version": "1.8.15",
+                    "license": [
+                        "GPL3"
+                    ]
+                },
+                {
+                    "name": "three",
+                    "description": "JavaScript 3D library",
+                    "url": "http://threejs.org",
+                    "version": "1.58.0",
+                    "repository": "https://github.com/mrdoob/three.js.git",
+                    "license": [
+                        "MIT"
+                    ]
+                }
+            ]
+        },
+        "Grunt": {
+            "result": [
+                {
+                    "name": "glsl-threejs",
+                    "description": "A Grunt taks for wrapping GLSL Shader code in Javascript packages, ready to be used in Three.js",
+                    "url": "https://npmjs.org/package/grunt-glsl-threejs"
+                },
+                {
+                    "name": "run",
+                    "description": "Invite external commands into your grunt process with three tasks `run`, `wait` and `stop`.",
+                    "url": "https://npmjs.org/package/grunt-run"
+                },
+                {
+                    "name": "three-obj",
+                    "description": "[WIP] Grunt tasks for Three OBJ",
+                    "url": "https://npmjs.org/package/grunt-three-obj"
+                },
+                {
+                    "name": "threevot-compiler",
+                    "description": "Grunt Compiler for 3VOT Coffescript Apps",
+                    "url": "https://npmjs.org/package/grunt-threevot-compiler"
+                },
+                {
+                    "name": "threevot-tester",
+                    "description": "Run tests for 3VOT components and apps",
+                    "url": "https://npmjs.org/package/grunt-threevot-tester"
+                }
+            ]
+        },
+        "JSter": {
+            "result": [
+                {
+                    "name": "three.js",
+                    "description": "JavaScript 3D library\r\n\r\nThe aim of the project is to create a lightweight 3D library with a very low level of complexity - in other words, for dummies. The library provides <canvas>, <svg> and WebGL renderers.",
+                    "url": "http://threejs.org/",
+                    "repository": "https://github.com/mrdoob/three.js.git"
+                },
+                {
+                    "name": "cannon.js",
+                    "description": "Lightweight 3D physics for the web\r\n\r\nInspired by three.js and ammo.js, and driven by the fact that the web lacks a physics engine, here comes cannon.js.",
+                    "url": "http://schteppe.github.com/cannon.js",
+                    "keywords": [
+                        "3d"
+                    ],
+                    "repository": "https://github.com/schteppe/cannon.js.git"
+                },
+                {
+                    "name": "YUI Touch Events and Abstractions",
+                    "description": "The event-touch module extends the whitelist of DOM events to include the native touch and gesture events and adds relevant information to event facades.\r\n\r\nThe event-move module adds a set of abstract events that adapt to the client environment to handle either touch or mouse input.\r\n\r\nThe event-flick module adds a \"flick\" event on top of the gesture abstraction layer to capture a user flicking an element with mouse or finger.\r\n\r\nThe event-gestures module is a rollup of these three, but will potentially roll in more gesture based events in the future.",
+                    "url": "http://yuilibrary.com/yui/docs/event/touch.html",
+                    "keywords": [
+                        "yui"
+                    ]
+                },
+                {
+                    "name": "node-png",
+                    "description": "This is a node.js module, writen in C++, that uses libpng to produce a PNG\r\nimage (in memory) from RGB or RGBA buffers.\r\n\r\nThe module exports three objects: `Png`, `FixedPngStack` and `DynamicPngStack`.\r\n\r\nThe `Png` object is for creating PNG images from an RGB or RGBA buffer.\r\nThe `FixedPngStack` is for joining a number of PNGs together (stacking them\r\ntogether) on a transparent blackground.\r\nThe `DynamicPngStack` is for joining a number of PNGs together in the most\r\nspace efficient way (so that the canvas border matches the leftmost upper corner\r\nof some PNG and the rightmost bottom corner of some PNG).",
+                    "url": "http://www.catonmat.net",
+                    "repository": "https://github.com/pkrumins/node-png.git"
+                },
+                {
+                    "name": "JUTE",
+                    "description": "Javascript Unit Testing Environment (JUTE)\r\nJUTE is a standalone HTTP server that serves your test files to a JUTE backend for testing. Three of the four backends (Selenium, Capture, and PhantomJS) serve files to a browser, the third backend (V8) will run your tests directly in V8. JUTE then collects and stores test output in JUnit XML format and code coverage information in 'lcov' format and generates pretty HTML to view your coverage results.",
+                    "url": "https://github.com/zzo/JUTE",
+                    "keywords": [
+                        "unit"
+                    ],
+                    "repository": "https://github.com/zzo/JUTE.git"
+                }
+            ]
+        },
+        "MicroJS": {
+            "result": [
+                {
+                    "name": "parseTime.js",
+                    "description": "convert strings like \"five days ago\" to an integer (with time in milliseconds) in three languages (en, de, pt)",
+                    "url": "https://github.com/SimonWaldherr/parseTime.js",
+                    "keywords": [
+                        "time",
+                        "date",
+                        "dates",
+                        "times",
+                        "language",
+                        "parse",
+                        "strings"
+                    ],
+                    "stars": 11
+                }
+            ]
+        },
+        "CDNJS": {
+            "result": [
+                {
+                    "name": "alloy-ui",
+                    "description": "Alloy is a UI metaframework that provides a consistent and simple API for building web applications across allthree levels of the browser: structure, style and behavior.",
+                    "url": "https://github.com/liferay/alloy-ui",
+                    "version": "1.0.1"
+                },
+                {
+                    "name": "three.js",
+                    "description": "three.js is a lightweight 3D library with a very low level of complexity. The library provides <canvas>, <svg> and WebGL renderers.",
+                    "url": "http://threejs.org/",
+                    "version": "r67"
+                }
+            ]
+        },
+        "jsDelivr": {
+            "result": [
+                {
+                    "name": "alloyui",
+                    "description": "Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.",
+                    "url": "http://alloyui.com/",
+                    "version": "2.0.0pr6"
+                },
+                {
+                    "name": "eve.js",
+                    "description": "A <3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.",
+                    "url": "http://evejs.com/",
+                    "version": "0.8.4"
+                },
+                {
+                    "name": "jquery.reel",
+                    "description": "Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.",
+                    "url": "http://www.reel360.org/",
+                    "version": "1.3"
+                },
+                {
+                    "name": "mathbox.js",
+                    "description": "MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.",
+                    "url": "https://github.com/unconed/MathBox.js",
+                    "version": "0.1"
+                },
+                {
+                    "name": "meny",
+                    "description": "A three dimensional and space effecient menu",
+                    "url": "http://lab.hakim.se/meny/",
+                    "version": "1.2"
+                }
+            ]
+        }
+    },
+    "somestrangename": {
+        "GitHub": {
+            "result": []
+        },
+        "NPM": {
+            "result": []
+        },
+        "Component": {
+            "result": []
+        },
+        "Bower": {
+            "result": []
+        },
+        "Jam": {
+            "result": []
+        },
+        "Grunt": {
+            "result": []
+        },
+        "JSter": {
+            "result": []
+        },
+        "MicroJS": {
+            "result": []
+        },
+        "CDNJS": {
+            "result": []
+        },
+        "jsDelivr": {
+            "result": []
+        }
+    }
+}

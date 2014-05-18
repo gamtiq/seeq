@@ -49,6 +49,14 @@
 						</li>
 						
 						<li>
+							<a href="module-format.html">format</a>
+						</li>
+						
+						<li>
+							<a href="util.html">format/util</a>
+						</li>
+						
+						<li>
 							<a href="module-github.html">github</a>
 						</li>
 						
@@ -65,6 +73,10 @@
 						</li>
 						
 						<li>
+							<a href="module-json.html">json</a>
+						</li>
+						
+						<li>
 							<a href="module-jster.html">jster</a>
 						</li>
 						
@@ -77,7 +89,15 @@
 						</li>
 						
 						<li>
+							<a href="module-raw.html">raw</a>
+						</li>
+						
+						<li>
 							<a href="module-resource.html">resource</a>
+						</li>
+						
+						<li>
+							<a href="util_.html">resource/util</a>
 						</li>
 						
 						<li>
@@ -85,7 +105,7 @@
 						</li>
 						
 						<li>
-							<a href="module-util.html">util</a>
+							<a href="module-text.html">text</a>
 						</li>
 						
 
@@ -115,7 +135,7 @@
  * @module cli
  */
 
-/*jshint boss:true, latedef:false, laxbreak:true*/
+/*jshint boss:true, laxbreak:true*/
 
 
 function resourceListToString(resourceList, short) {
@@ -148,6 +168,7 @@ var fs = require("fs"),
     charm = require("charm")(),
     nomnom = require("nomnom"),
     
+    formatUnit = require("./format"),
     resourceUnit = require("./resource"),
     seeq = require("./seeq"),
     
@@ -219,6 +240,11 @@ var fs = require("fs"),
                                 }
                             }
                         },
+                        "format": {
+                            abbr: "f",
+                            "default": formatUnit.exists("text") ? "text" : "raw",
+                            help: "Result format; can be: " + formatUnit.getNameList().join(", ")
+                        },
                         "verbose": {
                             abbr: "V",
                             flag: true,
@@ -260,84 +286,21 @@ function showProgress(data) {
 showProgress.shift = 3;
 
 
-function licenseToString(license) {
-    var result = [],
-        item, nI, nL;
-    if (! Array.isArray(license)) {
-        license = [license];
-    }
-    for (nI = 0, nL = license.length; nI &lt; nL; nI++) {
-        item = license[nI];
-        if (typeof item === "object" && item.type) {
-            item = item.type;
-        }
-        result.push(item);
-    }
-    return result.join(", ");
-}
-
-
 function showResult(resultMap, nameList, args) {
-    /*jshint expr:true*/
-    var bVerbose = args.verbose,
-        out = ["\nResults:"], 
-        sIndent = "    ",
-        sIndentTwice = "        ",
-        nameResult, nI, nK, nN, nQ, sName, sResourceName, resourceResult, resourceResultList, result, value;
-    
-    for (nI = 0, nK = nameList.length; nI &lt; nK; nI++) {
-        sName = nameList[nI];
-        out.push("\n\n", nI + 1, ". ", sName);
-        
-        nameResult = resultMap[sName];
-        for (sResourceName in nameResult) {
-            out.push("\n\n", sIndent, sResourceName);
-            resourceResult = nameResult[sResourceName];
-            resourceResultList = resourceResult.result;
-            nQ = resourceResultList.length;
-            if (nQ) {
-                out.push(" - ", nQ);
-                for (nN = 0; nN &lt; nQ; nN++) {
-                    result = resourceResultList[nN];
-                    nN &&
-                        out.push("\n");
-                    
-                    out.push("\n", sIndentTwice, result.name);
-                    result.description &&
-                        out.push(" - ", result.description);
-                    (value = result.url || result.homepage) &&
-                        out.push("\n", sIndentTwice, "url: ", value);
-                    (value = result.keywords) && value.length &&
-                        out.push("\n", sIndentTwice, "keywords: ", value.join(" "));
-                    
-                    if (bVerbose) {
-                        result.version &&
-                            out.push("\n", sIndentTwice, "version: ", result.version);
-                        if (value = result.repo || result.repository) {
-                            if (typeof value === "object") {
-                                value = value.url;
-                            }
-                            value &&
-                                out.push("\n", sIndentTwice, "repository: ", value);
-                        }
-                        result.language &&
-                            out.push("\n", sIndentTwice, "language: ", result.language);
-                        (value = result.license || result.licence) &&
-                            out.push("\n", sIndentTwice, "license: ", licenseToString(value));
-                        result.stars &&
-                            out.push("\n", sIndentTwice, "stars: ", result.stars);
-                    }
-                }
-            }
-            else {
-                out.push("\n", sIndentTwice, sName, " is not found.");
-                resourceResult.error &&
-                    out.push("\n", sIndentTwice, "Error of checking '", sName, "' at '", sResourceName, "': ", resourceResult.error);
-            }
-        }
-        
+    var sFormat = args.format,
+        result = sFormat ? formatUnit.exists(sFormat) : false;
+    if (result) {
+        result = formatUnit.format(resultMap, 
+                                    sFormat,
+                                    {
+                                        queryList: nameList,
+                                        verbose: args.verbose
+                                    });
     }
-    console.log(out.join(""));
+    else {
+        result = JSON.stringify(resultMap, null, 4);
+    }
+    console.log("\nResults:\n\n" + result);
 }
 
 
@@ -518,7 +481,7 @@ if (require.main === module) {
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Sun Apr 27 2014 00:00:36 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sun May 18 2014 22:50:20 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

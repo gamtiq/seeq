@@ -31,7 +31,7 @@ function handler(err, data, headers) {
             item = itemList[nI];
             if ( bRealSearch || util.isStringMatch(item.name, sSearchName, settings) ) {
                 item.api_url = item.url;
-                item.url = item.homepage ? null : item.html_url;
+                item.url = item.homepage || item.html_url;
                 item.repository = item.clone_url;
                 item.stars = item.stargazers_count;
                 result.push(item);

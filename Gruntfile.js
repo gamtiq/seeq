@@ -43,7 +43,11 @@ module.exports = function(grunt) {
         
         
         mochacli: {
-            all: {}
+            all: {
+                options: {
+                    filesRaw: ["test/*.js", "test/format/*.js"]
+                }
+            }
         },
         
         

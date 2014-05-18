@@ -37,6 +37,7 @@ var fs = require("fs"),
     charm = require("charm")(),
     nomnom = require("nomnom"),
     
+    formatUnit = require("./format"),
     resourceUnit = require("./resource"),
     seeq = require("./seeq"),
     
@@ -108,6 +109,11 @@ var fs = require("fs"),
                                 }
                             }
                         },
+                        "format": {
+                            abbr: "f",
+                            "default": formatUnit.exists("text") ? "text" : "raw",
+                            help: "Result format; can be: " + formatUnit.getNameList().join(", ")
+                        },
                         "verbose": {
                             abbr: "V",
                             flag: true,
@@ -149,84 +155,21 @@ function showProgress(data) {
 showProgress.shift = 3;
 
 
-function licenseToString(license) {
-    var result = [],
-        item, nI, nL;
-    if (! Array.isArray(license)) {
-        license = [license];
-    }
-    for (nI = 0, nL = license.length; nI < nL; nI++) {
-        item = license[nI];
-        if (typeof item === "object" && item.type) {
-            item = item.type;
-        }
-        result.push(item);
-    }
-    return result.join(", ");
-}
-
-
 function showResult(resultMap, nameList, args) {
-    /*jshint expr:true*/
-    var bVerbose = args.verbose,
-        out = ["\nResults:"], 
-        sIndent = "    ",
-        sIndentTwice = "        ",
-        nameResult, nI, nK, nN, nQ, sName, sResourceName, resourceResult, resourceResultList, result, value;
-    
-    for (nI = 0, nK = nameList.length; nI < nK; nI++) {
-        sName = nameList[nI];
-        out.push("\n\n", nI + 1, ". ", sName);
-        
-        nameResult = resultMap[sName];
-        for (sResourceName in nameResult) {
-            out.push("\n\n", sIndent, sResourceName);
-            resourceResult = nameResult[sResourceName];
-            resourceResultList = resourceResult.result;
-            nQ = resourceResultList.length;
-            if (nQ) {
-                out.push(" - ", nQ);
-                for (nN = 0; nN < nQ; nN++) {
-                    result = resourceResultList[nN];
-                    nN &&
-                        out.push("\n");
-                    
-                    out.push("\n", sIndentTwice, result.name);
-                    result.description &&
-                        out.push(" - ", result.description);
-                    (value = result.url) &&
-                        out.push("\n", sIndentTwice, "url: ", value);
-                    (value = result.keywords) && value.length &&
-                        out.push("\n", sIndentTwice, "keywords: ", value.join(" "));
-                    
-                    if (bVerbose) {
-                        result.version &&
-                            out.push("\n", sIndentTwice, "version: ", result.version);
-                        if (value = result.repository) {
-                            if (typeof value === "object") {
-                                value = value.url;
-                            }
-                            value &&
-                                out.push("\n", sIndentTwice, "repository: ", value);
-                        }
-                        result.language &&
-                            out.push("\n", sIndentTwice, "language: ", result.language);
-                        (value = result.license) &&
-                            out.push("\n", sIndentTwice, "license: ", licenseToString(value));
-                        result.stars &&
-                            out.push("\n", sIndentTwice, "stars: ", result.stars);
-                    }
-                }
-            }
-            else {
-                out.push("\n", sIndentTwice, sName, " is not found.");
-                resourceResult.error &&
-                    out.push("\n", sIndentTwice, "Error of checking '", sName, "' at '", sResourceName, "': ", resourceResult.error);
-            }
-        }
-        
+    var sFormat = args.format,
+        result = sFormat ? formatUnit.exists(sFormat) : false;
+    if (result) {
+        result = formatUnit.format(resultMap, 
+                                    sFormat,
+                                    {
+                                        queryList: nameList,
+                                        verbose: args.verbose
+                                    });
     }
-    console.log(out.join(""));
+    else {
+        result = JSON.stringify(resultMap, null, 4);
+    }
+    console.log("\nResults:\n\n" + result);
 }
 
 

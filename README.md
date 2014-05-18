@@ -54,6 +54,7 @@ Options:
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
    -m, --limit            Limit of quantity of results per resource
+   -f, --format           Result format; can be: text, json, raw  [text]
    -V, --verbose          Enable verbose output
    -v, --version          Show program version
    --github-lang          Search GitHub repositories that are written in the specified language
@@ -76,6 +77,17 @@ Available resources (10):
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
     * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
 ```
+
+To make a search you can use `sees` command (`sees` equals to `seeq -s`).
+
+### Formats
+
+It is possible to specify format of search result:
+
+* `text` - result will be converted into plain text; default format
+* `json` - result will be converted into JSON
+* `raw` - result will be returned "as is" (raw JSON): in usual mode auxiliary data about resources will be deleted, 
+in verbose mode no processing will be applied
 
 ### Examples
 
@@ -266,42 +278,62 @@ Results:
 ```
 
 Search for `unicorn` at resources that have tag `library` and do not have tags `node` and `cdn`,
-and limit results per resource up to 5.
+limit results per resource up to 5, print the search result in JSON format.
 
 ```
-> seeq unicorn -s -m 5 --tag library,-node,-cdn --all-tag
+> sees unicorn -m 5 --tag library,-node,-cdn --all-tag -f json
 Checking GitHub, Bower, JSter, MicroJS...
 Progress: 4/4 (100%)
 
 Results:
 
-1. unicorn
-
-    GitHub - 5
-        unicorn - Unofficial Unicorn Mirror.
-        url: http://unicorn.bogomips.org/
-
-        capistrano-unicorn - Capistrano integration for Unicorn!
-        url: https://github.com/sosedoff/capistrano-unicorn
-
-        unicorn - Development repository for Opscode Cookbook unicorn
-        url: http://community.opscode.com/cookbooks/unicorn
-
-        lolcat - Rainbows and unicorns!
-        url: https://github.com/busyloop/lolcat
-
-        unicorn-worker-killer - Automatically restart Unicorn workers based on 1) max number of requests and 2) max memory
-        url: https://rubygems.org/gems/unicorn-worker-killer
-
-    Bower - 1
-        angular-unicorn-directive
-        url: http://github.com/btford/angular-unicorn-directive
-
-    JSter
-        unicorn is not found.
-
-    MicroJS
-        unicorn is not found.
+{
+    "unicorn": {
+        "GitHub": {
+            "result": [
+                {
+                    "name": "unicorn",
+                    "description": "Unofficial Unicorn Mirror.",
+                    "url": "http://unicorn.bogomips.org/"
+                },
+                {
+                    "name": "capistrano-unicorn",
+                    "description": "Capistrano integration for Unicorn!",
+                    "url": "https://github.com/sosedoff/capistrano-unicorn"
+                },
+                {
+                    "name": "gunicorn",
+                    "description": "gunicorn 'Green Unicorn' is a WSGI HTTP Server for UNIX, fast clients and sleepy applications.",
+                    "url": "http://www.gunicorn.org"
+                },
+                {
+                    "name": "unicorn-worker-killer",
+                    "description": "Automatically restart Unicorn workers based on 1) max number of requests and 2) max memory",
+                    "url": "https://rubygems.org/gems/unicorn-worker-killer"
+                },
+                {
+                    "name": "unicorn",
+                    "description": "Development repository for Opscode Cookbook unicorn",
+                    "url": "http://community.opscode.com/cookbooks/unicorn"
+                }
+            ]
+        },
+        "Bower": {
+            "result": [
+                {
+                    "name": "angular-unicorn-directive",
+                    "url": "http://github.com/btford/angular-unicorn-directive"
+                }
+            ]
+        },
+        "JSter": {
+            "result": []
+        },
+        "MicroJS": {
+            "result": []
+        }
+    }
+}
 ```
 
 ## API
@@ -344,6 +376,13 @@ seeq.searchName("cheerio",
                     search: true,
                     resourceTag: ["library", "-cdn"]
                 });
+...
+seeq.search(["adam", "eva"], 
+            function(resultMap) {
+                console.log( seeq.format.format(resultMap, 
+                                                "json", 
+                                                {queryList: ["eva", "adam"], verbose: true}) );
+            });
 ```
 
 See JSDoc-generated documentation in `doc` folder.

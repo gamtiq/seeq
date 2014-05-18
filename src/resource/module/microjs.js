@@ -47,7 +47,7 @@ exports.detect = function detect(name, callback, settings) {
             }
             if ( util.isStringMatch(bRealSearch ? [sName, library.description].concat(library.keywords) : sName, 
                                     name, settings) ) {
-                library.stars = library.ghwatchers;
+                library.stars = Number(library.ghwatchers);
                 delete library.ghwatchers;
                 result.push(library);
                 if (result.length === nLimit) {

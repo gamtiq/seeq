@@ -1,0 +1,257 @@
+1. numgen
+
+    GitHub - 5
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+
+        numgen
+        url: https://github.com/grancier/numgen
+
+        NumGen - A number generating mobile app to use for awarding prizes at user groups
+        url: https://github.com/scryan7371/NumGen
+
+        gamtiq-numgen
+        url: https://github.com/npmcomponent/gamtiq-numgen
+
+        C-Sharp-NumGen - Written in C#
+        url: https://github.com/CirnoTheGenius/C-Sharp-NumGen
+
+    NPM - 1
+        numgen - Creates objects that generate number sequences
+        url: https://npmjs.org/package/numgen
+        keywords: number sequence generator
+
+    Component - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Bower - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Jam - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    Grunt
+        numgen is not found.
+
+    JSter - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: Fibonacci generator number progression sequence
+
+    MicroJS - 1
+        numgen - Creates objects that generate number sequences.
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator progression Fibonacci
+
+    CDNJS
+        numgen is not found.
+
+    jsDelivr
+        numgen is not found.
+
+2. three
+
+    GitHub - 5
+        three.js - JavaScript 3D library.
+        url: http://threejs.org/
+
+        three20 - Three20 is an Objective-C library for iPhone developers
+        url: https://github.com/facebook/three20
+
+        Meny - A three dimensional and space effecient menu
+        url: http://lab.hakim.se/meny/
+
+        three.dart - Dart port of three.js
+        url: http://threedart.github.com/three.dart/
+
+        ThreeNodes.js - vvvv "clone" in javascript/webgl
+        url: http://idflood.github.com/ThreeNodes.js/ 
+
+    NPM - 5
+        appway - The proserver is inspired by heroku a deployment mechanism and is designed for rubynas
+        url: https://npmjs.org/package/appway
+
+        ardrone-browser-3d - 3D display of the AR.Drone in a browser.
+        url: https://npmjs.org/package/ardrone-browser-3d
+        keywords: 3D AR.Drone ardrone-webflight browser diy drone drone nodecopter parrot plugin three.js webflight
+
+        argg - A poor man's test runner for tap, tape, or similar, that also can be used with istanbul. It's just three lines of code to require all globs or pathnames provided as command line arguments.
+        url: https://npmjs.org/package/argg
+        keywords: tap tape istanbul
+
+        authstarter - Add mongodb based authentication to an express web app with three lines of code
+        url: https://npmjs.org/package/authstarter
+
+        bowser-cli - A command line interface to create bowser-engine based games with ease.
+        url: https://npmjs.org/package/bowser-cli
+        keywords: game webgl pixel three engine 3d 2d
+
+    Component - 4
+        three - Three.js component
+        url: https://github.com/cvdlab/three
+        keywords: webgl three.js 3d
+
+        three-stats - Three.js stats component
+        url: https://github.com/cvdlab/three-stats
+        keywords: three.js stats
+
+        three-trackball - Three.js trackball component
+        url: https://github.com/cvdlab/three-trackball
+        keywords: three.js trackball camera
+
+        three-detector - Three.js detector component
+        url: https://github.com/cvdlab/three-detector
+        keywords: three.js detector
+
+    Bower - 5
+        threejs - JavaScript 3D library
+        url: http://threejs.org/
+        keywords: three threejs three.js 3D webgl
+
+        threejs-examples
+        url: http://github.com/bodylabs/threejs-examples
+
+        threejs-build
+        url: http://github.com/bodylabs/threejs-build
+
+        threejs-stats - JavaScript Performance Monitor
+        url: https://github.com/mrdoob/stats.js
+        keywords: three.js webgl
+
+        three.js - JavaScript 3D library
+        url: http://threejs.org/
+        keywords: threejs 3d webgl
+
+    Jam - 2
+        anythingslider - Just what the world needs, another jQuery slider. YAWN. I know, check this one out though, it's got lots of cool features.
+
+Here on CSS-Tricks, I've created a number of different sliders. Three, in fact. A "featured content" slider, a "start/stop slider", and "moving boxes". Each of them had some cool interesting feature that I needed to build at the time. All were well-received, but as is the case with these things, people want them to do X, Y, and Z in addition to what they already did.
+
+This new AnythingSlider is an attempt at bringing together the functionality of all of those previous sliders and adding new features. In other words, to create a really "full featured" slider that could be widely useful. This is the first time (on CSS-Tricks) that one of these sliders is an actual plugin as well, which should make implementing it and customizing it much easier.
+        url: http://css-tricks.com/3412-anythingslider-jquery-plugin/
+        keywords: customizable effects slider video
+
+        three - JavaScript 3D library
+        url: http://threejs.org
+
+    Grunt - 5
+        glsl-threejs - A Grunt taks for wrapping GLSL Shader code in Javascript packages, ready to be used in Three.js
+        url: https://npmjs.org/package/grunt-glsl-threejs
+
+        run - Invite external commands into your grunt process with three tasks `run`, `wait` and `stop`.
+        url: https://npmjs.org/package/grunt-run
+
+        three-obj - [WIP] Grunt tasks for Three OBJ
+        url: https://npmjs.org/package/grunt-three-obj
+
+        threevot-compiler - Grunt Compiler for 3VOT Coffescript Apps
+        url: https://npmjs.org/package/grunt-threevot-compiler
+
+        threevot-tester - Run tests for 3VOT components and apps
+        url: https://npmjs.org/package/grunt-threevot-tester
+
+    JSter - 5
+        three.js - JavaScript 3D library
+
+The aim of the project is to create a lightweight 3D library with a very low level of complexity - in other words, for dummies. The library provides <canvas>, <svg> and WebGL renderers.
+        url: http://threejs.org/
+
+        cannon.js - Lightweight 3D physics for the web
+
+Inspired by three.js and ammo.js, and driven by the fact that the web lacks a physics engine, here comes cannon.js.
+        url: http://schteppe.github.com/cannon.js
+        keywords: 3d
+
+        YUI Touch Events and Abstractions - The event-touch module extends the whitelist of DOM events to include the native touch and gesture events and adds relevant information to event facades.
+
+The event-move module adds a set of abstract events that adapt to the client environment to handle either touch or mouse input.
+
+The event-flick module adds a "flick" event on top of the gesture abstraction layer to capture a user flicking an element with mouse or finger.
+
+The event-gestures module is a rollup of these three, but will potentially roll in more gesture based events in the future.
+        url: http://yuilibrary.com/yui/docs/event/touch.html
+        keywords: yui
+
+        node-png - This is a node.js module, writen in C++, that uses libpng to produce a PNG
+image (in memory) from RGB or RGBA buffers.
+
+The module exports three objects: `Png`, `FixedPngStack` and `DynamicPngStack`.
+
+The `Png` object is for creating PNG images from an RGB or RGBA buffer.
+The `FixedPngStack` is for joining a number of PNGs together (stacking them
+together) on a transparent blackground.
+The `DynamicPngStack` is for joining a number of PNGs together in the most
+space efficient way (so that the canvas border matches the leftmost upper corner
+of some PNG and the rightmost bottom corner of some PNG).
+        url: http://www.catonmat.net
+
+        JUTE - Javascript Unit Testing Environment (JUTE)
+JUTE is a standalone HTTP server that serves your test files to a JUTE backend for testing. Three of the four backends (Selenium, Capture, and PhantomJS) serve files to a browser, the third backend (V8) will run your tests directly in V8. JUTE then collects and stores test output in JUnit XML format and code coverage information in 'lcov' format and generates pretty HTML to view your coverage results.
+        url: https://github.com/zzo/JUTE
+        keywords: unit
+
+    MicroJS - 1
+        parseTime.js - convert strings like "five days ago" to an integer (with time in milliseconds) in three languages (en, de, pt)
+        url: https://github.com/SimonWaldherr/parseTime.js
+        keywords: time date dates times language parse strings
+
+    CDNJS - 2
+        alloy-ui - Alloy is a UI metaframework that provides a consistent and simple API for building web applications across allthree levels of the browser: structure, style and behavior.
+        url: https://github.com/liferay/alloy-ui
+
+        three.js - three.js is a lightweight 3D library with a very low level of complexity. The library provides <canvas>, <svg> and WebGL renderers.
+        url: http://threejs.org/
+
+    jsDelivr - 5
+        alloyui - Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.
+        url: http://alloyui.com/
+
+        eve.js - A <3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.
+        url: http://evejs.com/
+
+        jquery.reel - Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.
+        url: http://www.reel360.org/
+
+        mathbox.js - MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.
+        url: https://github.com/unconed/MathBox.js
+
+        meny - A three dimensional and space effecient menu
+        url: http://lab.hakim.se/meny/
+
+3. somestrangename
+
+    GitHub
+        somestrangename is not found.
+
+    NPM
+        somestrangename is not found.
+
+    Component
+        somestrangename is not found.
+
+    Bower
+        somestrangename is not found.
+
+    Jam
+        somestrangename is not found.
+
+    Grunt
+        somestrangename is not found.
+
+    JSter
+        somestrangename is not found.
+
+    MicroJS
+        somestrangename is not found.
+
+    CDNJS
+        somestrangename is not found.
+
+    jsDelivr
+        somestrangename is not found.

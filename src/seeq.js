@@ -234,3 +234,7 @@ exports.searchName = searchName;
  * Reference to {@link module:resource resource} module.
  */
 exports.resource = resourceLib;
+/**
+ * Reference to {@link module:format format} module.
+ */
+exports.format = require("./format");

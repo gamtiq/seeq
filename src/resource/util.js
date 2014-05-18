@@ -1,7 +1,7 @@
 /**
  * Helper functions.
  * 
- * @module util
+ * @module resource/util
  */
 
 var he = require("he");

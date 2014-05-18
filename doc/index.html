@@ -49,6 +49,14 @@
 						</li>
 						
 						<li>
+							<a href="module-format.html">format</a>
+						</li>
+						
+						<li>
+							<a href="util.html">format/util</a>
+						</li>
+						
+						<li>
 							<a href="module-github.html">github</a>
 						</li>
 						
@@ -65,6 +73,10 @@
 						</li>
 						
 						<li>
+							<a href="module-json.html">json</a>
+						</li>
+						
+						<li>
 							<a href="module-jster.html">jster</a>
 						</li>
 						
@@ -77,7 +89,15 @@
 						</li>
 						
 						<li>
+							<a href="module-raw.html">raw</a>
+						</li>
+						
+						<li>
 							<a href="module-resource.html">resource</a>
+						</li>
+						
+						<li>
+							<a href="util_.html">resource/util</a>
 						</li>
 						
 						<li>
@@ -85,7 +105,7 @@
 						</li>
 						
 						<li>
-							<a href="module-util.html">util</a>
+							<a href="module-text.html">text</a>
 						</li>
 						
 
@@ -173,6 +193,7 @@ Options:
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
    -m, --limit            Limit of quantity of results per resource
+   -f, --format           Result format; can be: text, json, raw  [text]
    -V, --verbose          Enable verbose output
    -v, --version          Show program version
    --github-lang          Search GitHub repositories that are written in the specified language
@@ -194,6 +215,15 @@ Available resources (10):
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
     * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.</code></pre>
+<p>To make a search you can use <code>sees</code> command (<code>sees</code> equals to <code>seeq -s</code>).</p>
+<h3>Formats</h3>
+<p>It is possible to specify format of search result:</p>
+<ul>
+<li><code>text</code> - result will be converted into plain text; default format</li>
+<li><code>json</code> - result will be converted into JSON</li>
+<li><code>raw</code> - result will be returned &quot;as is&quot; (raw JSON): in usual mode auxiliary data about resources will be deleted, 
+in verbose mode no processing will be applied</li>
+</ul>
 <h3>Examples</h3>
 <p>Check <code>numgen</code>, <code>three</code> and <code>some-strange-name</code> at resources having <code>package</code> tag and limit results per resource up to 5.</p>
 <pre><code>&gt; seeq numgen three some-strange-name --tag package --limit 5
@@ -374,40 +404,60 @@ Results:
         version: 0.1.0
         repository: git://github.com/naoina/flight-mocha.git</code></pre>
 <p>Search for <code>unicorn</code> at resources that have tag <code>library</code> and do not have tags <code>node</code> and <code>cdn</code>,
-and limit results per resource up to 5.</p>
-<pre><code>&gt; seeq unicorn -s -m 5 --tag library,-node,-cdn --all-tag
+limit results per resource up to 5, print the search result in JSON format.</p>
+<pre><code>&gt; sees unicorn -m 5 --tag library,-node,-cdn --all-tag -f json
 Checking GitHub, Bower, JSter, MicroJS...
 Progress: 4/4 (100%)
 
 Results:
 
-1. unicorn
-
-    GitHub - 5
-        unicorn - Unofficial Unicorn Mirror.
-        url: http://unicorn.bogomips.org/
-
-        capistrano-unicorn - Capistrano integration for Unicorn!
-        url: https://github.com/sosedoff/capistrano-unicorn
-
-        unicorn - Development repository for Opscode Cookbook unicorn
-        url: http://community.opscode.com/cookbooks/unicorn
-
-        lolcat - Rainbows and unicorns!
-        url: https://github.com/busyloop/lolcat
-
-        unicorn-worker-killer - Automatically restart Unicorn workers based on 1) max number of requests and 2) max memory
-        url: https://rubygems.org/gems/unicorn-worker-killer
-
-    Bower - 1
-        angular-unicorn-directive
-        url: http://github.com/btford/angular-unicorn-directive
-
-    JSter
-        unicorn is not found.
-
-    MicroJS
-        unicorn is not found.</code></pre>
+{
+    &quot;unicorn&quot;: {
+        &quot;GitHub&quot;: {
+            &quot;result&quot;: [
+                {
+                    &quot;name&quot;: &quot;unicorn&quot;,
+                    &quot;description&quot;: &quot;Unofficial Unicorn Mirror.&quot;,
+                    &quot;url&quot;: &quot;http://unicorn.bogomips.org/&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;capistrano-unicorn&quot;,
+                    &quot;description&quot;: &quot;Capistrano integration for Unicorn!&quot;,
+                    &quot;url&quot;: &quot;https://github.com/sosedoff/capistrano-unicorn&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;gunicorn&quot;,
+                    &quot;description&quot;: &quot;gunicorn 'Green Unicorn' is a WSGI HTTP Server for UNIX, fast clients and sleepy applications.&quot;,
+                    &quot;url&quot;: &quot;http://www.gunicorn.org&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;unicorn-worker-killer&quot;,
+                    &quot;description&quot;: &quot;Automatically restart Unicorn workers based on 1) max number of requests and 2) max memory&quot;,
+                    &quot;url&quot;: &quot;https://rubygems.org/gems/unicorn-worker-killer&quot;
+                },
+                {
+                    &quot;name&quot;: &quot;unicorn&quot;,
+                    &quot;description&quot;: &quot;Development repository for Opscode Cookbook unicorn&quot;,
+                    &quot;url&quot;: &quot;http://community.opscode.com/cookbooks/unicorn&quot;
+                }
+            ]
+        },
+        &quot;Bower&quot;: {
+            &quot;result&quot;: [
+                {
+                    &quot;name&quot;: &quot;angular-unicorn-directive&quot;,
+                    &quot;url&quot;: &quot;http://github.com/btford/angular-unicorn-directive&quot;
+                }
+            ]
+        },
+        &quot;JSter&quot;: {
+            &quot;result&quot;: []
+        },
+        &quot;MicroJS&quot;: {
+            &quot;result&quot;: []
+        }
+    }
+}</code></pre>
 <h2>API</h2>
 <p>In your program you can use API provided by seeq in the following way:</p>
 <pre><code class="lang-javascript">var seeq = require(&quot;seeq&quot;);
@@ -444,7 +494,14 @@ seeq.searchName(&quot;cheerio&quot;,
                 {
                     search: true,
                     resourceTag: [&quot;library&quot;, &quot;-cdn&quot;]
-                });</code></pre>
+                });
+...
+seeq.search([&quot;adam&quot;, &quot;eva&quot;], 
+            function(resultMap) {
+                console.log( seeq.format.format(resultMap, 
+                                                &quot;json&quot;, 
+                                                {queryList: [&quot;eva&quot;, &quot;adam&quot;], verbose: true}) );
+            });</code></pre>
 <p>See JSDoc-generated documentation in <code>doc</code> folder.</p>
 <h2>Contributing</h2>
 <p>In lieu of a formal styleguide, take care to maintain the existing coding style.
@@ -473,7 +530,7 @@ Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Sun Apr 27 2014 00:00:36 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sun May 18 2014 22:50:20 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

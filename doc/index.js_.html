@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/index.js</title>
+	<title>seeq Source: format/index.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -49,6 +49,14 @@
 						</li>
 						
 						<li>
+							<a href="module-format.html">format</a>
+						</li>
+						
+						<li>
+							<a href="util.html">format/util</a>
+						</li>
+						
+						<li>
 							<a href="module-github.html">github</a>
 						</li>
 						
@@ -65,6 +73,10 @@
 						</li>
 						
 						<li>
+							<a href="module-json.html">json</a>
+						</li>
+						
+						<li>
 							<a href="module-jster.html">jster</a>
 						</li>
 						
@@ -77,7 +89,15 @@
 						</li>
 						
 						<li>
+							<a href="module-raw.html">raw</a>
+						</li>
+						
+						<li>
 							<a href="module-resource.html">resource</a>
+						</li>
+						
+						<li>
+							<a href="util_.html">resource/util</a>
 						</li>
 						
 						<li>
@@ -85,7 +105,7 @@
 						</li>
 						
 						<li>
-							<a href="module-util.html">util</a>
+							<a href="module-text.html">text</a>
 						</li>
 						
 
@@ -105,427 +125,177 @@
 					
 
 
-		<h1 class="page-title">Source: resource/index.js</h1>
+		<h1 class="page-title">Source: format/index.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * API to work with resources.
+ * API to work with formatters that can be used to format result of {@link module:seeq.search search}.
+ * &lt;br>
+ * Each formatter is a function that should return string representing result of search.
+ * The following parameters are passed to the format function:
+   &lt;ul>
+   &lt;li>object that is result of {@link module:seeq.search search}
+   &lt;li>object that represents format settings; the following settings can be used (name - type - description):
+       &lt;ul>
+       &lt;li>&lt;code>queryList&lt;/code> - &lt;code>Array&lt;/code> - list of names/strings that were checked/searched
+       &lt;li>&lt;code>verbose&lt;/code> - &lt;code>boolean&lt;/code> - whether basic or detailed result should be returned
+       &lt;/ul>
+   &lt;/ul>
  * 
- * @module resource
+ * @module format
  */
 
 
 "use strict";
 
-var sourceList = [],
-    resourceList = [],
-    resourceMap = {};
-
-
-function getResourceName(resource) {
-    return resource.name;
-}
-
-function toLowerCase(value) {
-    return value.toLowerCase();
-}
+var formatMap = {};
 
 
 /**
- * Check whether there is a resource with given name.
+ * Format result of search by using specified formatter.
  * 
+ * @param {Object} data
+ *      Result of {@link module:seeq.search search}.
  * @param {String} name
- *      A name that should be checked (case-insensitive).
- * @return {Boolean}
- *      &lt;code>true&lt;/code> if there is a resource with the given name,
- *      &lt;code>false&lt;/code> if no one of available resources has the specified name.
- * @alias module:resource.isAvailable
- */
-function isAvailable(name) {
-    return name.toLowerCase() in resourceMap;
-}
-
-/**
- * Return identifier of resource with given name.
- * 
- * @param {String} name
- *      A resource name (case-insensitive).
- * @return {String | null}
- *      Identifier of resource that has the given name
- *      or &lt;code>null&lt;/code> if no one of available resources has the specified name.
- * @alias module:resource.getIdByName
- */
-function getIdByName(name) {
-    /*jshint laxbreak:true*/
-    var sId = name.toLowerCase();
-    return sId in resourceMap
-            ? sId
-            : null;
-}
-
-/**
- * Check resource on presence or absence of specified tags.
- * 
- * @param {Object} resource
- *      Represents data about a resource that should be checked.
- * @param {Array} tagList
- *      List of tags (in lower case) that should be checked on presence or absence in resource tags.
- *      Tag in form "name" (without quotes; a positive tag) means that resource should be checked on presence of "name" tag.
- *      Tag in form "-name" (without quotes; a negative tag) means that resource should be checked on absence of "name" tag.
- * @param {Boolean} [checkAllTags]
- *      Whether all tags specified in &lt;code>tagList&lt;/code> should be checked on presence/absence in resource tags.
- *      When parameter has &lt;code>true&lt;/code> value it means that resource should have all positive tags 
- *      and should not have any negative tag.
- *      When parameter has &lt;code>false&lt;/code> value (by default) it means that resource should have one of positive tags 
- *      and should not have one of negative tags.
- * @return {Boolean}
- *      &lt;code>true&lt;/code> if resource tags satisfy to specified tags (depending on &lt;code>checkAllTags&lt;/code> value),
- *      &lt;code>false&lt;/code> otherwise.
- * @alias module:resource.checkResourceTags
- */
-function checkResourceTags(resource, tagList, checkAllTags) {
-    /*jshint laxbreak:true*/
-    var resTags = resource.tag,
-        nL = tagList.length,
-        nAbsent = 0,
-        nAbsentMatch = 0,
-        nPresent = 0,
-        nPresentMatch = 0,
-        nI, sTag;
-    
-    for (nI = 0; nI &lt; nL; nI++) {
-        sTag = tagList[nI];
-        if (sTag.charAt(0) === "-") {
-            nAbsent++;
-            sTag = sTag.substring(1);
-            if (resTags.indexOf(sTag) === -1) {
-                nAbsentMatch++;
-            }
-        }
-        else {
-            nPresent++;
-            if (resTags.indexOf(sTag) > -1) {
-                nPresentMatch++;
-            }
-        }
-        if (! checkAllTags && nPresentMatch && nAbsentMatch) {
-            return true;
-        }
-    }
-    return checkAllTags
-            ? (nPresent === nPresentMatch && nAbsent === nAbsentMatch)
-            : Boolean((! nPresent || nPresentMatch) && (! nAbsent || nAbsentMatch));
-}
-
-/**
- * Add data about a resource into the list of available resources.
- * 
- * @param {Object} resource
- *      Represents data about a resource that should be added.
- *      Object should contain the following fields (name - type - description):
-        &lt;ul>
-        &lt;li>&lt;code>name&lt;/code> - &lt;code>String&lt;/code> - resource name (required)
-        &lt;li>&lt;code>description&lt;/code> - &lt;code>String&lt;/code> - resource description
-        &lt;li>&lt;code>url&lt;/code> - &lt;code>String&lt;/code> - URL of resource's site
-        &lt;li>&lt;code>tag&lt;/code> - &lt;code>Array of String&lt;/code> - tags/keywords of resource
-        &lt;li>&lt;code>note&lt;/code> - &lt;code>String&lt;/code> - additional information about resource usage
-        &lt;li>&lt;code>module&lt;/code> - &lt;code>String&lt;/code> - path to the module that should be used to work with resource;
-                the module should implement necessary API 
-        &lt;li>&lt;code>api&lt;/code> - &lt;code>Object&lt;/code> - object that implements necessary API to work with resource
-        &lt;/ul>
-        The only mandatory field is &lt;code>name&lt;/code>. Also &lt;code>module&lt;/code> or &lt;code>api&lt;/code> field should be specified.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @throws Will throw an error if resource name is not specified.
- * @throws Will throw an error if resource API object and path to resource module are not specified.
- * @throws Will throw an error if there is a resource with the same name.
- * @alias module:resource.add
- * @see {@link module:resource.isAvailable isAvailable}
- */
-function add(resource) {
-    /*jshint newcap:false*/
-    var sName = resource.name,
-        sId;
-    if (! sName) {
-        throw Error("Unknown name: resource name is not specified");
-    }
-    if ((! resource.api || typeof resource.api !== "object") && (! resource.module || typeof resource.module !== "string")) {
-        throw Error("Unknown API: resource API object or path to resource module must be specified");
-    }
-    if (isAvailable(sName)) {
-        throw Error("Duplicate name: there is a resource with the same name");
-    }
-    
-    sId = resource.id = sName.toLowerCase();
-    if (! resource.tag) {
-        resource.tag = [];
-    }
-    resourceList.push(resource);
-    resourceMap[sId] = resource;
-    return exports;
-}
-
-/**
- * Remove resource with given name from list of resources.
- * 
- * @param {String} name
- *      Name of resource that should be removed (case-insensitive).
- * @return {Object | null}
- *      Object that represents removed resource
- *      or &lt;code>null&lt;/code> if no one of resources from list has the specified name.
- * @alias module:resource.remove
- */
-function remove(name) {
-    var sId = name.toLowerCase(),
-        nI, nL, resource;
-    if (sId in resourceMap) {
-        for (nI = 0, nL = resourceList.length; nI &lt; nL; nI++) {
-            if ((resource = resourceList[nI]).id === sId) {
-                resourceList.splice(nI, 1);
-                delete resourceMap[sId];
-                return resource;
-            }
-        }
-    }
-    return null;
-}
-
-/**
- * Clear list of resources.
- * 
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.add add}
- * @alias module:resource.removeAll
- */
-function removeAll() {
-    // Delete current resources
-    resourceList.length = 0;
-    resourceMap = {};
-    return exports;
-}
-
-
-/**
- * Return list of specified resources.
- * If no selection criteria is set then returns list of all available resources.
- * 
+ *      Name of formatter that should be used.
  * @param {Object} [settings]
- *      Specifies which data items should be returned.
- *      The following settings are supported (name - type - description):
+ *      Format settings. Default values for settings are the following:
         &lt;ul>
-        &lt;li>&lt;code>includeApi&lt;/code> - &lt;code>Boolean&lt;/code> - whether API object for resource should be included into data item
-                under &lt;code>api&lt;/code> field; &lt;code>false&lt;/code> by default
-        &lt;li>&lt;code>selectName&lt;/code> - &lt;code>Array | String&lt;/code> - specifies filter for available resources by name;
-                list of names of resources or name of resource (case-insensitive) that should be included into result
-        &lt;li>&lt;code>selectTag&lt;/code> - &lt;code>Array | String&lt;/code> - specifies filter for available resources by tag;
-                list of tags or tag (case-insensitive) that should be used to select resources into result;
-                resources that satisfy to specified tags (depending on &lt;code>checkAllTags&lt;/code> setting)
-                will be included in result; see {@link module:resource.checkResourceTags checkResourceTags} for details
-        &lt;li>&lt;code>checkAllTags&lt;/code> - &lt;code>Boolean&lt;/code> - whether all tags specified in &lt;code>selectTag&lt;/code>
-                 should be checked; see {@link module:resource.checkResourceTags checkResourceTags} for details
+        &lt;li>&lt;code>queryList&lt;/code> - extracted from &lt;code>data&lt;/code> parameter
+        &lt;li>&lt;code>verbose&lt;/code> - &lt;code>false&lt;/code>
         &lt;/ul>
-        Filter by name (&lt;code>selectName&lt;/code>) and filter by tag (&lt;code>selectTag&lt;/code>)
-        can be used separately or together.
-        If no filter is specified, all resources will be included into result.
- * @return {Array}
- *      List that contains objects presenting data about selected resources.
- * @alias module:resource.getList
- * @see {@link module:resource.checkResourceTags checkResourceTags}
+ * @return {String}
+ *      Result returned by specified formatter or empty string if no one of formatters has the specified name.
+ * @alias module:format.format
  */
-function getList(settings) {
-    /*jshint boss:true, laxbreak:true*/
-    var resList = resourceList,
-        result = [],
-        bCheckAllTags, bIncludeApi, nI, nL, resource, selectedIds, selectedTags;
-    // Prepare settings
+function format(data, name, settings) {
+    var fmt = formatMap[name];
     if (! settings) {
         settings = {};
     }
-    if (selectedIds = settings.selectName) {
-        if (typeof selectedIds === "string") {
-            selectedIds = [ selectedIds.toLowerCase() ];
-        }
-        else {
-            selectedIds = selectedIds.map(toLowerCase);
-        }
+    if (! settings.queryList) {
+        settings.queryList = Object.keys(data);
     }
-    if (selectedTags = settings.selectTag) {
-        if (typeof selectedTags === "string") {
-            selectedTags = [ selectedTags.toLowerCase() ];
-        }
-        else {
-            selectedTags = selectedTags.map(toLowerCase);
-        }
+    else if (! Array.isArray(settings.queryList)) {
+        settings.queryList = [settings.queryList];
     }
-    bCheckAllTags = settings.checkAllTags;
-    bIncludeApi = settings.includeApi;
-    // Form result list
-    for (nI = 0, nL = resList.length; nI &lt; nL; nI++) {
-        resource = resList[nI];
-        if ((! selectedIds && ! selectedTags) 
-                || (selectedIds && selectedIds.indexOf(resource.id) > -1)
-                || (selectedTags && checkResourceTags(resource, selectedTags, bCheckAllTags))) {
-            if (bIncludeApi && ! resource.api) {
-                resource.api = require(resource.module);
-            }
-            result.push(resource);
-        }
+    if (! ("verbose" in settings)) {
+        settings.verbose = false;
+    }
+    return fmt ? fmt(data, settings) : "";
+}
+
+/**
+ * Return formatter with specified name.
+ * 
+ * @param {String} name
+ *      Name of formatter that should be returned.
+ * @return {Function | null}
+ *      Function that represents formatter
+ *      or &lt;code>null&lt;/code> if no one of formatters has the specified name.
+ * @alias module:format.get
+ */
+function get(name) {
+    return formatMap[name] || null;
+}
+
+/**
+ * Check whether formatter with specified name exists.
+ * 
+ * @param {String} name
+ *      Name that should be checked.
+ * @return {Boolean}
+ *      &lt;code>true&lt;/code> if there is a formatter with the specified name,
+ *      &lt;code>false&lt;/code> if no one of formatters has the specified name.
+ * @alias module:format.exists
+ * @see {@link module:format.get get}
+ */
+function exists(name) {
+    return get(name) !== null;
+}
+
+/**
+ * Return object that represents all available formatters.
+ * 
+ * @return {Object}
+ *      Object that represents all available formatters.
+ *      Fields are names of formatters, values are corresponding formatters.
+ * @alias module:format.getMap
+ */
+function getMap() {
+    return formatMap;
+}
+
+/**
+ * Return list containing names of all available formatters.
+ * 
+ * @return {Array}
+ *      List containing names of all available formatters.
+ * @alias module:format.getNameList
+ */
+function getNameList() {
+    var result = [],
+        sName;
+    for (sName in formatMap) {
+        result.push(sName);
     }
     return result;
 }
 
 /**
- * Change list of available resources.
- * &lt;br>
- * In essence this method [removes all]{@link module:resource.removeAll} available resources
- * and [adds]{@link module:resource.add} data about each given resource into the list of available resources.
+ * Set formatter with specified name.
  * 
- * @param {Array | Object} list
- *      List that contains objects presenting data about resources,
- *      or object with data about an resource.
+ * @param {String} name
+ *      Name of formatter.
+ * @param {Function | null} format
+ *      Function that represents formatter.
  * @return {Object}
  *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.add add}
- * @see {@link module:resource.removeAll removeAll}
- * @alias module:resource.setList
+ * @throws Will throw an error if format is not a function.
+ * @alias module:format.set
  */
-function setList(list) {
-    // Delete current resources
-    removeAll();
-    // Form list of available resources
-    (Array.isArray(list) ? list : [list]).forEach(add);
+function set(name, format) {
+    /*jshint newcap:false*/
+    if (typeof format !== "function") {
+        throw Error("Format should be a function");
+    }
+    formatMap[name] = format;
     return exports;
 }
 
 /**
- * Apply filter on list of currently available resources.
- * &lt;br>
- * After operation only resources conforming to filter will be available.
- * &lt;br>
- * In essence, this method is a wrapper for the following code:
- * &lt;br>
- * &lt;code>setList( getList(settings) )&lt;/code>
+ * Remove formatter with specified name.
  * 
- * @param {Object} [settings]
- *      Specifies which resources should be selected.
- *      The following settings can be used to select resources:
- *      &lt;code>selectName, selectTag, checkAllTags&lt;/code>.
- *      See {@link module:resource.getList getList} for details.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @alias module:resource.filterList
- * @see {@link module:resource.getList getList}
- * @see {@link module:resource.resetList resetList}
- * @see {@link module:resource.setList setList}
+ * @param {String} name
+ *      Name of formatter.
+ * @return {Function | null}
+ *      Function that represents formatter
+ *      or &lt;code>null&lt;/code> if no one of formatters has the specified name.
+ * @alias module:format.remove
  */
-function filterList(settings) {
-    return setList( getList(settings) );
-}
-/**
- * Return list that contains names of all available resources.
- * 
- * @return {Array}
- *      List that contains names of all available resources.
- * @alias module:resource.getAllNameList
- * @see {@link module:resource.getNameList getNameList}
- */
-function getAllNameList() {
-    return resourceList.map(getResourceName);
+function remove(name) {
+    var format = formatMap[name] || null;
+    if (format) {
+        delete formatMap[name];
+    }
+    return format;
 }
 
-/**
- * Return list that contains names of selected resources.
- * &lt;br>
- * If no selection criteria is set then returns list of names of all available resources.
- * 
- * @param {Object} [settings]
- *      Specifies selection criteria. The following settings can be used to select resources:
- *      &lt;code>selectName, selectTag, checkAllTags&lt;/code>.
- *      See {@link module:resource.getList getList} for details.
- * @return {Array}
- *      List that contains names of selected resources.
- * @alias module:resource.getNameList
- * @see {@link module:resource.getAllNameList getAllNameList}
- * @see {@link module:resource.getList getList}
- */
-function getNameList(settings) {
-    return getList(settings).map(getResourceName);
-}
-
-/**
- * Return object that represents specified resources.
- * If no selection criteria is set then returns object that contains data about all available resources.
- * 
- * @param {Object} [settings]
- *      Specifies which data items should be returned.
- *      See {@link module:resource.getList getList} for details.
- * @return {Object}
- *      Object that contains data about selected resources.
- *      Fields are resource keys, values are objects representing data about resources.
- * @alias module:resource.getMap
- * @see {@link module:resource.getList getList}
- */
-function getMap(settings) {
-    var result = {};
-    getList(settings).forEach(function(item) {
-        result[item.id] = item;
-    });
-    return result;
-}
-
-/**
- * Set list of resources to initial state containing data about all available resources.
- * 
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.setList setList}
- * @alias module:resource.resetList
- */
-function resetList() {
-    return setList(sourceList);
-}
-
-/**
- * Set initial list of all available resources.
- * &lt;br>
- * This list is used to [reset]{@link module:resource.resetList} to initial state.
- * 
- * @param {Array | Object} list
- *      List that contains objects presenting data about resources,
- *      or object with data about an resource.
- * @return {Object}
- *      Object that represents module &lt;code>exports&lt;/code>.
- * @see {@link module:resource.resetList resetList}
- * @see {@link module:resource.setList setList}
- * @alias module:resource.initList
- */
-function initList(list) {
-    sourceList = Array.isArray(list) ? list : [list];
-    return resetList();
-}
-
-
-// Initialize list of resources
-initList(require("./list.json"));
+// Set predefined formatters
+set("text", require("./text"));
+set("json", require("./json"));
+set("raw", require("./raw"));
 
 //Exports
 
-exports.isAvailable = isAvailable;
-exports.getIdByName = getIdByName;
-exports.getAllNameList = getAllNameList;
-exports.getNameList = getNameList;
-exports.checkResourceTags = checkResourceTags;
-exports.getList = getList;
-exports.setList = setList;
-exports.filterList = filterList;
+exports.format = format;
+exports.get = get;
+exports.exists = exists;
 exports.getMap = getMap;
-exports.add = add;
+exports.getNameList = getNameList;
+exports.set = set;
 exports.remove = remove;
-exports.removeAll = removeAll;
-exports.resetList = resetList;
-exports.initList = initList;
 </pre>
         </article>
     </section>
@@ -547,7 +317,7 @@ exports.initList = initList;
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Sun Apr 27 2014 00:00:36 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Sun May 18 2014 22:50:20 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
