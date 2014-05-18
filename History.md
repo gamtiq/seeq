@@ -1,3 +1,11 @@
+### 0.2.0 / 2014-05-18
+
+* Add ability to format search result
+* `cli.js` refactoring
+* Normalize data from different resources
+* Add `sees` command
+* Fix errors in modules for Grunt and MicroJS
+
 ### 0.1.5 / 2014-03-30
 
 * Add resource for [JSter](http://jster.net)
