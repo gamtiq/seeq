@@ -52,6 +52,21 @@ describe("formatter", function() {
     });
     
     
+    describe("format/markdown", function() {
+        var format = require("../../src/format/markdown");
+        
+        it("should return Markdown representing result of search", function() {
+            expect( normalizeLineEnd( format(searchResult, {queryList: queryList, verbose: false}) ) )
+                .equal( getFormatResult("markdown.md") );
+        });
+        
+        it("should return Markdown representing detailed result of search", function() {
+            expect( normalizeLineEnd( format(searchResult, {queryList: queryList, verbose: true}) ) )
+                .equal( getFormatResult("markdown_verbose.md") );
+        });
+    });
+    
+    
     describe("format/raw", function() {
         var format = require("../../src/format/raw");
         

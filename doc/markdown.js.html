@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/module/component.js</title>
+	<title>seeq Source: format/markdown.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -129,68 +129,102 @@
 					
 
 
-		<h1 class="page-title">Source: resource/module/component.js</h1>
+		<h1 class="page-title">Source: format/markdown.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * Module that provides means to check/search in {@link https://github.com/component/component Component}.
+ * Module that provides formatter to convert result of {@link module:seeq.search search} 
+ * into {@link http://daringfireball.net/projects/markdown/ Markdown}.
  * 
- * @module component
+ * @module markdown
  */
 
 
 "use strict";
 
-var component = require("component"),
-    util = require("../util");
+var sEol = require("os").EOL,
+    util = require("./util");
 
 /**
- * Check whether package with the specified name is existent, or make search for the specified string.
+ * Format/convert result of {@link module:seeq.search search} into {@link http://daringfireball.net/projects/markdown/ Markdown}.
  * 
- * Data about found packages will be passed into callback as array.
- * If no package is found, empty array will be passed into callback.
- * 
- * @param {String} name
- *      Name of the package to check or string to search for.
- * @param {Function} callback
- *      Function that should be called to process operation's result.
- * @param {Object} [settings]
- *      Operation settings.
- *      The following settings are supported (name - type - description):
-        &lt;ul>
-        &lt;li>&lt;code>caseSensitive&lt;/code> - &lt;code>Boolean&lt;/code> - Whether case-sensitive check/search should be used
-        &lt;li>&lt;code>partialMatch&lt;/code> - &lt;code>Integer&lt;/code> - Allow partial matching when checking name: 
-            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
-        &lt;li>&lt;code>search&lt;/code> - &lt;code>Boolean&lt;/code> - Whether search should be made instead of check
-        &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results
-        &lt;/ul>
+ * @param {Object} data
+ *      Result of {@link module:seeq.search search}.
+ * @param {Object} settings
+ *      Format settings. See {@link module:format format} for details.
+ * @return {String}
+ *      Markdown text representing result of search.
+ * @see {@link module:format format}
  */
-exports.detect = function(name, callback, settings) {
-    component.search(name, function(err, resultList) {
-        var bRealSearch, nI, nL, nLimit, pkg, result;
-        if (err) {
-            callback(err, []);
-        }
-        else {
-            result = [];
-            bRealSearch = util.isRealSearchSet(settings);
-            nLimit = util.getLimit(settings);
-            for (nI = 0, nL = resultList.length; nI &lt; nL; nI++) {
-                pkg = resultList[nI];
-                if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
-                    pkg.url = "https://github.com/" + pkg.repo;
-                    pkg.repository = pkg.url + ".git";
-                    delete pkg.repo;
-                    result.push(pkg);
-                    if (result.length === nLimit) {
-                        break;
+module.exports = function(data, settings) {
+    /*jshint boss:true, expr:true*/
+    var getLicenseList = util.getLicenseList,
+        getRepository = util.getRepository,
+        bVerbose = settings.verbose,
+        queryList = settings.queryList,
+        out = [],
+        sBr = "  " + sEol,
+        sIndent = "    ",
+        sIndentTwice = "        ",
+        nameResult, nI, nK, nN, nQ, sName, sResourceName, resourceResult, resourceResultList, result, value;
+    
+    for (nI = 0, nK = queryList.length; nI &lt; nK; nI++) {
+        sName = queryList[nI];
+        nameResult = data[sName];
+        if (nameResult && typeof nameResult === "object") {
+            nI &&
+                out.push(sEol);
+            out.push(nI + 1, ". ", sName);
+            for (sResourceName in nameResult) {
+                out.push(sEol, sIndent, "* ", sResourceName);
+                resourceResult = nameResult[sResourceName];
+                resourceResultList = resourceResult.result;
+                nQ = resourceResultList.length;
+                if (nQ) {
+                    out.push(" - ", nQ);
+                    for (nN = 0; nN &lt; nQ; nN++) {
+                        result = resourceResultList[nN];
+                        
+                        out.push(sEol, sIndentTwice, "+ ");
+                        if (value = result.url) {
+                            out.push("[", result.name, "](", value, ")");
+                        }
+                        else {
+                            out.push("**", result.name, "**");
+                        }
+                        if (value = result.description) {
+                            out.push(" - ", 
+                                        value.replace(/\r\n\r\n|\n\n/g, sBr)
+                                            .replace(/&lt;/g, "&lt;")
+                                            .replace(/>/g, "&gt;"));
+                        }
+                        (value = result.keywords) && value.length &&
+                            out.push(sBr, sIndentTwice, "  _keywords_: ", value.join(" "));
+                        
+                        if (bVerbose) {
+                            result.version &&
+                                out.push(sBr, sIndentTwice, "  _version_: ", result.version);
+                            (value = getRepository(result)) &&
+                                out.push(sBr, sIndentTwice, "  _repository_: [", value, "](", value, ")");
+                            result.language &&
+                                out.push(sBr, sIndentTwice, "  _language_: ", result.language);
+                            (value = getLicenseList(result)) && value.length &&
+                                out.push(sBr, sIndentTwice, "  _license_: ", value.join(", "));
+                            result.stars &&
+                                out.push(sBr, sIndentTwice, "  _stars_: ", result.stars);
+                        }
                     }
                 }
+                else {
+                    out.push(sBr, sIndentTwice, sName, " is not found.");
+                    resourceResult.error &&
+                        out.push(sBr, sIndentTwice, "Error of checking '", sName, "' at '", sResourceName, "': ", resourceResult.error);
+                }
             }
-            callback(null, result);
         }
-    });
+    }
+    return out.join("");
 };
 </pre>
         </article>

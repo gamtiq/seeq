@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Module: component</title>
+	<title>seeq Module: markdown</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -129,12 +129,12 @@
 					
 
 
-	<h1 class="page-title">Module: component</h1>
+	<h1 class="page-title">Module: markdown</h1>
 <section>
 
 <header>
     <h2>
-    component
+    markdown
     </h2>
     
 </header>
@@ -142,70 +142,9 @@
 <article>
     <div class="container-overview">
     
-
-    
         
-            <div class="description">Module that provides means to check/search in <a href="https://github.com/component/component">Component</a>.</div>
-        
-
-        
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="component.js.html">resource/module/component.js</a>, <a href="component.js.html#sunlight-1-line-1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
 <dt>
-    <h4 class="name" id="detect"><span class="type-signature">&lt;static> </span>detect<span class="signature">(name, callback, <span class="optional">settings</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="module:markdown"><span class="type-signature"></span>require("markdown")<span class="signature">(data, settings)</span><span class="type-signature"> &rarr; {String}</span></h4>
     
     
 </dt>
@@ -213,7 +152,7 @@
     
     
     <div class="description">
-        Check whether package with the specified name is existent, or make search for the specified string.Data about found packages will be passed into callback as array.If no package is found, empty array will be passed into callback.
+        Format/convert result of <a href="module-seeq.html#search">search</a> into <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.
     </div>
     
 
@@ -235,8 +174,6 @@
 		<th>Type</th>
 
 		
-		<th>Argument</th>
-		
 
 		
 
@@ -249,62 +186,23 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Name of the package to check or string to search for.</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Function that should be called to process operation's result.</td>
+            <td class="description last">Result of <a href="module-seeq.html#search">search</a>.</td>
         </tr>
 
 	
@@ -324,27 +222,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Operation settings.     The following settings are supported (name - type - description):
-        <ul>
-        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check/search should be used
-        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching when checking name: 
-            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
-        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
-        <li><code>limit</code> - <code>Integer</code> - Limit of quantity of results
-        </ul></td>
+            <td class="description last">Format settings. See <a href="module-format.html">format</a> for details.</td>
         </tr>
 
 	
@@ -376,12 +257,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="component.js.html">resource/module/component.js</a>, <a href="component.js.html#sunlight-1-line-34">line 34</a>
+        <a href="markdown.js.html">format/markdown.js</a>, <a href="markdown.js.html#sunlight-1-line-25">line 25</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-format.html">format</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -397,11 +285,91 @@
     
     
     
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Markdown text representing result of search.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">String</span>
+
+
+	</dd>
+</dl>
+
+
+        
     
     
 </dd>
 
-        </dl>
+    
+
+    
+        
+            <div class="description">Module that provides formatter to convert result of <a href="module-seeq.html#search">search</a> into <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.</div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="markdown.js.html">format/markdown.js</a>, <a href="markdown.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     

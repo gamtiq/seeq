@@ -154,6 +154,7 @@ function remove(name) {
 // Set predefined formatters
 set("text", require("./text"));
 set("json", require("./json"));
+set("markdown", require("./markdown"));
 set("raw", require("./raw"));
 
 //Exports

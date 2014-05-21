@@ -54,7 +54,7 @@ Options:
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
    -m, --limit            Limit of quantity of results per resource
-   -f, --format           Result format; can be: text, json, raw  [text]
+   -f, --format           Result format; can be: text, json, markdown, raw  [text]
    -V, --verbose          Enable verbose output
    -v, --version          Show program version
    --github-lang          Search GitHub repositories that are written in the specified language
@@ -86,6 +86,7 @@ It is possible to specify format of search result:
 
 * `text` - result will be converted into plain text; default format
 * `json` - result will be converted into JSON
+* `markdown` - result will be converted into [Markdown](http://daringfireball.net/projects/markdown/)
 * `raw` - result will be returned "as is" (raw JSON): in usual mode auxiliary data about resources will be deleted, 
 in verbose mode no processing will be applied
 
