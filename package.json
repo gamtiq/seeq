@@ -49,12 +49,19 @@
     "project",
     "library",
     "framework",
+    "plugin",
     "name",
     "npm",
     "component",
     "bower",
     "jam",
-    "github"
+    "github",
+    "grunt",
+    "gulp",
+    "jster",
+    "microjs",
+    "cdnjs",
+    "jsdelivr"
   ],
   "dependencies": {
     "npm": "~1.4.0",

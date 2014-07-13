@@ -39,8 +39,15 @@
         "name": "Grunt",
         "description": "Registry of Grunt plugins",
         "url": "http://gruntjs.com/plugins",
-        "tag": ["grunt", "js", "javascript", "plugin", "registry", "node"],
+        "tag": ["grunt", "js", "javascript", "plugin", "registry", "node", "task", "runner"],
         "module": "./module/grunt"
+    },
+    {
+        "name": "Gulp",
+        "description": "Registry of Gulp plugins",
+        "url": "http://gulpjs.com/plugins/",
+        "tag": ["gulp", "js", "javascript", "plugin", "registry", "node", "build"],
+        "module": "./module/gulp"
     },
     {
         "name": "JSter",

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/module/jster.js</title>
+	<title>seeq Source: resource/module/gulp.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -133,14 +133,14 @@
 					
 
 
-		<h1 class="page-title">Source: resource/module/jster.js</h1>
+		<h1 class="page-title">Source: resource/module/gulp.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * Module that provides means to check/search in {@link http://jster.net JSter}.
+ * Module that provides means to check/search in {@link http://gulpjs.com/plugins/ registry of Gulp plugins}.
  * 
- * @module jster
+ * @module gulp
  */
 
 
@@ -148,16 +148,24 @@
 
 var request = require("request"),
     util = require("../util"),
-    libraryList;
+    pluginList;
+
+function extractField(plugin, sField, sName) {
+    var list;
+    if ((sField in plugin) && Array.isArray(list = plugin[sField]) && list.length) {
+        plugin[sName || sField] = list[0];
+    }
+    return extractField;
+}
 
 /**
- * Check whether library with the specified name is existent, or make search for the specified string.
+ * Check whether plugin with the specified name is existent, or make search for the specified string.
  * 
- * Data about found libraries will be passed into callback as array.
- * If no library is found, empty array will be passed into callback.
+ * Data about found plugins will be passed into callback as array.
+ * If no plugin is found, empty array will be passed into callback.
  * 
  * @param {String} name
- *      Name of the library to check or string to search for.
+ *      Name of the plugin to check or string to search for.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
@@ -173,26 +181,16 @@ var request = require("request"),
  */
 exports.detect = function detect(name, callback, settings) {
     var result = [],
-        bRealSearch, nI, nL, nLimit, library, sName;
-    if (libraryList && libraryList.length) {
+        bRealSearch, nI, nL, nLimit, plugin, sName;
+    if (pluginList && pluginList.length) {
         bRealSearch = util.isRealSearchSet(settings);
         nLimit = util.getLimit(settings);
-        for (nI = 0, nL = libraryList.length; nI &lt; nL; nI++) {
-            library = libraryList[nI];
-            sName = library.name;
-            if ( util.isStringMatch(bRealSearch ? [sName, library.description] : sName, 
+        for (nI = 0, nL = pluginList.length; nI &lt; nL; nI++) {
+            plugin = pluginList[nI];
+            sName = plugin.name;
+            if ( util.isStringMatch(bRealSearch ? [sName, plugin.description || ""].concat(plugin.keywords) : sName, 
                                     name, settings) ) {
-                if (library.github) {
-                    library.repository = library.github + ".git";
-                }
-                if (! library.url) {
-                    library.url = library.homepage || library.github;
-                }
-                if (library.tags && library.tags.length) {
-                    library.keywords = library.tags;
-                    delete library.tags;
-                }
-                result.push(library);
+                result.push(plugin);
                 if (result.length === nLimit) {
                     break;
                 }
@@ -201,9 +199,26 @@ exports.detect = function detect(name, callback, settings) {
         callback(null, result);
     }
     else {
-        request("http://api.jster.net/v1/libraries", function(err, response, data) {
+        request("http://registry.gulpjs.com/_search?fields=author,description,homepage,keywords,license,name,repository,version&q=keywords:gulpplugin,gulpfriendly&from=0&size=100000", function(err, response, data) {
             if (! err && response.statusCode === 200) {
-                libraryList = JSON.parse(data);
+                pluginList = JSON.parse(data).hits.hits;
+                for (nI = 0, nL = pluginList.length; nI &lt; nL; nI++) {
+                    plugin = pluginList[nI].fields;
+                    extractField(plugin, "author")
+                                (plugin, "description")
+                                (plugin, "homepage", "url")
+                                (plugin, "license")
+                                (plugin, "name")
+                                (plugin, "repository")
+                                (plugin, "version");
+                    delete plugin.homepage;
+                    sName = plugin.name;
+                    plugin.fullname = sName;
+                    if (sName.indexOf("gulp-") === 0) {
+                        plugin.name = sName.substring(5);
+                    }
+                    pluginList[nI] = plugin;
+                }
                 detect(name, callback, settings);
             }
             else {

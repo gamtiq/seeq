@@ -19,6 +19,7 @@ The following resources are available:
 * [Bower](http://bower.io)
 * [Jam](http://jamjs.org)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
+* [Registry of Gulp plugins](http://gulpjs.com/plugins)
 * [JSter](http://jster.net)
 * [MicroJS](http://microjs.com)
 * [CDNJS](http://cdnjs.com)
@@ -64,7 +65,7 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources (10):
+Available resources (11):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
@@ -72,6 +73,7 @@ Available resources (10):
     * Bower (http://bower.io) - Bower package manager registry
     * Jam (http://jamjs.org) - Jam package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
+    * Gulp (http://gulpjs.com/plugins/) - Registry of Gulp plugins
     * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
