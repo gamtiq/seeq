@@ -1,3 +1,8 @@
+### 0.2.1 / 2014-07-15
+
+* Add resource for registry of [Gulp plugins](http://gulpjs.com/plugins)
+* Add formatter to convert result into Markdown
+
 ### 0.2.0 / 2014-05-18
 
 * Add ability to format search result
