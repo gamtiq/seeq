@@ -4,7 +4,8 @@
  * @module resource/util
  */
 
-var he = require("he");
+var he = require("he"),
+    util = require("util");
 
 /**
  * Decode HTML entities in given string.
@@ -24,10 +25,11 @@ exports.decodeHtmlEntity = function(str) {
  * Default value will be returned if <code>limit</code> field is not present in <code>settings</code> parameter.
  * 
  * @param {Object} [settings]
- *      Operation settings. The object can have numeric <code>limit</code> field which value will be returned.
+ *      Operation settings. The object can have numeric <code>limit</code> field which value will be returned
+ *      if the value is positive number and not greater than maximum value.
  *      Otherwise value of <code>defaultValue</code> parameter will be returned.
  * @param {Number} [defaultValue]
- *      Default value of limit. <code>maxValue</code> is used when parameter value is not passed.
+ *      Default value of limit. <code>maxValue</code> is used when parameter value is not passed or 0.
  * @param {Number} [maxValue]
  *      Maximum value of limit. <code>Number.MAX_VALUE</code> is used when parameter value is not passed.
  * @return {Number}
@@ -87,7 +89,7 @@ exports.isSearchSet = function(settings) {
  * @param {Array | String} value
  *      String or array of strings that should be checked.
  * @param {String} searchValue
- *      Value that was searched for.
+ *      Value that is searched for.
  * @param {Object} [settings]
  *      Operation settings.
  *      The following settings are supported (name - type - description):
@@ -131,4 +133,41 @@ exports.isStringMatch = function(value, searchValue, settings) {
         }
     }
     return false;
+};
+
+/**
+ * Class for errors of failed HTTP requests.
+ * 
+ * @param {http.IncomingMessage} response
+ *      Represents data about response.
+ * @param {String} [message]
+ *      Error message.
+ * @constructor
+ */
+function FailedHttpRequestError(response, message) {
+    Error.call(this, message || "Http request failed");
+    this.response = response;
+}
+util.inherits(FailedHttpRequestError, Error);
+
+exports.FailedHttpRequestError = FailedHttpRequestError;
+
+/**
+ * Return object that represents data about error of HTTP request.
+ * <br>
+ * If <code>err</code> parameter is set then it will be returned.
+ * Otherwise instance of {@link resource/util.FailedHttpRequestError FailedHttpRequestError} will be returned.
+ * 
+ * @param {Error} err
+ *      Represents data about error.
+ * @param {http.IncomingMessage} response
+ *      Represents data about response.
+ * @return {Error}
+ *      Error object.
+ */
+exports.getHttpRequestError = function(err, response) {
+    /*jshint laxbreak:true*/
+    return err
+            ? err
+            : new FailedHttpRequestError(response);
 };

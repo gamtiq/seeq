@@ -18,6 +18,7 @@ The following resources are available:
 * [Component](https://github.com/component/component)
 * [Bower](http://bower.io)
 * [Jam](http://jamjs.org)
+* [SPM](http://spmjs.io)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
 * [Registry of Gulp plugins](http://gulpjs.com/plugins)
 * [JSter](http://jster.net)
@@ -65,13 +66,14 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources (11):
+Available resources (12):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
     * Component (https://github.com/component/component) - Component client package manager registry
     * Bower (http://bower.io) - Bower package manager registry
     * Jam (http://jamjs.org) - Jam package manager repository
+    * SPM (http://spmjs.io) - SPM package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
     * Gulp (http://gulpjs.com/plugins/) - Registry of Gulp plugins
     * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
@@ -135,6 +137,9 @@ Results:
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
 
+    SPM
+        numgen is not found.
+
 2. three
 
     GitHub - 5
@@ -170,6 +175,9 @@ Results:
         three - JavaScript 3D library
         url: http://threejs.org
 
+    SPM
+        three is not found.
+
 3. some-strange-name
 
     GitHub
@@ -185,6 +193,9 @@ Results:
         some-strange-name is not found.
 
     Jam
+        some-strange-name is not found.
+
+    SPM
         some-strange-name is not found.
 ```
 

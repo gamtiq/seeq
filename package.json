@@ -36,7 +36,8 @@
     "grunt-contrib-jshint": ">=0.7.2",
     "grunt-mocha-cli": ">=1.8.0",
     "grunt-jsdoc": ">=0.4.2",
-    "grunt-push-release": ">=0.1.8"
+    "grunt-push-release": ">=0.1.8",
+    "nock": "~0.42.1"
   },
   "keywords": [
     "search",
@@ -73,6 +74,7 @@
     "mixing": "~0.0.3",
     "octonode": "~0.5.0",
     "charm": "~0.2.0",
-    "he": "~0.3.6"
+    "he": "~0.3.6",
+    "eva": "~0.1.0"
   }
 }

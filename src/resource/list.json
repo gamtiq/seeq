@@ -36,6 +36,13 @@
         "module": "./module/jam"
     },
     {
+        "name": "SPM",
+        "description": "SPM package manager repository",
+        "url": "http://spmjs.io",
+        "tag": ["spm", "js", "javascript", "package", "seajs", "cmd", "browser"],
+        "module": "./module/spm"
+    },
+    {
         "name": "Grunt",
         "description": "Registry of Grunt plugins",
         "url": "http://gruntjs.com/plugins",
