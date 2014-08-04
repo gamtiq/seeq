@@ -3,69 +3,36 @@
 
 // Tests for resource/module/spm
 describe("resource/module/spm", function() {
-    var expect, nock, spm, util;
+    var spm, testUtil, util;
     
     // node
     if (typeof chai === "undefined") {
         spm = require("../../../src/resource/module/spm");
         util = require("../../../src/resource/util");
-        expect = require("../../lib/chai").expect;
-        nock = require("nock");
+        testUtil = require("../../testUtil");
     }
     
     
     describe(".detect(name, callback, settings)", function() {
         var detect = spm.detect,
+            getCallback = testUtil.getDetectCallback,
             repositoryData = require("../../fixtures/resource/spm.json"),
             packageList = repositoryData.data.results;
         
-        function getName(pkg) {
-            return pkg.name;
-        }
-        
-        function getCallback(expErr, expResult) {
-            return function(err, result) {
-                if (err instanceof Error) {
-                    expect(err.message)
-                        .equal(expErr.message);
-                    expect(err.constructor)
-                        .equal(expErr.constructor);
-                }
-                else {
-                    expect(err)
-                        .eql(expErr);
-                }
-                expect(result.map(getName))
-                    .eql(expResult.map(getName));
-            };
-        }
-        
         function getPackages(names) {
-            if (typeof names === "string") {
-                names = [names];
-            }
-            return packageList.filter(function(pkg) {
-                return names.indexOf(pkg.name) > -1;
-            });
+            return testUtil.filterObjectListByNames(packageList, names);
         }
         
         function mockSuccessRequest() {
-            nock("http://spmjs.io")
-                .get("/repositories")
-                .reply(200, repositoryData);
+            testUtil.mockSuccessRequest("http://spmjs.io", "/repositories", repositoryData);
         }
         
         function mockFailRequest(nCode) {
-            nock.cleanAll();
-            nock("http://spmjs.io")
-                .get("/repositories")
-                .reply(nCode);
+            testUtil.mockFailRequest("http://spmjs.io", "/repositories", nCode);
         }
         
         function check(prepare, sName, callback, settings) {
-            prepare &&
-                prepare();
-            detect(sName, callback, settings);
+            testUtil.callDetect(prepare, detect, sName, callback, settings);
         }
         
         

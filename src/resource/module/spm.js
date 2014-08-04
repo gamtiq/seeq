@@ -9,7 +9,6 @@
 
 var eva = require("eva"),
     request = require("request"),
-    slice = Array.prototype.slice,
     util = require("../util"),
     callbackList, detectList, packageList;
 
@@ -57,11 +56,11 @@ exports.detect = function detect(name, callback, settings) {
         callback(null, result);
     }
     else if (detectList) {
-        detectList.push(eva.closure(detect, slice.call(arguments, 0)));
+        detectList.push(eva.closure(detect, arguments));
         callbackList.push(callback);
     }
     else {
-        detectList = [eva.closure(detect, slice.call(arguments, 0))];
+        detectList = [eva.closure(detect, arguments)];
         callbackList = [callback];
         request("http://spmjs.io/repositories", function(err, response, data) {
             var fallbackList = callbackList,
@@ -73,7 +72,10 @@ exports.detect = function detect(name, callback, settings) {
                 eva.map(taskList);
             }
             else {
-                eva.map(fallbackList, [util.getHttpRequestError(err, response), result]);
+                eva.map(fallbackList,
+                        function getParamList() {
+                            return [util.getHttpRequestError(err, response), []];
+                        });
             }
         });
     }
