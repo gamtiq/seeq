@@ -49,6 +49,10 @@
 						</li>
 						
 						<li>
+							<a href="module-customelements.html">customelements</a>
+						</li>
+						
+						<li>
 							<a href="module-format.html">format</a>
 						</li>
 						
@@ -113,7 +117,29 @@
 						</li>
 						
 						<li>
+							<a href="module-spm.html">spm</a>
+						</li>
+						
+						<li>
 							<a href="module-text.html">text</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="util-FailedHttpRequestError.html">FailedHttpRequestError</a>
+						</li>
+						
+						<li>
+							<a href="util-IncorrectResponseError.html">IncorrectResponseError</a>
 						</li>
 						
 
@@ -172,12 +198,14 @@
 <li><a href="https://github.com/component/component">Component</a></li>
 <li><a href="http://bower.io">Bower</a></li>
 <li><a href="http://jamjs.org">Jam</a></li>
+<li><a href="http://spmjs.io">SPM</a></li>
 <li><a href="http://gruntjs.com/plugins">Registry of Grunt plugins</a></li>
 <li><a href="http://gulpjs.com/plugins">Registry of Gulp plugins</a></li>
 <li><a href="http://jster.net">JSter</a></li>
 <li><a href="http://microjs.com">MicroJS</a></li>
 <li><a href="http://cdnjs.com">CDNJS</a></li>
 <li><a href="http://www.jsdelivr.com">jsDelivr</a></li>
+<li><a href="http://customelements.io">Custom Elements</a></li>
 </ul>
 <p>You can see information about all available resources by running <code>seeq -l</code> (see below).</p>
 <h2>Installation</h2>
@@ -212,19 +240,21 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources (11):
+Available resources (13):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
     * Component (https://github.com/component/component) - Component client package manager registry
     * Bower (http://bower.io) - Bower package manager registry
     * Jam (http://jamjs.org) - Jam package manager repository
+    * SPM (http://spmjs.io) - SPM package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
     * Gulp (http://gulpjs.com/plugins/) - Registry of Gulp plugins
     * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
-    * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.</code></pre>
+    * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
+    * Custom Elements (http://customelements.io) - A Web Components gallery for modern web apps</code></pre>
 <p>To make a search you can use <code>sees</code> command (<code>sees</code> equals to <code>seeq -s</code>).</p>
 <h3>Formats</h3>
 <p>It is possible to specify format of search result:</p>
@@ -238,19 +268,22 @@ in verbose mode no processing will be applied</li>
 <h3>Examples</h3>
 <p>Check <code>numgen</code>, <code>three</code> and <code>some-strange-name</code> at resources having <code>package</code> tag and limit results per resource up to 5.</p>
 <pre><code>&gt; seeq numgen three some-strange-name --tag package --limit 5
-Checking GitHub, NPM, Component, Bower, Jam...
-Progress: 15/15 (100%)
+Checking GitHub, NPM, Component, Bower, Jam, SPM...
+Progress: 18/18 (100%)
 
 Results:
 
 1. numgen
 
-    GitHub - 3
-        numgen
-        url: https://github.com/grancier/numgen
-
+    GitHub - 4
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
+
+        numgen - doerp
+        url: https://github.com/drmarduk/numgen
+
+        numgen
+        url: https://github.com/grancier/numgen
 
         NumGen - A number generating mobile app to use for awarding prizes at user groups
         url: https://github.com/scryan7371/NumGen
@@ -271,6 +304,11 @@ Results:
         keywords: number sequence generator
 
     Jam - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
+
+    SPM - 1
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
@@ -310,6 +348,9 @@ Results:
         three - JavaScript 3D library
         url: http://threejs.org
 
+    SPM
+        three is not found.
+
 3. some-strange-name
 
     GitHub
@@ -325,6 +366,9 @@ Results:
         some-strange-name is not found.
 
     Jam
+        some-strange-name is not found.
+
+    SPM
         some-strange-name is not found.</code></pre>
 <p>Check <code>mixing</code> and <code>flight</code> at GitHub and Bower, allow partial matching at the beginning, use case-sensitive search,
 limit Bower results up to 3 and GitHub results up to 5, include only GitHub projects that are written in JavaScript,
@@ -541,7 +585,7 @@ Lint and test your code using <a href="http://gruntjs.com/">Grunt</a>.</p>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Sun Jul 13 2014 23:52:09 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Thu Aug 21 2014 23:46:51 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

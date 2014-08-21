@@ -31,6 +31,11 @@ describe("resource/module/spm", function() {
             testUtil.mockFailRequest("http://spmjs.io", "/repositories", nCode);
         }
         
+        function mockFailedHttpRequest(nCode) {
+            spm.clearCache();
+            mockFailRequest(nCode);
+        }
+        
         function check(prepare, sName, callback, settings) {
             testUtil.callDetect(prepare, detect, sName, callback, settings);
         }
@@ -54,17 +59,12 @@ describe("resource/module/spm", function() {
             check(mockSuccessRequest, "Scrolling", getCallback(null, []), {search: true, caseSensitive: true});
         });
         
-        it("should return error", function() {
-            function mockRequest(nCode) {
-                spm.clearCache();
-                mockFailRequest(nCode);
-            }
-            
-            var err = new util.FailedHttpRequestError();
-            
-            check(mockRequest(404), "numgen", getCallback(err, []));
-            check(mockRequest(500), "numgen", getCallback(err, []));
+        it("should return FailedHttpRequestError error for 404 HTTP status code", function(done) {
+            check(mockFailedHttpRequest(404), "numgen", getCallback(new util.FailedHttpRequestError(), [], done));
+        });
+        
+        it("should return FailedHttpRequestError error for 500 HTTP status code", function(done) {
+            check(mockFailedHttpRequest(500), "numgen", getCallback(new util.FailedHttpRequestError(), [], done));
         });
     });
-    
 });

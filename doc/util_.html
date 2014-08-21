@@ -49,6 +49,10 @@
 						</li>
 						
 						<li>
+							<a href="module-customelements.html">customelements</a>
+						</li>
+						
+						<li>
 							<a href="module-format.html">format</a>
 						</li>
 						
@@ -113,7 +117,29 @@
 						</li>
 						
 						<li>
+							<a href="module-spm.html">spm</a>
+						</li>
+						
+						<li>
 							<a href="module-text.html">text</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="util-FailedHttpRequestError.html">FailedHttpRequestError</a>
+						</li>
+						
+						<li>
+							<a href="util-IncorrectResponseError.html">IncorrectResponseError</a>
 						</li>
 						
 
@@ -197,6 +223,16 @@
 
     
 
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="util-FailedHttpRequestError.html">FailedHttpRequestError</a></dt>
+            <dd></dd>
+        
+            <dt><a href="util-IncorrectResponseError.html">IncorrectResponseError</a></dt>
+            <dd></dd>
+        </dl>
     
 
     
@@ -299,7 +335,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-17">line 17</a>
+        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-18">line 18</a>
     </li></ul></dd>
     
 
@@ -336,6 +372,170 @@
 	<dd>
 		
 <span class="param-type">String</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getHttpRequestError"><span class="type-signature">&lt;static> </span>getHttpRequestError<span class="signature">(err, response)</span><span class="type-signature"> &rarr; {Error}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Return object that represents data about error of HTTP request.<br>If <code>err</code> parameter is set then it will be returned.Otherwise instance of FailedHttpRequestError will be returned.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>err</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Error</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Represents data about error.</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">http.IncomingMessage</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Represents data about response.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-185">line 185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Error object.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
 
 
 	</dd>
@@ -420,7 +620,7 @@
 
             
 
-            <td class="description last">Operation settings. The object can have numeric <code>limit</code> field which value will be returned.     Otherwise value of <code>defaultValue</code> parameter will be returned.</td>
+            <td class="description last">Operation settings. The object can have numeric <code>limit</code> field which value will be returned     if the value is positive number and not greater than maximum value.     Otherwise value of <code>defaultValue</code> parameter will be returned.</td>
         </tr>
 
 	
@@ -453,7 +653,7 @@
 
             
 
-            <td class="description last">Default value of limit. <code>maxValue</code> is used when parameter value is not passed.</td>
+            <td class="description last">Default value of limit. <code>maxValue</code> is used when parameter value is not passed or 0.</td>
         </tr>
 
 	
@@ -518,7 +718,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-36">line 36</a>
+        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-38">line 38</a>
     </li></ul></dd>
     
 
@@ -674,7 +874,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-60">line 60</a>
+        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-62">line 62</a>
     </li></ul></dd>
     
 
@@ -833,7 +1033,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-80">line 80</a>
+        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-82">line 82</a>
     </li></ul></dd>
     
 
@@ -986,7 +1186,7 @@
 
             
 
-            <td class="description last">Value that was searched for.</td>
+            <td class="description last">Value that is searched for.</td>
         </tr>
 
 	
@@ -1057,7 +1257,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-104">line 104</a>
+        <a href="util.js_.html">resource/util.js</a>, <a href="util.js_.html#sunlight-1-line-106">line 106</a>
     </li></ul></dd>
     
 
@@ -1131,7 +1331,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
-		on Sun Jul 13 2014 23:52:13 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Thu Aug 21 2014 23:46:52 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

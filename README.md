@@ -25,6 +25,7 @@ The following resources are available:
 * [MicroJS](http://microjs.com)
 * [CDNJS](http://cdnjs.com)
 * [jsDelivr](http://www.jsdelivr.com)
+* [Custom Elements](http://customelements.io)
 
 You can see information about all available resources by running `seeq -l` (see below).
 
@@ -66,7 +67,7 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources (12):
+Available resources (13):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
@@ -80,6 +81,7 @@ Available resources (12):
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
     * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
+    * Custom Elements (http://customelements.io) - A Web Components gallery for modern web apps
 ```
 
 To make a search you can use `sees` command (`sees` equals to `seeq -s`).
@@ -100,19 +102,22 @@ Check `numgen`, `three` and `some-strange-name` at resources having `package` ta
 
 ```
 > seeq numgen three some-strange-name --tag package --limit 5
-Checking GitHub, NPM, Component, Bower, Jam...
-Progress: 15/15 (100%)
+Checking GitHub, NPM, Component, Bower, Jam, SPM...
+Progress: 18/18 (100%)
 
 Results:
 
 1. numgen
 
-    GitHub - 3
-        numgen
-        url: https://github.com/grancier/numgen
-
+    GitHub - 4
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
+
+        numgen - doerp
+        url: https://github.com/drmarduk/numgen
+
+        numgen
+        url: https://github.com/grancier/numgen
 
         NumGen - A number generating mobile app to use for awarding prizes at user groups
         url: https://github.com/scryan7371/NumGen
@@ -137,8 +142,10 @@ Results:
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
 
-    SPM
-        numgen is not found.
+    SPM - 1
+        numgen - Creates objects that generate number sequences
+        url: https://github.com/gamtiq/numgen
+        keywords: number sequence generator
 
 2. three
 

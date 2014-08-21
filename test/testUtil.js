@@ -1,6 +1,8 @@
 // Helpful methods for tests
 
-var expect = require("./lib/chai").expect,
+var fs = require("fs"),
+    path = require("path"),
+    expect = require("./lib/chai").expect,
     nock = require("nock");
 
 /*
@@ -22,11 +24,14 @@ function getName(entity) {
  *      Expected error.
  * @param {Any} expResult
  *      Expected result.
+ * @param {Function} [done]
+ *      Function that should be called after test.
  * @return {Function}
  *      Function that can be used as callback to test result of `detect` method.
  */
-function getDetectCallback(expErr, expResult) {
+function getDetectCallback(expErr, expResult, done) {
     return function(err, result) {
+        /*jshint expr:true*/
         if (err instanceof Error) {
             expect(err.message)
                 .equal(expErr.message);
@@ -39,7 +44,25 @@ function getDetectCallback(expErr, expResult) {
         }
         expect(result.map(getName))
             .eql(expResult.map(getName));
+        done && 
+            done();
     };
+}
+
+/*
+ * Return contents of specified file.
+ * 
+ * @param {...String} path
+ *      Path (or part of path) to the file. If several parts are passed they will be joined by `path.join`.
+ * @return {String}
+ *      Contents of the file or empty string when the file is not found.
+ */
+function getFileContent() {
+    /*jshint laxbreak:true*/
+    var file = path.join.apply(path, arguments);
+    return fs.existsSync(file)
+            ? fs.readFileSync(file, {encoding: "utf8"})
+            : "";
 }
 
 /*
@@ -75,6 +98,7 @@ function filterObjectListByNames(list, names) {
  *      Data which should be used as response for mocked request.
  */
 function mockSuccessRequest(host, path, responseData) {
+    nock.cleanAll();
     nock(host)
         .get(path)
         .reply(200, responseData);
@@ -123,6 +147,7 @@ function callDetect(prepare, detect, name, callback, settings) {
 // Exports
 exports.getName = getName;
 exports.getDetectCallback = getDetectCallback;
+exports.getFileContent = getFileContent;
 exports.filterObjectListByNames = filterObjectListByNames;
 exports.mockSuccessRequest = mockSuccessRequest;
 exports.mockFailRequest = mockFailRequest;

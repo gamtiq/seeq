@@ -56,18 +56,21 @@
     "component",
     "bower",
     "jam",
+    "spm",
     "github",
     "grunt",
     "gulp",
     "jster",
     "microjs",
     "cdnjs",
-    "jsdelivr"
+    "jsdelivr",
+    "webcomponent",
+    "customelement"
   ],
   "dependencies": {
     "npm": "~1.4.0",
     "component": "~0.19.5",
-    "bower-registry-client": "~0.1.6",
+    "bower-registry-client": "~0.2.1",
     "jamjs": "~0.2.17",
     "nomnom": "~1.6.2",
     "request": "~2.34.0",

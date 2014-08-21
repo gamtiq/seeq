@@ -153,6 +153,23 @@ util.inherits(FailedHttpRequestError, Error);
 exports.FailedHttpRequestError = FailedHttpRequestError;
 
 /**
+ * Class for errors of incorrect response data.
+ * 
+ * @param {String} responseData
+ *      Received response data.
+ * @param {String} [message]
+ *      Error message.
+ * @constructor
+ */
+function IncorrectResponseError(responseData, message) {
+    Error.call(this, message || "Incorrect response data");
+    this.responseData = responseData;
+}
+util.inherits(IncorrectResponseError, Error);
+
+exports.IncorrectResponseError = IncorrectResponseError;
+
+/**
  * Return object that represents data about error of HTTP request.
  * <br>
  * If <code>err</code> parameter is set then it will be returned.

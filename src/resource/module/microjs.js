@@ -67,7 +67,7 @@ exports.detect = function detect(name, callback, settings) {
                     detect(name, callback, settings);
                 }
                 else {
-                    callback("Incorrect format of data about list of libraries", result);
+                    callback(new util.IncorrectResponseError(data, "Incorrect format of data about list of libraries"), result);
                 }
             }
             else {

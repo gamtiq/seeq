@@ -74,14 +74,21 @@
         "name": "CDNJS",
         "description": "Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets",
         "url": "http://cdnjs.com",
-        "tag": ["cdnjs", "cdn", "js", "javascript", "library", "framework", "css"],
+        "tag": ["cdnjs", "cdn", "js", "javascript", "library", "framework", "css", "browser"],
         "module": "./module/cdn/cdnjs"
     },
     {
         "name": "jsDelivr",
         "description": "Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.",
         "url": "http://www.jsdelivr.com",
-        "tag": ["jsdelivr", "cdn", "js", "javascript", "library", "framework", "plugin", "css", "font"],
+        "tag": ["jsdelivr", "cdn", "js", "javascript", "library", "framework", "plugin", "css", "font", "browser"],
         "module": "./module/cdn/jsdelivr"
+    },
+    {
+        "name": "Custom Elements",
+        "description": "A Web Components gallery for modern web apps",
+        "url": "http://customelements.io",
+        "tag": ["customelements", "component", "webcomponent", "custom", "element", "js", "javascript", "css", "html", "gallery", "browser"],
+        "module": "./module/customelements"
     }
 ]

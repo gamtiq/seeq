@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>seeq Source: resource/module/github.js</title>
+	<title>seeq Source: resource/module/customelements.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -159,161 +159,119 @@
 					
 
 
-		<h1 class="page-title">Source: resource/module/github.js</h1>
+		<h1 class="page-title">Source: resource/module/customelements.js</h1>
     
     <section>
         <article>
             <pre class="sunlight-highlight-javascript linenums">/**
- * Module that provides means to check/search in {@link https://github.com GitHub}.
+ * Module that provides means to check/search in {@link http://customelements.io Custom Elements gallery}.
  * 
- * @module github
+ * @module customelements
  */
 
 
 "use strict";
 
-var github = require("octonode"),
+var eva = require("eva"),
+    request = require("request"),
     util = require("../util"),
-    remainingLimit = 1,
-    delay = 60001;
-
-// Process search result
-function handler(err, data, headers) {
-    /*jshint camelcase:false, validthis:true*/
-    var result = [],
-        bRealSearch, item, itemList, nI, nL, nLimit, settings, sSearchName;
-    if (! err) {
-        remainingLimit = Number(headers["x-ratelimit-remaining"]);
-        delay = (Number(headers["x-ratelimit-reset"]) * 1000) - (new Date()).getTime() + 1;
-        
-        settings = this.settings;
-        bRealSearch = util.isRealSearchSet(settings);
-        nLimit = util.getLimit(settings, 100, 100);
-        
-        sSearchName = this.name;
-        itemList = data.items;
-        for (nI = 0, nL = itemList.length; nI &lt; nL; nI++) {
-            item = itemList[nI];
-            if ( bRealSearch || util.isStringMatch(item.name, sSearchName, settings) ) {
-                item.api_url = item.url;
-                item.url = item.homepage || item.html_url;
-                item.repository = item.clone_url;
-                item.stars = item.stargazers_count;
-                result.push(item);
-                if (result.length === nLimit) {
-                    break;
-                }
-            }
-        }
-        this.callback(err, result);
-    }
-    else if (err.message === "Search repos error") {
-        setTimeout(this.send, delay);
-    }
-    else {
-        this.callback(err, result);
-    }
-}
-
-// Send search request
-function send() {
-    /*jshint validthis:true*/
-    var settings = this.settings,
-        sLanguage = settings.lang || settings.language,
-        sQuery = this.name,
-        nPageSize = settings.pageSize;
-    if (! util.isRealSearchSet(settings)) {
-        sQuery += "+in:name";
-    }
-    if (sLanguage) {
-        sQuery += "+language:" + sLanguage;
-    }
-    if (typeof nPageSize !== "number" || nPageSize &lt;= 0 || nPageSize > 100) {
-        nPageSize = 100;
-    }
-    this.search.repos({q: sQuery, "per_page": nPageSize}, this.handler);
-}
+    callbackList, componentList, detectList;
 
 /**
- * Supported operation settings/options.
+ * Check whether component with the specified name is existent, or make search for the specified string.
  * 
- * Conform to format of {@link https://github.com/harthur/nomnom nomnom} options.
- */
-exports.settings = {
-    lang: {
-        help: "Search GitHub repositories that are written in the specified language"
-    },
-    limit: {
-        help: "Limit of quantity of GitHub results; default and maximum value is 100"
-    },
-    user: {
-        help: "GitHub username that should be used for authentication"
-    },
-    password: {
-        help: "GitHub account password"
-    },
-    token: {
-        help: "GitHub OAuth2 token that should be used for authentication instead of username and password"
-    }
-};
-
-/**
- * Check whether repository with the specified name is existent.
- * 
- * Data about found repositories will be passed into callback as array.
- * If no repository is found, empty array will be passed into callback.
+ * Data about found components will be passed into callback as array.
+ * If no component is found, empty array will be passed into callback.
  * 
  * @param {String} name
- *      Name of the repository to check.
+ *      Name of the component to check or string to search for.
  * @param {Function} callback
  *      Function that should be called to process operation's result.
  * @param {Object} [settings]
  *      Operation settings.
  *      The following settings are supported (name - type - description):
         &lt;ul>
-        &lt;li>&lt;code>caseSensitive&lt;/code> - &lt;code>Boolean&lt;/code> - Whether case-sensitive search should be used
-        &lt;li>&lt;code>partialMatch&lt;/code> - &lt;code>Integer&lt;/code> - Allow partial matching: 0 - disallow (by default), 
-            1 - allow at the beginning of matching strings, 2 - allow substring matching
-        &lt;li>&lt;code>lang, language&lt;/code> - &lt;code>String&lt;/code> - Search repositories that are written in the specified language
-        &lt;li>&lt;code>user&lt;/code> - &lt;code>String&lt;/code> - GitHub username that should be used for authentication
-        &lt;li>&lt;code>password&lt;/code> - &lt;code>String&lt;/code> - GitHub account password
-        &lt;li>&lt;code>token&lt;/code> - &lt;code>String&lt;/code> - OAuth2 token that should be used for authentication 
-            instead of username and password
-        &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results; default and maximum value is 100
-        &lt;li>&lt;code>pageSize&lt;/code> - &lt;code>Integer&lt;/code> - Quantity of results per page; default and maximum value is 100
+        &lt;li>&lt;code>caseSensitive&lt;/code> - &lt;code>Boolean&lt;/code> - Whether case-sensitive check/search should be used
+        &lt;li>&lt;code>partialMatch&lt;/code> - &lt;code>Integer&lt;/code> - Allow partial matching when checking name: 
+            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
+        &lt;li>&lt;code>search&lt;/code> - &lt;code>Boolean&lt;/code> - Whether search should be made instead of check
+        &lt;li>&lt;code>limit&lt;/code> - &lt;code>Integer&lt;/code> - Limit of quantity of results
         &lt;/ul>
  */
-exports.detect = function(name, callback, settings) {
-    var client, request;
-    if (! settings) {
-        settings = {};
+exports.detect = function detect(name, callback, settings) {
+    var result = [],
+        bRealSearch, nI, nL, nLimit, component, sName;
+    if (componentList && componentList.length) {
+        bRealSearch = util.isRealSearchSet(settings);
+        nLimit = util.getLimit(settings);
+        for (nI = 0, nL = componentList.length; nI &lt; nL; nI++) {
+            component = componentList[nI];
+            sName = component.name;
+            if ( util.isStringMatch(bRealSearch ? [sName, component.description || ""].concat(component.keywords || []) : sName, 
+                                    name, settings) ) {
+                result.push(component);
+                if (result.length === nLimit) {
+                    break;
+                }
+            }
+        }
+        callback(null, result);
     }
-    if (settings.token) {
-        client = github.client(settings.token);
+    else if (detectList) {
+        detectList.push(eva.closure(detect, arguments));
+        callbackList.push(callback);
     }
-    else if (settings.user && settings.password) {
-        client = github.client({
-            username: settings.user,
-            password: settings.password
+    else {
+        detectList = [eva.closure(detect, arguments)];
+        callbackList = [callback];
+        request("http://customelementsio.herokuapp.com", function(err, response, data) {
+            var fallbackList = callbackList,
+                taskList = detectList;
+            detectList = null;
+            callbackList = null;
+            if (! err && response.statusCode === 200) {
+                nI = data.indexOf("[");
+                nL = data.lastIndexOf("]");
+                if (nI > -1 && nL > nI) {
+                    try {
+                        componentList = JSON.parse(data.substring(nI, nL + 1));
+                    }
+                    catch (e) {
+                        nI = -1;
+                    }
+                    if (nI > -1) {
+                        eva.map(taskList);
+                    }
+                }
+                else {
+                    nI = -1;
+                }
+                if (nI === -1) {
+                    eva.map(fallbackList,
+                            function getParamList() {
+                                return [
+                                            new util.IncorrectResponseError(data, 
+                                                                            "Incorrect format of data about list of components"), 
+                                            []
+                                        ];
+                            });
+                }
+            }
+            else {
+                eva.map(fallbackList,
+                        function getParamList() {
+                            return [util.getHttpRequestError(err, response), []];
+                        });
+            }
         });
     }
-    else {
-        client = github.client();
-    }
-    request = {
-        search: client.search(),
-        name: settings.caseSensitive ? name : name.toLowerCase(),
-        callback: callback,
-        settings: settings
-    };
-    request.send = send.bind(request);
-    request.handler = handler.bind(request);
-    if (remainingLimit) {
-        request.send();
-    }
-    else {
-        setTimeout(request.send, delay);
-    }
+};
+
+/**
+ * Removes cached component list.
+ */
+exports.clearCache = function() {
+    componentList = null;
 };
 </pre>
         </article>
