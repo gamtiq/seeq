@@ -1,3 +1,7 @@
+### 0.2.2 / 2014-08-24
+
+* Add resources for [SPM](http://spmjs.io) and [Custom Elements](http://customelements.io)
+
 ### 0.2.1 / 2014-07-15
 
 * Add resource for registry of [Gulp plugins](http://gulpjs.com/plugins)

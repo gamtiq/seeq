@@ -1,7 +1,7 @@
 {
   "name": "seeq",
   "description": "Search or detect name on some resource (GitHub, NPM, Component, Bower, Jam, ...)",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/gamtiq/seeq",
   "author": {
     "name": "Denis Sikuler"
