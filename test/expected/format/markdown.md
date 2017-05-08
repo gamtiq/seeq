@@ -14,9 +14,6 @@
     * Bower - 1
         + [numgen](https://github.com/gamtiq/numgen) - Creates objects that generate number sequences  
           _keywords_: number sequence generator
-    * Jam - 1
-        + [numgen](https://github.com/gamtiq/numgen) - Creates objects that generate number sequences  
-          _keywords_: number sequence generator
     * Grunt  
         numgen is not found.
     * JSter - 1
@@ -63,12 +60,6 @@
           _keywords_: three.js webgl
         + [three.js](http://threejs.org/) - JavaScript 3D library  
           _keywords_: threejs 3d webgl
-    * Jam - 2
-        + [anythingslider](http://css-tricks.com/3412-anythingslider-jquery-plugin/) - Just what the world needs, another jQuery slider. YAWN. I know, check this one out though, it's got lots of cool features.  
-Here on CSS-Tricks, I've created a number of different sliders. Three, in fact. A "featured content" slider, a "start/stop slider", and "moving boxes". Each of them had some cool interesting feature that I needed to build at the time. All were well-received, but as is the case with these things, people want them to do X, Y, and Z in addition to what they already did.  
-This new AnythingSlider is an attempt at bringing together the functionality of all of those previous sliders and adding new features. In other words, to create a really "full featured" slider that could be widely useful. This is the first time (on CSS-Tricks) that one of these sliders is an actual plugin as well, which should make implementing it and customizing it much easier.  
-          _keywords_: customizable effects slider video
-        + [three](http://threejs.org) - JavaScript 3D library
     * Grunt - 5
         + [glsl-threejs](https://npmjs.org/package/grunt-glsl-threejs) - A Grunt taks for wrapping GLSL Shader code in Javascript packages, ready to be used in Three.js
         + [run](https://npmjs.org/package/grunt-run) - Invite external commands into your grunt process with three tasks `run`, `wait` and `stop`.
@@ -118,8 +109,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
     * Component  
         somestrangename is not found.
     * Bower  
-        somestrangename is not found.
-    * Jam  
         somestrangename is not found.
     * Grunt  
         somestrangename is not found.

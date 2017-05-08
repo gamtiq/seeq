@@ -1,7 +1,7 @@
 # seeq
 
 Detect whether a name is registered or present on some resource ([GitHub](https://github.com), [NPM](https://npmjs.org),
-[Component](https://github.com/component/component), [Bower](http://bower.io), [Jam](http://jamjs.org), ...).
+[Component](https://github.com/component/component), [Bower](http://bower.io), ...).
 
 Also allows searching for string on specified resources.
 
@@ -17,8 +17,6 @@ The following resources are available:
 * [NPM](https://npmjs.org)
 * [Component](https://github.com/component/component)
 * [Bower](http://bower.io)
-* [Jam](http://jamjs.org)
-* [SPM](http://spmjs.io)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
 * [Registry of Gulp plugins](http://gulpjs.com/plugins)
 * [JSter](http://jster.net)
@@ -73,8 +71,6 @@ Available resources (13):
     * NPM (https://npmjs.org) - Node packaged modules registry
     * Component (https://github.com/component/component) - Component client package manager registry
     * Bower (http://bower.io) - Bower package manager registry
-    * Jam (http://jamjs.org) - Jam package manager repository
-    * SPM (http://spmjs.io) - SPM package manager repository
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
     * Gulp (http://gulpjs.com/plugins/) - Registry of Gulp plugins
     * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
@@ -102,7 +98,7 @@ Check `numgen`, `three` and `some-strange-name` at resources having `package` ta
 
 ```
 > seeq numgen three some-strange-name --tag package --limit 5
-Checking GitHub, NPM, Component, Bower, Jam, SPM...
+Checking GitHub, NPM, Component, Bower...
 Progress: 18/18 (100%)
 
 Results:
@@ -133,16 +129,6 @@ Results:
         keywords: number sequence generator
 
     Bower - 1
-        numgen - Creates objects that generate number sequences
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator
-
-    Jam - 1
-        numgen - Creates objects that generate number sequences
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator
-
-    SPM - 1
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
@@ -178,13 +164,6 @@ Results:
     Bower
         three is not found.
 
-    Jam - 1
-        three - JavaScript 3D library
-        url: http://threejs.org
-
-    SPM
-        three is not found.
-
 3. some-strange-name
 
     GitHub
@@ -197,12 +176,6 @@ Results:
         some-strange-name is not found.
 
     Bower
-        some-strange-name is not found.
-
-    Jam
-        some-strange-name is not found.
-
-    SPM
         some-strange-name is not found.
 ```
 
@@ -389,7 +362,7 @@ seeq.search(["chronoman", "knockout", "joy"],
 ...
 seeq.searchName("duratiform",
                 callback,
-                {resource: ["Bower", "Jam"]});
+                {resource: ["Bower", "MicroJS"]});
 ...
 seeq.searchName("cheerio",
                 callback,

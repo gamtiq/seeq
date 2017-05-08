@@ -69,20 +69,6 @@
                 }
             ]
         },
-        "Jam": {
-            "result": [
-                {
-                    "name": "numgen",
-                    "description": "Creates objects that generate number sequences",
-                    "url": "https://github.com/gamtiq/numgen",
-                    "keywords": [
-                        "number",
-                        "sequence",
-                        "generator"
-                    ]
-                }
-            ]
-        },
         "Grunt": {
             "result": []
         },
@@ -295,26 +281,6 @@
                 }
             ]
         },
-        "Jam": {
-            "result": [
-                {
-                    "name": "anythingslider",
-                    "description": "Just what the world needs, another jQuery slider. YAWN. I know, check this one out though, it's got lots of cool features.\n\nHere on CSS-Tricks, I've created a number of different sliders. Three, in fact. A \"featured content\" slider, a \"start/stop slider\", and \"moving boxes\". Each of them had some cool interesting feature that I needed to build at the time. All were well-received, but as is the case with these things, people want them to do X, Y, and Z in addition to what they already did.\n\nThis new AnythingSlider is an attempt at bringing together the functionality of all of those previous sliders and adding new features. In other words, to create a really \"full featured\" slider that could be widely useful. This is the first time (on CSS-Tricks) that one of these sliders is an actual plugin as well, which should make implementing it and customizing it much easier.",
-                    "url": "http://css-tricks.com/3412-anythingslider-jquery-plugin/",
-                    "keywords": [
-                        "customizable",
-                        "effects",
-                        "slider",
-                        "video"
-                    ]
-                },
-                {
-                    "name": "three",
-                    "description": "JavaScript 3D library",
-                    "url": "http://threejs.org"
-                }
-            ]
-        },
         "Grunt": {
             "result": [
                 {
@@ -455,9 +421,6 @@
             "result": []
         },
         "Bower": {
-            "result": []
-        },
-        "Jam": {
             "result": []
         },
         "Grunt": {

@@ -29,13 +29,6 @@
         "module": "./module/bower"
     },
     {
-        "name": "Jam",
-        "description": "Jam package manager repository",
-        "url": "http://jamjs.org",
-        "tag": ["jam", "js", "javascript", "package", "requirejs", "amd", "browser"],
-        "module": "./module/jam"
-    },
-    {
         "name": "Grunt",
         "description": "Registry of Grunt plugins",
         "url": "http://gruntjs.com/plugins",

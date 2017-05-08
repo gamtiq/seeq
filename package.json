@@ -1,6 +1,6 @@
 {
   "name": "seeq",
-  "description": "Search or detect name on some resource (GitHub, NPM, Component, Bower, Jam, ...)",
+  "description": "Search or detect name on some resource (GitHub, NPM, Component, Bower, ...)",
   "version": "0.2.2",
   "homepage": "https://github.com/gamtiq/seeq",
   "author": {
@@ -55,8 +55,6 @@
     "npm",
     "component",
     "bower",
-    "jam",
-    "spm",
     "github",
     "grunt",
     "gulp",
@@ -73,7 +71,6 @@
     "component": "~0.19.5",
     "eva": "~0.1.1",
     "he": "~0.3.6",
-    "jamjs": "~0.2.17",
     "mixing": "~0.0.3",
     "nomnom": "~1.6.2",
     "npm": "~1.4.0",
