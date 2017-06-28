@@ -15,13 +15,6 @@
         "module": "./module/npm"
     },
     {
-        "name": "Component",
-        "description": "Component client package manager registry",
-        "url": "https://github.com/component/component",
-        "tag": ["componentjs", "component", "js", "javascript", "package", "browser"],
-        "module": "./module/component"
-    },
-    {
         "name": "Bower",
         "description": "Bower package manager registry",
         "url": "http://bower.io",

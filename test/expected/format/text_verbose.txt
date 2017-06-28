@@ -33,14 +33,6 @@
         keywords: number sequence generator
         version: 0.0.3
 
-    Component - 1
-        numgen - Creates objects that generate number sequences
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator
-        version: 0.0.3
-        repository: https://github.com/gamtiq/numgen.git
-        license: MIT
-
     Bower - 1
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
@@ -125,35 +117,6 @@
         url: https://npmjs.org/package/bowser-cli
         keywords: game webgl pixel three engine 3d 2d
         version: 0.0.0
-
-    Component - 4
-        three - Three.js component
-        url: https://github.com/cvdlab/three
-        keywords: webgl three.js 3d
-        version: 0.60.0
-        repository: https://github.com/cvdlab/three.git
-        license: MIT
-
-        three-stats - Three.js stats component
-        url: https://github.com/cvdlab/three-stats
-        keywords: three.js stats
-        version: 0.1.0
-        repository: https://github.com/cvdlab/three-stats.git
-        license: MIT
-
-        three-trackball - Three.js trackball component
-        url: https://github.com/cvdlab/three-trackball
-        keywords: three.js trackball camera
-        version: 0.1.0
-        repository: https://github.com/cvdlab/three-trackball.git
-        license: MIT
-
-        three-detector - Three.js detector component
-        url: https://github.com/cvdlab/three-detector
-        keywords: three.js detector
-        version: 0.1.0
-        repository: https://github.com/cvdlab/three-detector.git
-        license: MIT
 
     Bower - 5
         threejs - JavaScript 3D library
@@ -289,9 +252,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
         somestrangename is not found.
 
     NPM
-        somestrangename is not found.
-
-    Component
         somestrangename is not found.
 
     Bower

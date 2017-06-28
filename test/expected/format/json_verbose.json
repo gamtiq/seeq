@@ -53,25 +53,6 @@
                 }
             ]
         },
-        "Component": {
-            "result": [
-                {
-                    "name": "numgen",
-                    "description": "Creates objects that generate number sequences",
-                    "url": "https://github.com/gamtiq/numgen",
-                    "keywords": [
-                        "number",
-                        "sequence",
-                        "generator"
-                    ],
-                    "version": "0.0.3",
-                    "repository": "https://github.com/gamtiq/numgen.git",
-                    "license": [
-                        "MIT"
-                    ]
-                }
-            ]
-        },
         "Bower": {
             "result": [
                 {
@@ -237,67 +218,6 @@
                         "2d"
                     ],
                     "version": "0.0.0"
-                }
-            ]
-        },
-        "Component": {
-            "result": [
-                {
-                    "name": "three",
-                    "description": "Three.js component",
-                    "url": "https://github.com/cvdlab/three",
-                    "keywords": [
-                        "webgl",
-                        "three.js",
-                        "3d"
-                    ],
-                    "version": "0.60.0",
-                    "repository": "https://github.com/cvdlab/three.git",
-                    "license": [
-                        "MIT"
-                    ]
-                },
-                {
-                    "name": "three-stats",
-                    "description": "Three.js stats component",
-                    "url": "https://github.com/cvdlab/three-stats",
-                    "keywords": [
-                        "three.js",
-                        "stats"
-                    ],
-                    "version": "0.1.0",
-                    "repository": "https://github.com/cvdlab/three-stats.git",
-                    "license": [
-                        "MIT"
-                    ]
-                },
-                {
-                    "name": "three-trackball",
-                    "description": "Three.js trackball component",
-                    "url": "https://github.com/cvdlab/three-trackball",
-                    "keywords": [
-                        "three.js",
-                        "trackball camera"
-                    ],
-                    "version": "0.1.0",
-                    "repository": "https://github.com/cvdlab/three-trackball.git",
-                    "license": [
-                        "MIT"
-                    ]
-                },
-                {
-                    "name": "three-detector",
-                    "description": "Three.js detector component",
-                    "url": "https://github.com/cvdlab/three-detector",
-                    "keywords": [
-                        "three.js",
-                        "detector"
-                    ],
-                    "version": "0.1.0",
-                    "repository": "https://github.com/cvdlab/three-detector.git",
-                    "license": [
-                        "MIT"
-                    ]
                 }
             ]
         },
@@ -509,9 +429,6 @@
             "result": []
         },
         "NPM": {
-            "result": []
-        },
-        "Component": {
             "result": []
         },
         "Bower": {

@@ -482,35 +482,6 @@
                 }
             ]
         },
-        "Component": {
-            "name": "Component",
-            "description": "Component client package manager registry",
-            "url": "https://github.com/component/component",
-            "query": "numgen",
-            "result": [
-                {
-                    "name": "numgen",
-                    "version": "0.0.3",
-                    "description": "Creates objects that generate number sequences",
-                    "keywords": [
-                        "number",
-                        "sequence",
-                        "generator"
-                    ],
-                    "dependencies": {},
-                    "development": {},
-                    "license": "MIT",
-                    "main": "numgen.js",
-                    "scripts": [
-                        "numgen.js"
-                    ],
-                    "dependents": [],
-                    "stars": 0,
-                    "url": "https://github.com/gamtiq/numgen",
-                    "repository": "https://github.com/gamtiq/numgen.git"
-                }
-            ]
-        },
         "Bower": {
             "name": "Bower",
             "description": "Bower package manager registry",
@@ -1175,98 +1146,6 @@
                 }
             ]
         },
-        "Component": {
-            "name": "Component",
-            "description": "Component client package manager registry",
-            "url": "https://github.com/component/component",
-            "query": "three",
-            "result": [
-                {
-                    "name": "three",
-                    "description": "Three.js component",
-                    "version": "0.60.0",
-                    "keywords": [
-                        "webgl",
-                        "three.js",
-                        "3d"
-                    ],
-                    "scripts": [
-                        "index.js"
-                    ],
-                    "dependencies": {},
-                    "license": "MIT",
-                    "dependents": [
-                        "cvdlab/plasm",
-                        "cvdlab/three-trackball"
-                    ],
-                    "stars": 0,
-                    "url": "https://github.com/cvdlab/three",
-                    "repository": "https://github.com/cvdlab/three.git"
-                },
-                {
-                    "name": "three-stats",
-                    "description": "Three.js stats component",
-                    "version": "0.1.0",
-                    "keywords": [
-                        "three.js",
-                        "stats"
-                    ],
-                    "scripts": [
-                        "index.js"
-                    ],
-                    "dependencies": {},
-                    "license": "MIT",
-                    "dependents": [
-                        "cvdlab/plasm"
-                    ],
-                    "stars": 0,
-                    "url": "https://github.com/cvdlab/three-stats",
-                    "repository": "https://github.com/cvdlab/three-stats.git"
-                },
-                {
-                    "name": "three-trackball",
-                    "description": "Three.js trackball component",
-                    "version": "0.1.0",
-                    "keywords": [
-                        "three.js",
-                        "trackball camera"
-                    ],
-                    "scripts": [
-                        "index.js"
-                    ],
-                    "dependencies": {
-                        "cvdlab/three": "*"
-                    },
-                    "license": "MIT",
-                    "dependents": [
-                        "cvdlab/plasm"
-                    ],
-                    "stars": 0,
-                    "url": "https://github.com/cvdlab/three-trackball",
-                    "repository": "https://github.com/cvdlab/three-trackball.git"
-                },
-                {
-                    "name": "three-detector",
-                    "description": "Three.js detector component",
-                    "version": "0.1.0",
-                    "keywords": [
-                        "three.js",
-                        "detector"
-                    ],
-                    "scripts": [
-                        "index.js"
-                    ],
-                    "dependencies": {},
-                    "license": "MIT",
-                    "dependents": [
-                        "cvdlab/plasm"
-                    ],
-                    "stars": 0,
-                    "url": "https://github.com/cvdlab/three-detector",
-                    "repository": "https://github.com/cvdlab/three-detector.git"
-                }
-            ]
-        },
         "Bower": {
             "name": "Bower",
             "description": "Bower package manager registry",
@@ -1907,13 +1786,6 @@
             "name": "NPM",
             "description": "Node packaged modules registry",
             "url": "https://npmjs.org",
-            "query": "somestrangename",
-            "result": []
-        },
-        "Component": {
-            "name": "Component",
-            "description": "Component client package manager registry",
-            "url": "https://github.com/component/component",
             "query": "somestrangename",
             "result": []
         },

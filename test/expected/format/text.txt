@@ -21,11 +21,6 @@
         url: https://npmjs.org/package/numgen
         keywords: number sequence generator
 
-    Component - 1
-        numgen - Creates objects that generate number sequences
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator
-
     Bower - 1
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
@@ -86,23 +81,6 @@
         bowser-cli - A command line interface to create bowser-engine based games with ease.
         url: https://npmjs.org/package/bowser-cli
         keywords: game webgl pixel three engine 3d 2d
-
-    Component - 4
-        three - Three.js component
-        url: https://github.com/cvdlab/three
-        keywords: webgl three.js 3d
-
-        three-stats - Three.js stats component
-        url: https://github.com/cvdlab/three-stats
-        keywords: three.js stats
-
-        three-trackball - Three.js trackball component
-        url: https://github.com/cvdlab/three-trackball
-        keywords: three.js trackball camera
-
-        three-detector - Three.js detector component
-        url: https://github.com/cvdlab/three-detector
-        keywords: three.js detector
 
     Bower - 5
         threejs - JavaScript 3D library
@@ -213,9 +191,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
         somestrangename is not found.
 
     NPM
-        somestrangename is not found.
-
-    Component
         somestrangename is not found.
 
     Bower

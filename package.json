@@ -1,6 +1,6 @@
 {
   "name": "seeq",
-  "description": "Search or detect name on some resource (GitHub, NPM, Component, Bower, ...)",
+  "description": "Search or detect name on some resource (GitHub, NPM, Bower, ...)",
   "version": "0.2.2",
   "homepage": "https://github.com/gamtiq/seeq",
   "author": {
@@ -68,7 +68,6 @@
   "dependencies": {
     "bower-registry-client": "~0.2.1",
     "charm": "~0.2.0",
-    "component": "~0.19.5",
     "eva": "~0.1.1",
     "he": "~0.3.6",
     "mixing": "~0.0.3",

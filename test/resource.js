@@ -63,7 +63,6 @@ describe("resource", function() {
         it("should return true", function() {
             checkResourcePresence("github");
             checkResourcePresence("nPM");
-            checkResourcePresence("compoNent");
             checkResourcePresence("Bower");
         });
         
@@ -86,8 +85,6 @@ describe("resource", function() {
                 .equal("github");
             expect( getIdByName("npm") )
                 .equal("npm");
-            expect( getIdByName("CompoNent") )
-                .equal("component");
             expect( getIdByName("BOWER") )
                 .equal("bower");
         });
@@ -163,9 +160,9 @@ describe("resource", function() {
             checkResNames({selectTag: ["node", "micro"]}, ["npm", "Grunt", "microjs"]);
             
             checkResNames({selectName: "Github", selectTag: "package"}, 
-                            ["GitHub", "npm", "Component", "Bower"]);
+                            ["GitHub", "npm", "Bower"]);
             checkResNames({selectName: "Github", selectTag: ["library", "component"]}, 
-                            ["GitHub", "npm", "Component", "Bower", "MicroJS"]);
+                            ["GitHub", "npm", "Bower", "MicroJS"]);
             checkResNames({selectName: ["Microjs", "Grunt"], selectTag: "node"}, 
                             ["Microjs", "Npm", "Grunt"]);
             checkResNames({selectName: ["Grunt"], selectTag: ["framework", "library"]}, 
@@ -174,7 +171,7 @@ describe("resource", function() {
             checkResNames({selectName: "Grunt", selectTag: ["library", "package"], checkAllTags: true}, 
                             ["NPM", "Bower", "Grunt", "Github"]);
             checkResNames({selectName: ["Grunt", "MicroJS"], selectTag: ["browser", "component"], checkAllTags: true}, 
-                            ["Component", "Bower", "Grunt", "MicroJS"]);
+                            ["Bower", "Grunt", "MicroJS"]);
         });
     });
     
@@ -377,14 +374,14 @@ describe("resource", function() {
                 expect( resourceList[0].name.toLowerCase() )
                     .equal("npm");
                 
-                resourceList = getList({selectName: ["BOWER", "component"]});
+                resourceList = getList({selectName: ["BOWER", "Microjs"]});
                 
                 expect( resourceList )
                     .be["instanceof"](Array);
                 expect( resourceList.length )
                     .equal(2);
                 
-                nameList = ["bower", "component"];
+                nameList = ["bower", "microjs"];
                 for (nI = 0, nL = resourceList.length; nI < nL; nI++) {
                     expect( nameList.indexOf( resourceList[0].name.toLowerCase() ) )
                         .above(-1);
@@ -430,19 +427,19 @@ describe("resource", function() {
                 resList = getList({selectTag: ["JS"]});
                 checkResTags(resList, ["js"]);
                 expect( resList.length )
-                    .equal(5);
+                    .equal(4);
                 
                 tags = ["Node", "Browser"];
                 resList = getList({selectTag: tags});
                 checkResTags(resList, tags);
                 expect( resList.length )
-                    .equal(4);
+                    .equal(3);
                 
                 tags = ["PACKAGE", "Library", "component"];
                 resList = getList({selectTag: tags});
                 checkResTags(resList, tags);
                 expect( resList.length )
-                    .equal(5);
+                    .equal(4);
             });
             
             it("should return empty array", function() {
@@ -471,7 +468,7 @@ describe("resource", function() {
                 expect( resList.length )
                     .equal(1);
                 
-                tags = ["package", "browser", "-library"];
+                tags = ["js", "node", "-library"];
                 resList = getList({selectTag: tags});
                 checkResTags(resList, tags);
                 expect( resList.length )
@@ -481,7 +478,7 @@ describe("resource", function() {
                 resList = getList({selectTag: tags});
                 checkResTags(resList, tags);
                 expect( resList.length )
-                    .equal(3);
+                    .equal(2);
             });
             
             it("should return empty array", function() {
@@ -521,9 +518,9 @@ describe("resource", function() {
                 resList = getList({selectTag: ["JS"], checkAllTags: true});
                 checkResTags(resList, ["js"]);
                 expect( resList.length )
-                    .equal(5);
+                    .equal(4);
                 
-                tags = ["Browser", "Component"];
+                tags = ["Framework", "Library"];
                 resList = getList({selectTag: tags, checkAllTags: true});
                 checkResTags(resList, tags);
                 expect( resList.length )
@@ -576,7 +573,7 @@ describe("resource", function() {
             it("should return list of resources filtered by tags", function() {
                 var resList, tags;
                 
-                tags = ["JS", "Browser", "Package", "-Amd"];
+                tags = ["JS", "Library", "Package", "-Amd"];
                 resList = getList({selectTag: tags, checkAllTags: true});
                 checkResTags(resList, tags, true);
                 expect( resList.length )
@@ -629,9 +626,9 @@ describe("resource", function() {
                 
                 checkResNames({selectName: "Github", selectTag: "project"}, "GitHub");
                 checkResNames({selectName: "Github", selectTag: "package"}, 
-                                ["GitHub", "npm", "Component", "Bower"]);
+                                ["GitHub", "npm", "Bower"]);
                 checkResNames({selectName: "Github", selectTag: ["library", "component"]}, 
-                                ["GitHub", "npm", "Component", "Bower", "MicroJS"]);
+                                ["GitHub", "npm", "Bower", "MicroJS"]);
                 checkResNames({selectName: ["Github", "Grunt"], selectTag: "node"}, 
                                 ["GitHub", "Npm", "Grunt"]);
                 checkResNames({selectName: ["Grunt"], selectTag: ["framework", "library"]}, 
@@ -640,7 +637,7 @@ describe("resource", function() {
                 checkResNames({selectName: "Grunt", selectTag: ["library", "package"], checkAllTags: true}, 
                                 ["NPM", "Bower", "Grunt", "Github"]);
                 checkResNames({selectName: ["Grunt", "MicroJS"], selectTag: ["browser", "component"], checkAllTags: true}, 
-                                ["Component", "Bower", "Grunt", "MicroJS"]);
+                                ["Bower", "Grunt", "MicroJS"]);
             });
             
             it("should return empty array", function() {
@@ -774,7 +771,7 @@ describe("resource", function() {
         var filterList = resource.filterList;
         
         it("should filter list of available resources", function() {
-            checkResNames({selectTag: "package"}, ["Github", "Npm", "Component", "Bower"]);
+            checkResNames({selectTag: "package"}, ["Github", "Npm", "Bower"]);
             checkResNames({selectTag: "library"}, ["Github", "Npm", "Bower"]);
             checkResNames({selectTag: ["node", "browser"]}, ["Npm", "Bower"]);
             checkResNames({selectTag: "node"}, ["Npm"]);
@@ -783,11 +780,11 @@ describe("resource", function() {
             resource.resetList();
             
             checkResNames({selectName: ["Github", "Microjs"], selectTag: ["package", "browser"], checkAllTags: true}, 
-                            ["Github", "Component", "Bower", "Microjs"]);
-            checkResNames({selectName: ["Component"], selectTag: ["js", "library"], checkAllTags: true}, 
-                            ["Component", "Bower", "Microjs"]);
-            checkResNames({selectName: "Component", selectTag: ["package", "amd"], checkAllTags: true}, 
-                            ["Component"]);
+                            ["Github", "Bower", "Microjs"]);
+            checkResNames({selectName: ["GitHub"], selectTag: ["js", "library"], checkAllTags: true}, 
+                            ["GitHub", "Bower", "Microjs"]);
+            checkResNames({selectName: "Bower", selectTag: ["package", "component"], checkAllTags: true}, 
+                            ["Bower"]);
             checkResNames({selectName: "Fruit", selectTag: ["amd", "project"], checkAllTags: true}, 
                             []);
         });
@@ -849,7 +846,7 @@ describe("resource", function() {
                 
                 check("npm");
                 
-                check(["GitHub", "COMPONENT"]);
+                check(["GitHub", "microJS"]);
                 
                 check(["NPM", "bower"]);
             });
@@ -866,9 +863,9 @@ describe("resource", function() {
         
         describe("getMap({selectTag: 'tag' | ['tag1', 'tag2', ...]})", function() {
             it("should return object containing data about resources with specified tags", function() {
-                checkResNames({selectTag: []}, ["Github", "Npm", "Component", "Bower", "Grunt", "MicroJS"]);
-                checkResNames({selectTag: ["JS"]}, ["Npm", "Component", "Bower", "Grunt", "MicroJS"]);
-                checkResNames({selectTag: ["project", "Component"]}, ["Github", "Component", "Bower"]);
+                checkResNames({selectTag: []}, ["Github", "Npm", "Bower", "Grunt", "MicroJS"]);
+                checkResNames({selectTag: ["JS"]}, ["Npm", "Bower", "Grunt", "MicroJS"]);
+                checkResNames({selectTag: ["project", "Component"]}, ["Github", "Bower"]);
                 checkResNames({selectTag: ["project", "amd", "micro"]}, ["Github", "microjs"]);
             });
             
@@ -881,9 +878,9 @@ describe("resource", function() {
         describe("getMap({selectTag: 'tag' | ['tag1', 'tag2', ...], checkAllTags: true})", function() {
             it("should return object containing data about resources with all specified tags", function() {
                 checkResNames({selectTag: [], checkAllTags: true}, 
-                                ["Github", "Npm", "Component", "Bower", "Grunt", "MicroJS"]);
+                                ["Github", "Npm", "Bower", "Grunt", "MicroJS"]);
                 checkResNames({selectTag: ["JS"], checkAllTags: true}, 
-                                ["Npm", "Component", "Bower", "Grunt", "MicroJS"]);
+                                ["Npm", "Bower", "Grunt", "MicroJS"]);
                 checkResNames({selectTag: ["library", "Component"], checkAllTags: true}, 
                                 ["Bower"]);
                 checkResNames({selectTag: ["library", "framework"], checkAllTags: true}, 
@@ -937,7 +934,7 @@ describe("resource", function() {
                 
                 check( getMap({includeApi: true}) );
                 
-                check( getMap({selectName: ["npm", "Component", "BOWER"], includeApi: true}) );
+                check( getMap({selectName: ["npm", "BOWER"], includeApi: true}) );
             });
         });
         
@@ -993,7 +990,7 @@ describe("resource", function() {
             
             expect( a({name: "npm", module: "path"}) )
                 .to["throw"](/duplicate name/i);
-            expect( a({name: "COMPONENT", api: {}}) )
+            expect( a({name: "BOWER", api: {}}) )
                 .to["throw"](/duplicate name/i);
         });
     });

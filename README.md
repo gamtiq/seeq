@@ -1,7 +1,7 @@
 # seeq
 
 Detect whether a name is registered or present on some resource ([GitHub](https://github.com), [NPM](https://npmjs.org),
-[Component](https://github.com/component/component), [Bower](http://bower.io), ...).
+[Bower](http://bower.io), ...).
 
 Also allows searching for string on specified resources.
 
@@ -15,7 +15,6 @@ The following resources are available:
 
 * [GitHub](https://github.com)
 * [NPM](https://npmjs.org)
-* [Component](https://github.com/component/component)
 * [Bower](http://bower.io)
 * [Registry of Grunt plugins](http://gruntjs.com/plugins)
 * [Registry of Gulp plugins](http://gulpjs.com/plugins)
@@ -65,11 +64,10 @@ Options:
    --github-token         GitHub OAuth2 token that should be used for authentication instead of username and password
 
 
-Available resources (13):
+Available resources (10):
 
     * GitHub (https://github.com) - GitHub repositories
     * NPM (https://npmjs.org) - Node packaged modules registry
-    * Component (https://github.com/component/component) - Component client package manager registry
     * Bower (http://bower.io) - Bower package manager registry
     * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
     * Gulp (http://gulpjs.com/plugins/) - Registry of Gulp plugins
