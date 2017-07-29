@@ -1,9 +1,9 @@
 "use strict";
-/*global chai, describe, it*/
+/*global describe, it*/
 
 // Tests for format utils
 describe("format/util", function() {
-    var expect = require("../lib/chai").expect,
+    var expect = require("chai").expect,
         util = require("../../src/format/util");
     
     

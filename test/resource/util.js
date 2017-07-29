@@ -1,16 +1,10 @@
 "use strict";
-/*global chai, describe, it*/
+/*global describe, it*/
 
 // Tests for resource/util
 describe("resource/util", function() {
-    var expect, util;
-    
-    // node
-    if (typeof chai === "undefined") {
+    var expect = require("chai").expect,
         util = require("../../src/resource/util.js");
-        expect = require("../lib/chai").expect;
-    }
-    
     
     describe(".getLimit", function() {
         var getLimit = util.getLimit;

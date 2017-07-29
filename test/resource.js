@@ -1,18 +1,13 @@
 "use strict";
-/*global after, afterEach, before, chai, describe, it*/
+/*global after, afterEach, before, describe, it*/
 
 // Tests for resource/index.js
 describe("resource", function() {
-    var initialResourceList = require("./fixtures/resource.json"),
-        expect, oldResourceList, resource;
+    var expect = require("chai").expect,
+        initialResourceList = require("./fixtures/resource.json"),
+        resource = require("../src/resource"),
+        oldResourceList;
     
-    // node
-    if (typeof chai === "undefined") {
-        resource = require("../src/resource");
-        expect = require("./lib/chai").expect;
-    }
-    
-
     function toLowerCase(value) {
         return value.toLowerCase();
     }

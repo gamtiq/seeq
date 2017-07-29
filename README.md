@@ -22,7 +22,7 @@ The following resources are available:
 * [MicroJS](http://microjs.com)
 * [CDNJS](http://cdnjs.com)
 * [jsDelivr](http://www.jsdelivr.com)
-* [Custom Elements](http://customelements.io)
+* [Web components](https://www.webcomponents.org)
 
 You can see information about all available resources by running `seeq -l` (see below).
 
@@ -54,6 +54,7 @@ Options:
    -c, --case-sensitive   Use case-sensitive check/search when possible
    -s, --search           Make search instead of check
    -m, --limit            Limit of quantity of results per resource
+   --timeout              Number of seconds to wait for a response before aborting a data request to a resource  [60]
    -f, --format           Result format; can be: text, json, markdown, raw  [text]
    -V, --verbose          Enable verbose output
    -v, --version          Show program version
@@ -75,7 +76,7 @@ Available resources (10):
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
     * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
-    * Custom Elements (http://customelements.io) - A Web Components gallery for modern web apps
+    * Web components (https://www.webcomponents.org) - Share and discover reusable web UI components. A long-term project committed to making the web better by sharing peer-reviewed custom elements that are usable across all browsers, and interoperable with existing libraries.
 ```
 
 To make a search you can use `sees` command (`sees` equals to `seeq -s`).

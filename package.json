@@ -32,12 +32,13 @@
     "test": "grunt test"
   },
   "devDependencies": {
+    "chai": "4.1.0",
     "grunt": ">=0.4.2",
     "grunt-contrib-jshint": ">=0.7.2",
-    "grunt-mocha-cli": ">=1.8.0",
     "grunt-jsdoc": ">=0.4.2",
+    "grunt-mocha-cli": "3.0.0",
     "grunt-push-release": ">=0.1.8",
-    "nock": "~0.42.1"
+    "nock": "9.0.14"
   },
   "keywords": [
     "search",
@@ -63,15 +64,15 @@
     "cdnjs",
     "jsdelivr",
     "webcomponent",
-    "customelement"
+    "webcomponents"
   ],
   "dependencies": {
     "bower-registry-client": "~0.2.1",
     "charm": "~0.2.0",
-    "eva": "~0.1.1",
+    "eva": "0.1.3",
     "he": "~0.3.6",
-    "mixing": "~0.0.3",
-    "nomnom": "~1.6.2",
+    "mixing": "1.2.1",
+    "nomnom": "^1.8.1",
     "npm": "~1.4.0",
     "octonode": "~0.5.0",
     "request": "^2.81.0"

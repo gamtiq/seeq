@@ -64,10 +64,10 @@
         "module": "./module/cdn/jsdelivr"
     },
     {
-        "name": "Custom Elements",
-        "description": "A Web Components gallery for modern web apps",
-        "url": "http://customelements.io",
-        "tag": ["customelements", "component", "webcomponent", "custom", "element", "js", "javascript", "css", "html", "gallery", "browser"],
-        "module": "./module/customelements"
+        "name": "Web components",
+        "description": "Share and discover reusable web UI components. A long-term project committed to making the web better by sharing peer-reviewed custom elements that are usable across all browsers, and interoperable with existing libraries.",
+        "url": "https://www.webcomponents.org",
+        "tag": ["webcomponents", "customelements", "web", "component", "webcomponent", "custom", "element", "js", "javascript", "css", "html", "gallery", "browser"],
+        "module": "./module/webcomponents"
     }
 ]
