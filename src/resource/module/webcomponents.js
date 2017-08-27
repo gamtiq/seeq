@@ -42,13 +42,7 @@ exports.detect = function detect(name, callback, settings) {
                     : 1,
         result = [],
         sRequestUrl = "https://www.webcomponents.org/api/search/" + name + "?limit=100&count=",
-        requestSettings = {
-            json: true
-        };
-    
-    if (settings && settings.requestTimeout) {
-        requestSettings.timeout = settings.requestTimeout;
-    }
+        requestSettings = util.getRequestSettings(settings);
 
     function handler(err, response, data) {
         /*jshint boss:true*/

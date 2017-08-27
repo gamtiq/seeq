@@ -101,6 +101,8 @@ function filterObjectListByNames(list, names) {
  *      Operation settings.
  * @param {Boolean} [settings.persist=false]
  *      Whether specified request mocks/interceptors should be persisted (used several times).
+ * @param {Number} [settings.socketDelay=0]
+ *      The number of milliseconds that your connection should be idle, to simulate a socket timeout.
  */
 function mockSuccessRequest(host, path, responseData, settings) {
     var key, reqMock, responseSet;
@@ -122,6 +124,7 @@ function mockSuccessRequest(host, path, responseData, settings) {
     for (key in responseSet) {
         reqMock = reqMock
                     .get(key)
+                    .socketDelay(settings.socketDelay || 0)
                     .reply(200, responseSet[key]);
     }
 }

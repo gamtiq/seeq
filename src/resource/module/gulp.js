@@ -8,6 +8,7 @@
 "use strict";
 
 var request = require("request"),
+    mixing = require("mixing"),
     util = require("../util"),
     pluginList;
 
@@ -17,6 +18,53 @@ function extractField(plugin, sField, sName) {
         plugin[sName || sField] = list[0];
     }
     return extractField;
+}
+
+/**
+ * Convert received plugin's data to normalized form.
+ *
+ * @param {Object} plugin
+ *      Source data.
+ * @return {Object}
+ *      Normalized data.
+ */
+exports.preparePlugin = function preparePlugin(plugin) {
+    var sItemName;
+
+    extractField(plugin, "author")
+                (plugin, "description")
+                (plugin, "homepage", "url")
+                (plugin, "name")
+                (plugin, "repository")
+                (plugin, "version");
+    delete plugin.homepage;
+    sItemName = plugin.name;
+    plugin.fullname = sItemName;
+    if (sItemName.indexOf("gulp-") === 0) {
+        plugin.name = sItemName.substring(5);
+    }
+
+    return plugin;
+};
+
+function detectWithList(list, name, callback, settings) {
+    var bRealSearch = util.isRealSearchSet(settings),
+        nL = list.length,
+        nLimit = util.getLimit(settings),
+        result = [],
+        nI, plugin, sName;
+    for (nI = 0; nI < nL; nI++) {
+        plugin = list[nI];
+        sName = plugin.name;
+        if ( util.isStringMatch(bRealSearch ? [sName, plugin.description || ""].concat(plugin.keywords) : sName, 
+                                name, settings) ) {
+            result.push(plugin);
+            if (result.length === nLimit) {
+                break;
+            }
+        }
+    }
+    callback(null, result);
 }
 
 /**
@@ -38,53 +86,56 @@ function extractField(plugin, sField, sName) {
             0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
         <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
         <li><code>limit</code> - <code>Integer</code> - Limit of quantity of results
+        <li><code>requestTimeout</code> - <code>Integer</code> - Number of milliseconds to wait for a response before aborting a data request
         </ul>
  */
 exports.detect = function detect(name, callback, settings) {
     var result = [],
-        bRealSearch, nI, nL, nLimit, plugin, sName;
-    if (pluginList && pluginList.length) {
-        bRealSearch = util.isRealSearchSet(settings);
-        nLimit = util.getLimit(settings);
-        for (nI = 0, nL = pluginList.length; nI < nL; nI++) {
-            plugin = pluginList[nI];
-            sName = plugin.name;
-            if ( util.isStringMatch(bRealSearch ? [sName, plugin.description || ""].concat(plugin.keywords) : sName, 
-                                    name, settings) ) {
-                result.push(plugin);
-                if (result.length === nLimit) {
-                    break;
+        sRequestUrl = "https://npmsearch.com/query?fields=name,keywords,repository,description,author,homepage,version&q=keywords:gulpfriendly&q=keywords:gulpplugin&sort=rating:desc&size=10000&start=",
+        requestSettings = util.getRequestSettings(settings),
+        taskList = [],
+        tempPluginList;
+    
+    function handler(err, response, data) {
+        /*jshint boss:true*/
+        var bRun, itemList, nI, nL;
+        if (! err && response.statusCode === 200) {
+            itemList = data.results;
+            for (nI = 0, nL = itemList.length; nI < nL; nI++) {
+                tempPluginList.push(exports.preparePlugin(itemList[nI]));
+            }
+            nL = tempPluginList.length;
+            if (nL > 0) {
+                if (nL < data.total) {
+                    request(mixing({url: sRequestUrl + nL}, requestSettings), handler);
+                }
+                else {
+                    pluginList = tempPluginList;
+                    bRun = true;
                 }
             }
         }
-        callback(null, result);
+        else if (! tempPluginList.length) {
+            callback(new util.getHttpRequestError(err, response), result);
+        }
+        else {
+            bRun = true;
+        }
+        if (bRun) {
+            for (nI = 0, nL = taskList.length; nI < nL; nI++) {
+                detectWithList.apply(null, [tempPluginList].concat(taskList[nI]));
+            }
+        }
+    }
+    
+    if (pluginList && pluginList.length) {
+        detectWithList(pluginList, name, callback, settings);
     }
     else {
-        request("http://registry.gulpjs.com/_search?fields=author,description,homepage,keywords,license,name,repository,version&q=keywords:gulpplugin,gulpfriendly&from=0&size=100000", function(err, response, data) {
-            if (! err && response.statusCode === 200) {
-                pluginList = JSON.parse(data).hits.hits;
-                for (nI = 0, nL = pluginList.length; nI < nL; nI++) {
-                    plugin = pluginList[nI].fields;
-                    extractField(plugin, "author")
-                                (plugin, "description")
-                                (plugin, "homepage", "url")
-                                (plugin, "license")
-                                (plugin, "name")
-                                (plugin, "repository")
-                                (plugin, "version");
-                    delete plugin.homepage;
-                    sName = plugin.name;
-                    plugin.fullname = sName;
-                    if (sName.indexOf("gulp-") === 0) {
-                        plugin.name = sName.substring(5);
-                    }
-                    pluginList[nI] = plugin;
-                }
-                detect(name, callback, settings);
-            }
-            else {
-                callback(err, result);
-            }
-        });
+        taskList.push(Array.prototype.slice.call(arguments));
+        if (! tempPluginList) {
+            tempPluginList = [];
+            request(mixing({url: sRequestUrl + 0}, requestSettings), handler);
+        }
     }
 };
