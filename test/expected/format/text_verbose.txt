@@ -58,9 +58,6 @@
     CDNJS
         numgen is not found.
 
-    jsDelivr
-        numgen is not found.
-
 2. three
 
     GitHub - 5
@@ -225,27 +222,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
         url: http://threejs.org/
         version: r67
 
-    jsDelivr - 5
-        alloyui - Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.
-        url: http://alloyui.com/
-        version: 2.0.0pr6
-
-        eve.js - A <3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.
-        url: http://evejs.com/
-        version: 0.8.4
-
-        jquery.reel - Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.
-        url: http://www.reel360.org/
-        version: 1.3
-
-        mathbox.js - MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.
-        url: https://github.com/unconed/MathBox.js
-        version: 0.1
-
-        meny - A three dimensional and space effecient menu
-        url: http://lab.hakim.se/meny/
-        version: 1.2
-
 3. somestrangename
 
     GitHub
@@ -267,7 +243,4 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
         somestrangename is not found.
 
     CDNJS
-        somestrangename is not found.
-
-    jsDelivr
         somestrangename is not found.

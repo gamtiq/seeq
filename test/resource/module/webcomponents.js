@@ -11,7 +11,6 @@ describe("resource/module/webcomponents", function() {
     describe(".detect(name, callback, settings)", function() {
         var detect = webComponents.detect,
             getCallback = testUtil.getDetectCallback,
-            getFileContent = testUtil.getFileContent,
             fixture = require("../../fixtures/resource/webcomponents.js"),
             apiHost = "https://www.webcomponents.org",
             apiPath = "/api/search/",

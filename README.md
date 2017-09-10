@@ -21,7 +21,6 @@ The following resources are available:
 * [JSter](http://jster.net)
 * [MicroJS](http://microjs.com)
 * [CDNJS](http://cdnjs.com)
-* [jsDelivr](http://www.jsdelivr.com)
 * [Web components](https://www.webcomponents.org)
 
 You can see information about all available resources by running `seeq -l` (see below).
@@ -75,7 +74,6 @@ Available resources (10):
     * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
     * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
-    * jsDelivr (http://www.jsdelivr.com) - Content Delivery Network where any web developer can host their files, including CSS, fonts, JavaScript, jQuery plugins, etc.
     * Web components (https://www.webcomponents.org) - Share and discover reusable web UI components. A long-term project committed to making the web better by sharing peer-reviewed custom elements that are usable across all browsers, and interoperable with existing libraries.
 ```
 

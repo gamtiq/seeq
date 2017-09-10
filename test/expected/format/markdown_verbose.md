@@ -37,8 +37,6 @@
           _keywords_: number sequence generator progression Fibonacci
     * CDNJS  
         numgen is not found.
-    * jsDelivr  
-        numgen is not found.
 2. three
     * GitHub - 5
         + [three.js](http://threejs.org/) - JavaScript 3D library.  
@@ -139,17 +137,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
           _version_: 1.0.1
         + [three.js](http://threejs.org/) - three.js is a lightweight 3D library with a very low level of complexity. The library provides &lt;canvas&gt;, &lt;svg&gt; and WebGL renderers.  
           _version_: r67
-    * jsDelivr - 5
-        + [alloyui](http://alloyui.com/) - Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.  
-          _version_: 2.0.0pr6
-        + [eve.js](http://evejs.com/) - A &lt;3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.  
-          _version_: 0.8.4
-        + [jquery.reel](http://www.reel360.org/) - Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.  
-          _version_: 1.3
-        + [mathbox.js](https://github.com/unconed/MathBox.js) - MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.  
-          _version_: 0.1
-        + [meny](http://lab.hakim.se/meny/) - A three dimensional and space effecient menu  
-          _version_: 1.2
 3. somestrangename
     * GitHub  
         somestrangename is not found.
@@ -164,6 +151,4 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
     * MicroJS  
         somestrangename is not found.
     * CDNJS  
-        somestrangename is not found.
-    * jsDelivr  
         somestrangename is not found.

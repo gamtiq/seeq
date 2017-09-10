@@ -1,45 +1,45 @@
 "use strict";
 /*global describe, it*/
 
-// Tests for resource/module/gulp
-describe("resource/module/gulp", function() {
+// Tests for resource/module/cdnjs
+describe("resource/module/cdnjs", function() {
     var expect = require("chai").expect,
         mixing = require("mixing"),
-        gulp = require("../../../src/resource/module/gulp"),
-        fixture = require("../../fixtures/resource/gulp.js"),
+        cdnjs = require("../../../src/resource/module/cdnjs"),
+        fixture = require("../../fixtures/resource/cdnjs.js"),
         testUtil = require("../../testUtil"),
         util = require("../../../src/resource/util");
     
-    describe(".preparePlugin(plugin)", function() {
-        var preparePlugin = gulp.preparePlugin;
+    describe(".prepareData(data)", function() {
+        var prepareData = cdnjs.prepareData;
 
-        it("should return normalized plugin data", function() {
-            var plugin = preparePlugin(fixture.normalResponse.results[0]);
+        it("should return normalized data", function() {
+            var library = prepareData(fixture.normalResponse.results[4]);
 
-            expect( plugin.name )
+            expect( library.url )
                 .a( "string" );
-            expect( plugin.description )
+            expect( library.repository )
                 .a( "string" );
-            expect( plugin.keywords )
-                .a( "array" );
+            expect( library.license )
+                .a( "string" );
         });
     });
     
     describe(".detect(name, callback, settings)", function() {
-        var detect = gulp.detect,
+        var detect = cdnjs.detect,
             getCallback = testUtil.getDetectCallback,
-            apiHost = "https://npmsearch.com",
-            apiPath = "/query?fields=name,keywords,repository,description,author,homepage,version&q=keywords:gulpfriendly&q=keywords:gulpplugin&sort=rating:desc&size=10000&start=0",
-            componentList = [],
+            apiHost = "https://api.cdnjs.com",
+            apiPath = "/libraries?fields=version,description,homepage,keywords,license,repository",
+            libraryList = [],
             itemList = fixture.normalResponse.results,
             i, k;
         
         for (i = 0, k = itemList.length; i < k; i++) {
-            componentList.push(gulp.preparePlugin( mixing({}, itemList[i]) ));
+            libraryList.push(cdnjs.prepareData( mixing({}, itemList[i]) ));
         }
         
         function getComponents(names) {
-            return testUtil.filterObjectListByNames(componentList, names);
+            return testUtil.filterObjectListByNames(libraryList, names);
         }
         
         function mockSuccessRequest(settings) {
@@ -54,55 +54,71 @@ describe("resource/module/gulp", function() {
             testUtil.callDetect(prepare, detect, sName, callback, settings);
         }
         
-        describe("should return array of found plugins", function() {
+        describe("should return array of found libraries", function() {
             it("no settings", function(done) {
-                check(mockSuccessRequest, "about", getCallback(null, getComponents("about"), done));
+                check(mockSuccessRequest, "amcharts", getCallback(null, getComponents("amcharts"), done));
             });
             
             it("partialMatch: 1", function(done) {
-                check(mockSuccessRequest, "json",
-                        getCallback(null, getComponents("json-to-yaml"), done),
+                check(mockSuccessRequest, "open",
+                        getCallback(null,
+                                    getComponents([
+                                        "openajax-hub",
+                                        "openlayers",
+                                        "openseadragon"
+                                    ]),
+                                    done),
                         {partialMatch: 1});
             });
             
             it("partialMatch: 2", function(done) {
-                check(mockSuccessRequest, "html",
+                check(mockSuccessRequest, "date",
                         getCallback(null,
                                     getComponents([
-                                        "striphtml",
-                                        "jshtml"
+                                        "air-datepicker",
+                                        "angular-bootstrap-datetimepicker",
+                                        "angular-relative-date",
+                                        "better-dateinput-polyfill"
                                     ]),
                                     done),
                         {partialMatch: 2});
             });
             
             it("search: true", function(done) {
-                check(mockSuccessRequest, "json",
+                check(mockSuccessRequest, "component",
                         getCallback(null,
                                     getComponents([
-                                        "translation2json",
-                                        "replace-task",
-                                        "about",
-                                        "json-to-yaml"
+                                        "amazeui-react",
+                                        "amazeui",
+                                        "amplifyjs",
+                                        "better-dateinput-polyfill",
+                                        "openajax-hub"
                                     ]),
                                     done),
                         {search: true});
             });
             
-            it("search: true, limit: 2", function(done) {
-                check(mockSuccessRequest, "json",
+            it("search: true, limit: 3", function(done) {
+                check(mockSuccessRequest, "component",
                         getCallback(null,
                                     getComponents([
-                                        "translation2json",
-                                        "replace-task"
+                                        "amazeui-react",
+                                        "amazeui",
+                                        "amplifyjs"
                                     ]),
                                     done),
-                        {search: true, limit: 2});
+                        {search: true, limit: 3});
             });
             
             it("search: true, caseSensitive: true", function(done) {
-                check(mockSuccessRequest, "JSON",
-                        getCallback(null, getComponents(["translation2json", "json-to-yaml"]), done), 
+                check(mockSuccessRequest, "Ajax",
+                        getCallback(null,
+                                    getComponents([
+                                        "ajaxify",
+                                        "blissfuljs",
+                                        "openajax-hub"
+                                    ]),
+                                    done),
                         {search: true, caseSensitive: true});
             });
         });
@@ -113,7 +129,7 @@ describe("resource/module/gulp", function() {
             });
 
             it("for specific settings", function(done) {
-                check(mockSuccessRequest, "Task", getCallback(null, [], done), {search: true, caseSensitive: true});
+                check(mockSuccessRequest, "Chart", getCallback(null, [], done), {partialMatch: 2, caseSensitive: true});
             });
         });
         

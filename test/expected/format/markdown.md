@@ -21,8 +21,6 @@
           _keywords_: number sequence generator progression Fibonacci
     * CDNJS  
         numgen is not found.
-    * jsDelivr  
-        numgen is not found.
 2. three
     * GitHub - 5
         + [three.js](http://threejs.org/) - JavaScript 3D library.
@@ -83,12 +81,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
     * CDNJS - 2
         + [alloy-ui](https://github.com/liferay/alloy-ui) - Alloy is a UI metaframework that provides a consistent and simple API for building web applications across allthree levels of the browser: structure, style and behavior.
         + [three.js](http://threejs.org/) - three.js is a lightweight 3D library with a very low level of complexity. The library provides &lt;canvas&gt;, &lt;svg&gt; and WebGL renderers.
-    * jsDelivr - 5
-        + [alloyui](http://alloyui.com/) - Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.
-        + [eve.js](http://evejs.com/) - A &lt;3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.
-        + [jquery.reel](http://www.reel360.org/) - Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.
-        + [mathbox.js](https://github.com/unconed/MathBox.js) - MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.
-        + [meny](http://lab.hakim.se/meny/) - A three dimensional and space effecient menu
 3. somestrangename
     * GitHub  
         somestrangename is not found.
@@ -103,6 +95,4 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
     * MicroJS  
         somestrangename is not found.
     * CDNJS  
-        somestrangename is not found.
-    * jsDelivr  
         somestrangename is not found.

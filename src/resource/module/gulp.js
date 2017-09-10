@@ -98,11 +98,12 @@ exports.detect = function detect(name, callback, settings) {
     
     function handler(err, response, data) {
         /*jshint boss:true*/
-        var bRun, itemList, nI, nL;
+        var bRun, itemList, nI, nL, preparePlugin;
         if (! err && response.statusCode === 200) {
+            preparePlugin = exports.preparePlugin;
             itemList = data.results;
             for (nI = 0, nL = itemList.length; nI < nL; nI++) {
-                tempPluginList.push(exports.preparePlugin(itemList[nI]));
+                tempPluginList.push(preparePlugin(itemList[nI]));
             }
             nL = tempPluginList.length;
             if (nL > 0) {
