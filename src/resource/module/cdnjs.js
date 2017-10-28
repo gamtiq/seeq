@@ -65,7 +65,7 @@ exports.detect = function detect(name, callback, settings) {
         for (nI = 0, nL = libraryList.length; nI < nL; nI++) {
             library = libraryList[nI];
             sName = library.name;
-            if ( util.isStringMatch(bRealSearch ? [sName, library.description].concat(library.keywords) : sName, 
+            if ( util.isStringMatch(bRealSearch ? [sName, library.description || ""].concat(library.keywords) : sName, 
                                     name, settings) ) {
                 result.push(prepareData(library));
                 if (result.length === nLimit) {

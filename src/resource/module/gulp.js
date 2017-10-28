@@ -10,7 +10,8 @@
 var request = require("request"),
     mixing = require("mixing"),
     util = require("../util"),
-    pluginList;
+    taskList = [],
+    pluginList, tempPluginList;
 
 function extractField(plugin, sField, sName) {
     var list;
@@ -92,9 +93,7 @@ function detectWithList(list, name, callback, settings) {
 exports.detect = function detect(name, callback, settings) {
     var result = [],
         sRequestUrl = "https://npmsearch.com/query?fields=name,keywords,repository,description,author,homepage,version&q=keywords:gulpfriendly&q=keywords:gulpplugin&sort=rating:desc&size=10000&start=",
-        requestSettings = util.getRequestSettings(settings),
-        taskList = [],
-        tempPluginList;
+        requestSettings = util.getRequestSettings(settings);
     
     function handler(err, response, data) {
         /*jshint boss:true*/
