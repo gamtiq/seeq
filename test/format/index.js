@@ -1,9 +1,9 @@
 "use strict";
-/*global chai, describe, it*/
+/*global describe, it*/
 
 // Tests for format API
 describe("format", function() {
-    var expect = require("../lib/chai").expect,
+    var expect = require("chai").expect,
         format = require("../../src/format"),
         sourceFormatMap = format.getMap(),
         testFormatMap = {};

@@ -53,25 +53,6 @@
                 }
             ]
         },
-        "Component": {
-            "result": [
-                {
-                    "name": "numgen",
-                    "description": "Creates objects that generate number sequences",
-                    "url": "https://github.com/gamtiq/numgen",
-                    "keywords": [
-                        "number",
-                        "sequence",
-                        "generator"
-                    ],
-                    "version": "0.0.3",
-                    "repository": "https://github.com/gamtiq/numgen.git",
-                    "license": [
-                        "MIT"
-                    ]
-                }
-            ]
-        },
         "Bower": {
             "result": [
                 {
@@ -85,25 +66,6 @@
                     ],
                     "version": "0.0.3",
                     "repository": "git://github.com/gamtiq/numgen.git",
-                    "license": [
-                        "MIT"
-                    ]
-                }
-            ]
-        },
-        "Jam": {
-            "result": [
-                {
-                    "name": "numgen",
-                    "description": "Creates objects that generate number sequences",
-                    "url": "https://github.com/gamtiq/numgen",
-                    "keywords": [
-                        "number",
-                        "sequence",
-                        "generator"
-                    ],
-                    "version": "0.0.3",
-                    "repository": "https://github.com/gamtiq/numgen.git",
                     "license": [
                         "MIT"
                     ]
@@ -147,9 +109,6 @@
             ]
         },
         "CDNJS": {
-            "result": []
-        },
-        "jsDelivr": {
             "result": []
         }
     },
@@ -259,67 +218,6 @@
                 }
             ]
         },
-        "Component": {
-            "result": [
-                {
-                    "name": "three",
-                    "description": "Three.js component",
-                    "url": "https://github.com/cvdlab/three",
-                    "keywords": [
-                        "webgl",
-                        "three.js",
-                        "3d"
-                    ],
-                    "version": "0.60.0",
-                    "repository": "https://github.com/cvdlab/three.git",
-                    "license": [
-                        "MIT"
-                    ]
-                },
-                {
-                    "name": "three-stats",
-                    "description": "Three.js stats component",
-                    "url": "https://github.com/cvdlab/three-stats",
-                    "keywords": [
-                        "three.js",
-                        "stats"
-                    ],
-                    "version": "0.1.0",
-                    "repository": "https://github.com/cvdlab/three-stats.git",
-                    "license": [
-                        "MIT"
-                    ]
-                },
-                {
-                    "name": "three-trackball",
-                    "description": "Three.js trackball component",
-                    "url": "https://github.com/cvdlab/three-trackball",
-                    "keywords": [
-                        "three.js",
-                        "trackball camera"
-                    ],
-                    "version": "0.1.0",
-                    "repository": "https://github.com/cvdlab/three-trackball.git",
-                    "license": [
-                        "MIT"
-                    ]
-                },
-                {
-                    "name": "three-detector",
-                    "description": "Three.js detector component",
-                    "url": "https://github.com/cvdlab/three-detector",
-                    "keywords": [
-                        "three.js",
-                        "detector"
-                    ],
-                    "version": "0.1.0",
-                    "repository": "https://github.com/cvdlab/three-detector.git",
-                    "license": [
-                        "MIT"
-                    ]
-                }
-            ]
-        },
         "Bower": {
             "result": [
                 {
@@ -376,35 +274,6 @@
                     ],
                     "version": "0.0.64",
                     "repository": "git://github.com/jiyinyiyong/three.js.git",
-                    "license": [
-                        "MIT"
-                    ]
-                }
-            ]
-        },
-        "Jam": {
-            "result": [
-                {
-                    "name": "anythingslider",
-                    "description": "Just what the world needs, another jQuery slider. YAWN. I know, check this one out though, it's got lots of cool features.\n\nHere on CSS-Tricks, I've created a number of different sliders. Three, in fact. A \"featured content\" slider, a \"start/stop slider\", and \"moving boxes\". Each of them had some cool interesting feature that I needed to build at the time. All were well-received, but as is the case with these things, people want them to do X, Y, and Z in addition to what they already did.\n\nThis new AnythingSlider is an attempt at bringing together the functionality of all of those previous sliders and adding new features. In other words, to create a really \"full featured\" slider that could be widely useful. This is the first time (on CSS-Tricks) that one of these sliders is an actual plugin as well, which should make implementing it and customizing it much easier.",
-                    "url": "http://css-tricks.com/3412-anythingslider-jquery-plugin/",
-                    "keywords": [
-                        "customizable",
-                        "effects",
-                        "slider",
-                        "video"
-                    ],
-                    "version": "1.8.15",
-                    "license": [
-                        "GPL3"
-                    ]
-                },
-                {
-                    "name": "three",
-                    "description": "JavaScript 3D library",
-                    "url": "http://threejs.org",
-                    "version": "1.58.0",
-                    "repository": "https://github.com/mrdoob/three.js.git",
                     "license": [
                         "MIT"
                     ]
@@ -516,40 +385,6 @@
                     "version": "r67"
                 }
             ]
-        },
-        "jsDelivr": {
-            "result": [
-                {
-                    "name": "alloyui",
-                    "description": "Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.",
-                    "url": "http://alloyui.com/",
-                    "version": "2.0.0pr6"
-                },
-                {
-                    "name": "eve.js",
-                    "description": "A <3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.",
-                    "url": "http://evejs.com/",
-                    "version": "0.8.4"
-                },
-                {
-                    "name": "jquery.reel",
-                    "description": "Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.",
-                    "url": "http://www.reel360.org/",
-                    "version": "1.3"
-                },
-                {
-                    "name": "mathbox.js",
-                    "description": "MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.",
-                    "url": "https://github.com/unconed/MathBox.js",
-                    "version": "0.1"
-                },
-                {
-                    "name": "meny",
-                    "description": "A three dimensional and space effecient menu",
-                    "url": "http://lab.hakim.se/meny/",
-                    "version": "1.2"
-                }
-            ]
         }
     },
     "somestrangename": {
@@ -559,13 +394,7 @@
         "NPM": {
             "result": []
         },
-        "Component": {
-            "result": []
-        },
         "Bower": {
-            "result": []
-        },
-        "Jam": {
             "result": []
         },
         "Grunt": {
@@ -578,9 +407,6 @@
             "result": []
         },
         "CDNJS": {
-            "result": []
-        },
-        "jsDelivr": {
             "result": []
         }
     }

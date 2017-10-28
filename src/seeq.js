@@ -2,7 +2,7 @@
  * seeq
  * https://github.com/gamtiq/seeq
  *
- * Copyright (c) 2014 Denis Sikuler
+ * Copyright (c) 2014-2017 Denis Sikuler
  * Licensed under the MIT license.
  */
 

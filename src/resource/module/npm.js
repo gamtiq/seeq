@@ -7,9 +7,9 @@
 
 "use strict";
 
-var npm = require("npm"),
-    util = require("../util"),
-    bReady = false;
+var exec = require("child_process").exec,
+    path = require("path"),
+    util = require("../util");
 
 /**
  * Check whether package with the specified name is existent, or make search for the specified string.
@@ -20,7 +20,7 @@ var npm = require("npm"),
  * @param {String} name
  *      Name of the package to check or string to search for.
  * @param {Function} callback
- *      Function that should be called to process operation's result.
+ *      Function that should be called to process operation"s result.
  * @param {Object} [settings]
  *      Operation settings.
  *      The following settings are supported (name - type - description):
@@ -33,58 +33,60 @@ var npm = require("npm"),
         </ul>
  */
 exports.detect = function detect(name, callback, settings) {
-    if (bReady) {
-        var bSearch = util.isSearchSet(settings);
-        npm.commands[bSearch ? "search" : "view"]([name], true, function(err, data) {
+    /*jshint laxbreak:true*/
+    var bSearch = util.isSearchSet(settings);
+    var nLimit = util.getLimit(settings, -1);
+    exec("npm " + (bSearch ? "search" : "view") + " " + name + " --json"
+            + (bSearch
+                ? " --searchlimit=" + (nLimit > -1 ? nLimit : 100000)
+                : ""),
+        {cwd: path.join(__dirname, "../../../node_modules/.bin")},
+        function(error, stdout) {
             var result = [],
-                bRealSearch, nLimit, pkg, sName;
-            if (data) {
-                if (bSearch) {
-                    bRealSearch = util.isRealSearchSet(settings);
-                    nLimit = util.getLimit(settings);
-                    for (sName in data) {
-                        pkg = data[sName];
-                        if ( bRealSearch || util.isStringMatch(pkg.name, name, settings) ) {
-                            if (! pkg.url) {
-                                pkg.url = "https://npmjs.org/package/" + sName;
-                            }
-                            if (pkg.keywords && ! Array.isArray(pkg.keywords)) {
-                                pkg.keywords = [pkg.keywords];
-                            }
-                            result.push(pkg);
-                            if (result.length === nLimit) {
-                                break;
+                bRealSearch, data, nI, nK, pkg, sName;
+            if (error) {
+                sName = error.message;
+                if (error.code === "E404"
+                        || sName.indexOf("ERR! code E404") > -1
+                        || sName.indexOf("Registry returned 404") > -1) {
+                    error = null;
+                }
+            }
+            else if (stdout) {
+                try {
+                    data = JSON.parse(stdout);
+                }
+                catch (e) {
+                    error = e;
+                }
+                if (data) {
+                    if (bSearch) {
+                        bRealSearch = util.isRealSearchSet(settings);
+                        for (nI = 0, nK = data.length; nI < nK; nI++) {
+                            pkg = data[nI];
+                            sName = pkg.name;
+                            if ( util.isStringMatch(bRealSearch
+                                                        ? [sName, pkg.description || ""].concat(pkg.keywords || [])
+                                                        : sName,
+                                                    name, settings) ) {
+                                if (! pkg.url) {
+                                    pkg.url = "https://npmjs.org/package/" + pkg.name;
+                                }
+                                if (pkg.keywords && ! Array.isArray(pkg.keywords)) {
+                                    pkg.keywords = [pkg.keywords];
+                                }
+                                result.push(pkg);
                             }
                         }
                     }
-                }
-                else {
-                    for (sName in data) {
-                        pkg = data[sName];
-                        if (! pkg.url && pkg.homepage) {
-                            pkg.url = pkg.homepage;
+                    else {
+                        if (! data.url && data.homepage) {
+                            data.url = data.homepage;
                         }
-                        result.push(pkg);
-                        break;
+                        result.push(data);
                     }
                 }
             }
-            if (err && err.code === "E404") {
-                err = null;
-            }
-            callback(err, result);
+            callback(error, result);
         });
-    }
-    else {
-        npm.load({loglevel: "silent"}, function(err, npmObj) {
-            if (err) {
-                callback(err, []);
-            }
-            else {
-                bReady = true;
-                npm = npmObj;
-                detect(name, callback, settings);
-            }
-        });
-    }
 };

@@ -15,25 +15,11 @@
         "module": "./module/npm"
     },
     {
-        "name": "Component",
-        "description": "Component client package manager registry",
-        "url": "https://github.com/component/component",
-        "tag": ["component", "js", "javascript", "package", "browser"],
-        "module": "./module/component"
-    },
-    {
         "name": "Bower",
         "description": "Bower package manager registry",
         "url": "http://bower.io",
         "tag": ["bower", "js", "javascript", "package", "component", "library", "browser"],
         "module": "./module/bower"
-    },
-    {
-        "name": "Jam",
-        "description": "Jam package manager repository",
-        "url": "http://jamjs.org",
-        "tag": ["jam", "js", "javascript", "package", "requirejs", "amd", "browser"],
-        "module": "./module/jam"
     },
     {
         "name": "Grunt",

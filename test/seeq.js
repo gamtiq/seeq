@@ -1,16 +1,10 @@
 "use strict";
-/*global chai, describe, it*/
+/*global describe, it*/
 
 // Tests for seeq
 describe("seeq", function() {
-    var expect, seeq;
-    
-    // node
-    if (typeof chai === "undefined") {
+    var expect = require("chai").expect,
         seeq = require("../src/seeq.js");
-        expect = require("./lib/chai").expect;
-    }
-    
     
     describe(".searchName(name, callback, settings)", function() {
         var searchName = seeq.searchName;

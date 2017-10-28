@@ -2,7 +2,7 @@
 
 var fs = require("fs"),
     path = require("path"),
-    expect = require("./lib/chai").expect,
+    expect = require("chai").expect,
     nock = require("nock");
 
 /*
@@ -44,7 +44,7 @@ function getDetectCallback(expErr, expResult, done) {
         }
         expect(result.map(getName))
             .eql(expResult.map(getName));
-        done && 
+        (typeof done === "function") &&
             done();
     };
 }
@@ -92,16 +92,41 @@ function filterObjectListByNames(list, names) {
  *      Specifies address of server for which request should be mocked in the following form:
  *      protocol://domain[:port]
  *      where port is optional.
- * @param {String} path
+ * @param {Object, String} path
  *      Part of URL after domain/port (starting form /). May contain query string.
- * @param {Object, String} responseData
+ *      An object can be passed. In such case keys are paths, and values specify corresponding responses.
+ * @param {Object, String} [responseData]
  *      Data which should be used as response for mocked request.
+ * @param {Object} [settings]
+ *      Operation settings.
+ * @param {Boolean} [settings.persist=false]
+ *      Whether specified request mocks/interceptors should be persisted (used several times).
+ * @param {Number} [settings.socketDelay=0]
+ *      The number of milliseconds that your connection should be idle, to simulate a socket timeout.
  */
-function mockSuccessRequest(host, path, responseData) {
+function mockSuccessRequest(host, path, responseData, settings) {
+    var key, reqMock, responseSet;
+    if (! settings) {
+        settings = {};
+    }
     nock.cleanAll();
-    nock(host)
-        .get(path)
-        .reply(200, responseData);
+    if (typeof path === "string") {
+        responseSet = {};
+        responseSet[path] = responseData || "";
+    }
+    else {
+        responseSet = path;
+    }
+    reqMock = nock(host);
+    if (settings.persist) {
+        reqMock.persist();
+    }
+    for (key in responseSet) {
+        reqMock = reqMock
+                    .get(key)
+                    .socketDelay(settings.socketDelay || 0)
+                    .reply(200, responseSet[key]);
+    }
 }
 
 /*
@@ -113,14 +138,19 @@ function mockSuccessRequest(host, path, responseData) {
  *      where port is optional.
  * @param {String} path
  *      Part of URL after domain/port (starting form /). May contain query string.
- * @param {Number} responseCode
+ * @param {Number | Object | String} response
  *      Response code.
  */
-function mockFailRequest(host, path, responseCode) {
+function mockFailRequest(host, path, response) {
     nock.cleanAll();
-    nock(host)
-        .get(path)
-        .reply(responseCode);
+    var reqMock = nock(host)
+                .get(path);
+    if (typeof response === "number") {
+        reqMock.reply(response);
+    }
+    else {
+        reqMock.replyWithError(response);
+    }
 }
 
 /*
@@ -139,7 +169,7 @@ function mockFailRequest(host, path, responseCode) {
  */
 function callDetect(prepare, detect, name, callback, settings) {
     /*jshint expr:true*/
-    prepare &&
+    (typeof prepare === "function") &&
         prepare();
     detect(name, callback, settings);
 }

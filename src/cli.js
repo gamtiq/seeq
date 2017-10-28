@@ -44,10 +44,11 @@ var fs = require("fs"),
     pkg = JSON.parse(fs.readFileSync(__dirname + "/../package.json", "utf8")),
     resourceList = resourceUnit.getList({includeApi: true}),
     generalSettingName = {
-        "partialMatch": null, 
-        "caseSensitive": null, 
-        "search": null, 
-        "limit": null
+        "partialMatch": null,
+        "caseSensitive": null,
+        "search": null,
+        "limit": null,
+        "requestTimeout": null
     },
     
     argParser = nomnom()
@@ -108,6 +109,11 @@ var fs = require("fs"),
                                     return "Limit should be equal to or greater than 1";
                                 }
                             }
+                        },
+                        "requestTimeout": {
+                            full: "timeout",
+                            "default": 60,
+                            help: "Number of seconds to wait for a response before aborting a data request to a resource"
                         },
                         "format": {
                             abbr: "f",
@@ -228,6 +234,9 @@ function run(args) {
                 value = args[sName];
                 // General settings
                 if (sName in generalSettingName) {
+                    if (sName === "requestTimeout") {
+                        value *= 1000;
+                    }
                     (resourceSettings._general || (resourceSettings._general = {}))[sName] = value;
                 }
                 // Resource-specific settings

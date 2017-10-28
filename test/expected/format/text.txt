@@ -21,17 +21,7 @@
         url: https://npmjs.org/package/numgen
         keywords: number sequence generator
 
-    Component - 1
-        numgen - Creates objects that generate number sequences
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator
-
     Bower - 1
-        numgen - Creates objects that generate number sequences
-        url: https://github.com/gamtiq/numgen
-        keywords: number sequence generator
-
-    Jam - 1
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
         keywords: number sequence generator
@@ -50,9 +40,6 @@
         keywords: number sequence generator progression Fibonacci
 
     CDNJS
-        numgen is not found.
-
-    jsDelivr
         numgen is not found.
 
 2. three
@@ -92,23 +79,6 @@
         url: https://npmjs.org/package/bowser-cli
         keywords: game webgl pixel three engine 3d 2d
 
-    Component - 4
-        three - Three.js component
-        url: https://github.com/cvdlab/three
-        keywords: webgl three.js 3d
-
-        three-stats - Three.js stats component
-        url: https://github.com/cvdlab/three-stats
-        keywords: three.js stats
-
-        three-trackball - Three.js trackball component
-        url: https://github.com/cvdlab/three-trackball
-        keywords: three.js trackball camera
-
-        three-detector - Three.js detector component
-        url: https://github.com/cvdlab/three-detector
-        keywords: three.js detector
-
     Bower - 5
         threejs - JavaScript 3D library
         url: http://threejs.org/
@@ -127,18 +97,6 @@
         three.js - JavaScript 3D library
         url: http://threejs.org/
         keywords: threejs 3d webgl
-
-    Jam - 2
-        anythingslider - Just what the world needs, another jQuery slider. YAWN. I know, check this one out though, it's got lots of cool features.
-
-Here on CSS-Tricks, I've created a number of different sliders. Three, in fact. A "featured content" slider, a "start/stop slider", and "moving boxes". Each of them had some cool interesting feature that I needed to build at the time. All were well-received, but as is the case with these things, people want them to do X, Y, and Z in addition to what they already did.
-
-This new AnythingSlider is an attempt at bringing together the functionality of all of those previous sliders and adding new features. In other words, to create a really "full featured" slider that could be widely useful. This is the first time (on CSS-Tricks) that one of these sliders is an actual plugin as well, which should make implementing it and customizing it much easier.
-        url: http://css-tricks.com/3412-anythingslider-jquery-plugin/
-        keywords: customizable effects slider video
-
-        three - JavaScript 3D library
-        url: http://threejs.org
 
     Grunt - 5
         glsl-threejs - A Grunt taks for wrapping GLSL Shader code in Javascript packages, ready to be used in Three.js
@@ -208,22 +166,6 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
         three.js - three.js is a lightweight 3D library with a very low level of complexity. The library provides <canvas>, <svg> and WebGL renderers.
         url: http://threejs.org/
 
-    jsDelivr - 5
-        alloyui - Alloy is a UI framework built on top of YUI3 that provides a simple API for building high scalable applications. It incorporates three design languages: HTML, CSS, and JavaScript.
-        url: http://alloyui.com/
-
-        eve.js - A <3kB JavaScript file providing three simple methods to organize code into CSS namespaces which magically restrict code to the current context, allowing for dramatic reductions to code size and development time.
-        url: http://evejs.com/
-
-        jquery.reel - Established and the most versatile three-sixty player for jQuery. Teaches your ordinary image tag some new tricks turning it into a gorgeous interactive 360° object movie, panorama or stop-motion animation.
-        url: http://www.reel360.org/
-
-        mathbox.js - MathBox is a library for rendering presentation-quality math diagrams in a browser using WebGL. Built on top of Three.js and tQuery, it provides a clean API to visualize mathematical relationships and animate them smoothly.
-        url: https://github.com/unconed/MathBox.js
-
-        meny - A three dimensional and space effecient menu
-        url: http://lab.hakim.se/meny/
-
 3. somestrangename
 
     GitHub
@@ -232,13 +174,7 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
     NPM
         somestrangename is not found.
 
-    Component
-        somestrangename is not found.
-
     Bower
-        somestrangename is not found.
-
-    Jam
         somestrangename is not found.
 
     Grunt
@@ -251,7 +187,4 @@ JUTE is a standalone HTTP server that serves your test files to a JUTE backend f
         somestrangename is not found.
 
     CDNJS
-        somestrangename is not found.
-
-    jsDelivr
         somestrangename is not found.

@@ -1,11 +1,11 @@
 "use strict";
-/*global chai, describe, it*/
+/*global describe, it*/
 
 // Tests for formatters
 describe("formatter", function() {
     var fs = require("fs"),
         path = require("path"),
-        expect = require("../lib/chai").expect,
+        expect = require("chai").expect,
         searchResult = require("../fixtures/result.json"),
         queryList = Object.keys(searchResult);
     

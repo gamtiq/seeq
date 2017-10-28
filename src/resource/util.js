@@ -47,6 +47,33 @@ exports.getLimit = function(settings, defaultValue, maxValue) {
 };
 
 /**
+ * Return request settings.
+ * 
+ * @param {Object} [settings]
+ *      Operation settings.
+ *      The following settings are used to form request settings (name - type - description):
+        <ul>
+        <li><code>requestTimeout</code> - <code>Integer</code> - Number of milliseconds to wait for a response before aborting a data request
+        </ul>
+ * @param {Boolean} [json=true]
+ *      Whether the setting to process response as JSON should be added.
+ * @return {Object}
+ *      Request settings.
+ */
+exports.getRequestSettings = function(settings, json) {
+    var requestSettings = {};
+    
+    if (settings && settings.requestTimeout) {
+        requestSettings.timeout = settings.requestTimeout;
+    }
+    if (json || arguments.length < 2) {
+        requestSettings.json = true;
+    }
+
+    return requestSettings;
+};
+
+/**
  * Determine whether search should be made instead of check according to operation settings.
  * 
  * @param {Object} [settings]
