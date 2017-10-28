@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>seeq Module: format</title>
+	<title>seeq Module: resource/util</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,7 +72,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: format</h1>
+	<h1 class="page-title">Module: resource/util</h1>
 <section>
 
 <header>
@@ -84,15 +84,7 @@
     <div class="container-overview">
     
         
-            <div class="description">API to work with formatters that can be used to format result of <a href="module-seeq.html#.search">search</a>.<br>Each formatter is a function that should return string representing result of search.The following parameters are passed to the format function:
-   <ul>
-   <li>object that is result of <a href="module-seeq.html#.search">search</a>
-   <li>object that represents format settings; the following settings can be used (name - type - description):
-       <ul>
-       <li><code>queryList</code> - <code>Array</code> - list of names/strings that were checked/searched
-       <li><code>verbose</code> - <code>boolean</code> - whether basic or detailed result should be returned
-       </ul>
-   </ul></div>
+            <div class="description">Helper functions.</div>
         
 
         
@@ -144,6 +136,16 @@
     
 
     
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-resource_util-FailedHttpRequestError.html">FailedHttpRequestError</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-resource_util-IncorrectResponseError.html">IncorrectResponseError</a></dt>
+            <dd></dd>
+        </dl>
+    
 
     
 
@@ -158,7 +160,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".exists"><span class="type-signature">&lt;static> </span>exists(name)</h4>
+    <h4 class="name" id=".decodeHtmlEntity"><span class="type-signature">&lt;static> </span>decodeHtmlEntity(str)</h4>
     
     
 </dt>
@@ -166,7 +168,7 @@
 
     
     <div class="description">
-        Check whether formatter with specified name exists.
+        Decode HTML entities in given string.
     </div>
     
 
@@ -201,7 +203,7 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>str</code></td>
             
 
             <td class="type">
@@ -218,7 +220,7 @@
 
             
 
-            <td class="description last">Name that should be checked.</td>
+            <td class="description last">String that should be processed.</td>
         </tr>
 
     
@@ -262,12 +264,181 @@
 	
 
 	
-	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
-	<dd class="tag-see">
-		<ul>
-			<li><a href="module-format.html#.get">get</a></li>
-			</ul>
-	</dd>
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Decoded string.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".getHttpRequestError"><span class="type-signature">&lt;static> </span>getHttpRequestError(err, response)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Return object that represents data about error of HTTP request.<br>If <code>err</code> parameter is set then it will be returned.Otherwise instance of FailedHttpRequestError will be returned.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>err</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Error</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Represents data about error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">http.IncomingMessage</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Represents data about response.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
 	
 
 	
@@ -289,7 +460,7 @@
     
             
 <div class="param-desc">
-    <code>true</code> if there is a formatter with the specified name,     <code>false</code> if no one of formatters has the specified name.
+    Error object.
 </div>
 
 
@@ -300,7 +471,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Error</span>
 
 
 
@@ -317,7 +488,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".format"><span class="type-signature">&lt;static> </span>format(data, name [, settings])</h4>
+    <h4 class="name" id=".getLimit"><span class="type-signature">&lt;static> </span>getLimit( [settings] [, defaultValue] [, maxValue])</h4>
     
     
 </dt>
@@ -325,7 +496,7 @@
 
     
     <div class="description">
-        Format result of search by using specified formatter.
+        Return value of <code>limit</code> setting.Default value will be returned if <code>limit</code> field is not present in <code>settings</code> parameter.
     </div>
     
 
@@ -362,7 +533,7 @@
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>settings</code></td>
             
 
             <td class="type">
@@ -378,6 +549,8 @@
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -387,20 +560,20 @@
 
             
 
-            <td class="description last">Result of <a href="module-seeq.html#.search">search</a>.</td>
+            <td class="description last">Operation settings. The object can have numeric <code>limit</code> field which value will be returned     if the value is positive number and not greater than maximum value.     Otherwise value of <code>defaultValue</code> parameter will be returned.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>defaultValue</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Number</span>
 
 
 
@@ -410,6 +583,8 @@
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -419,9 +594,386 @@
 
             
 
-            <td class="description last">Name of formatter that should be used.</td>
+            <td class="description last">Default value of limit. <code>maxValue</code> is used when parameter value is not passed or 0.</td>
         </tr>
 
+    
+
+        <tr>
+            
+                <td class="name"><code>maxValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Maximum value of limit. <code>Number.MAX_VALUE</code> is used when parameter value is not passed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Value that corresponds to <code>limit</code> setting.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".getRequestSettings"><span class="type-signature">&lt;static> </span>getRequestSettings( [settings] [, json])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Return request settings.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Operation settings.     The following settings are used to form request settings (name - type - description):
+        <ul>
+        <li><code>requestTimeout</code> - <code>Integer</code> - Number of milliseconds to wait for a response before aborting a data request
+        </ul></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>json</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Whether the setting to process response as JSON should be added.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Request settings.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".isRealSearchSet"><span class="type-signature">&lt;static> </span>isRealSearchSet( [settings])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Determine whether search should be made instead of check according to operation settings.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
         <tr>
@@ -453,10 +1005,9 @@
 
             
 
-            <td class="description last">Format settings. Default values for settings are the following:
+            <td class="description last">Operation settings.     The following settings are used to specify real search (name - type - description):
         <ul>
-        <li><code>queryList</code> - extracted from <code>data</code> parameter
-        <li><code>verbose</code> - <code>false</code>
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
         </ul></td>
         </tr>
 
@@ -521,7 +1072,7 @@
     
             
 <div class="param-desc">
-    Result returned by specified formatter or empty string if no one of formatters has the specified name.
+    <code>true</code> if real search should be made according to settings,     <code>false</code> otherwise.
 </div>
 
 
@@ -532,7 +1083,7 @@
     </dt>
     <dd>
         
-<span class="param-type">String</span>
+<span class="param-type">Boolean</span>
 
 
 
@@ -549,7 +1100,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".get"><span class="type-signature">&lt;static> </span>get(name)</h4>
+    <h4 class="name" id=".isSearchSet"><span class="type-signature">&lt;static> </span>isSearchSet( [settings])</h4>
     
     
 </dt>
@@ -557,7 +1108,7 @@
 
     
     <div class="description">
-        Return formatter with specified name.
+        Check whether search should be made according to operation settings.
     </div>
     
 
@@ -580,6 +1131,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -592,13 +1145,13 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>settings</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
 
@@ -606,10 +1159,26 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Name of formatter that should be returned.</td>
+            <td class="description last">Operation settings.     The following settings are used to specify search (name - type - description):
+        <ul>
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check/search should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
+            1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
+        </ul></td>
         </tr>
 
     
@@ -673,7 +1242,7 @@
     
             
 <div class="param-desc">
-    Function that represents formatter     or <code>null</code> if no one of formatters has the specified name.
+    <code>true</code> if search should be made according to settings,     <code>false</code> otherwise.
 </div>
 
 
@@ -684,10 +1253,7 @@
     </dt>
     <dd>
         
-<span class="param-type">function</span>
-|
-
-<span class="param-type">null</span>
+<span class="param-type">Boolean</span>
 
 
 
@@ -704,7 +1270,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".getMap"><span class="type-signature">&lt;static> </span>getMap()</h4>
+    <h4 class="name" id=".isStringMatch"><span class="type-signature">&lt;static> </span>isStringMatch(value, searchValue [, settings])</h4>
     
     
 </dt>
@@ -712,7 +1278,7 @@
 
     
     <div class="description">
-        Return object that represents all available formatters.
+        Check whether one of given strings is similar to the searched string.
     </div>
     
 
@@ -722,236 +1288,69 @@
 
     
     
+        <h5>Parameters:</h5>
+        
 
-    
-<dl class="details">
-    
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-	
+        <th>Type</th>
 
-	
+        
+        <th>Argument</th>
+        
 
-	
+        
 
-    
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
+    <tbody>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+        <tr>
             
-<div class="param-desc">
-    Object that represents all available formatters.     Fields are names of formatters, values are corresponding formatters.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
+                <td class="name"><code>value</code></td>
             
-<hr>
-<dt>
-    <h4 class="name" id=".getNameList"><span class="type-signature">&lt;static> </span>getNameList()</h4>
-    
-    
-</dt>
-<dd>
 
-    
-    <div class="description">
-        Return list containing names of all available formatters.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+            <td class="type">
             
-<div class="param-desc">
-    List containing names of all available formatters.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
+                
 <span class="param-type">Array</span>
+|
+
+<span class="param-type">String</span>
 
 
 
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
             
-<hr>
-<dt>
-    <h4 class="name" id=".remove"><span class="type-signature">&lt;static> </span>remove(name)</h4>
-    
-    
-</dt>
-<dd>
+            </td>
 
-    
-    <div class="description">
-        Remove formatter with specified name.
-    </div>
-    
+            
+                <td class="attributes">
+                
 
-    
+                
 
-    
+                
+                </td>
+            
 
-    
-    
-        <h5>Parameters:</h5>
-        
+            
 
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
+            <td class="description last">String or array of strings that should be checked.</td>
+        </tr>
 
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>searchValue</code></td>
             
 
             <td class="type">
@@ -965,279 +1364,133 @@
             </td>
 
             
-
-            
-
-            <td class="description last">Name of formatter.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Function that represents formatter     or <code>null</code> if no one of formatters has the specified name.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">function</span>
-|
-
-<span class="param-type">null</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id=".set"><span class="type-signature">&lt;static> </span>set(name, format)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Set formatter with specified name.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">String</span>
 
+                
 
-
-            
-            </td>
-
+                
+                </td>
             
 
             
 
-            <td class="description last">Name of formatter.</td>
+            <td class="description last">Value that is searched for.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>format</code></td>
+                <td class="name"><code>settings</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
-|
-
-<span class="param-type">null</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Function that represents formatter.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Throws:</h5>
-    
-            
-
-    <div class="param-desc">
-    
-        Will throw an error if format is not a function.
-    
-    </div>
-
-
-        
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Object that represents module <code>exports</code>.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
 <span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Operation settings.     The following settings are supported (name - type - description):
+        <ul>
+        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check should be used
+        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching: 0 - disallow (by default), 
+            1 - allow at the beginning of matching strings, 2 - allow substring matching
+        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
+        </ul></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <code>true</code> if one of given strings is similar to the searched string according to settings,     <code>false</code> otherwise.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
 
 
 

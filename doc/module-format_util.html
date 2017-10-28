@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>seeq Module: bower</title>
+	<title>seeq Module: format/util</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,7 +72,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: bower</h1>
+	<h1 class="page-title">Module: format/util</h1>
 <section>
 
 <header>
@@ -84,7 +84,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Module that provides means to check/search in <a href="http://bower.io">Bower</a>.</div>
+            <div class="description">Helper functions for formating.</div>
         
 
         
@@ -150,7 +150,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".detect"><span class="type-signature">&lt;static> </span>detect(name, callback [, settings])</h4>
+    <h4 class="name" id=".getLicenseList"><span class="type-signature">&lt;static> </span>getLicenseList(data)</h4>
     
     
 </dt>
@@ -158,7 +158,7 @@
 
     
     <div class="description">
-        Check whether package with the specified name is existent, or make search for the specified string.Data about found packages will be passed into callback as array.If no package is found, empty array will be passed into callback.
+        Return list of license types extracted from specified data.License types extracted from <code>license</code> or <code>licenses</code> field.
     </div>
     
 
@@ -181,8 +181,6 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
         
 
@@ -195,71 +193,7 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Name of the package to check or string to search for.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Function that should be called to process operation's result.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>settings</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
@@ -273,28 +207,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Operation settings.     The following settings are supported (name - type - description):
-        <ul>
-        <li><code>caseSensitive</code> - <code>Boolean</code> - Whether case-sensitive check/search should be used
-        <li><code>partialMatch</code> - <code>Integer</code> - Allow partial matching when checking name: 
-            0 - disallow (by default), 1 - allow at the beginning of matching strings, 2 - allow substring matching
-        <li><code>search</code> - <code>Boolean</code> - Whether search should be made instead of check
-        <li><code>limit</code> - <code>Integer</code> - Limit of quantity of results
-        <li><code>requestTimeout</code> - <code>Integer</code> - Number of milliseconds to wait for a response before aborting a data request
-        </ul></td>
+            <td class="description last">Data that should be processed.</td>
         </tr>
 
     
@@ -354,6 +270,182 @@
     
 
     
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    List of found license types.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".getRepository"><span class="type-signature">&lt;static> </span>getRepository(data)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Return repository URL extracted from specified data.URL extracted from <code>repository</code> field.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Data that should be processed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Found repository URL or empty string.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
 
     
 </dd>
