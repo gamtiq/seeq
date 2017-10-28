@@ -1,3 +1,9 @@
+### 1.0.0 / 2017-10-29
+
+* Remove support for outdated resources (Component, Jam, jsDelivr, SPM)
+* Replace Custom Elements by Web components
+* Update implementation of resource modules
+
 ### 0.2.2 / 2014-08-24
 
 * Add resources for [SPM](http://spmjs.io) and [Custom Elements](http://customelements.io)
