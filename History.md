@@ -1,3 +1,7 @@
+### 1.0.1 / 2017-10-31
+
+* Fix gulp resource module implementation
+
 ### 1.0.0 / 2017-10-29
 
 * Remove support for outdated resources (Component, Jam, jsDelivr, SPM)
