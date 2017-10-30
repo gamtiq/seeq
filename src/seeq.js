@@ -85,6 +85,8 @@ function getCheckNameCallback(resource, position, callback) {
  */
 function searchName(name, callback, settings) {
     /*jshint laxbreak:true*/
+    var resultList = [],
+        api, generalSettings, nC, nI, nTotal, realSettings, resource, resourceList, resourceSettings;
     
     // Gather results from resources
     function resultCallback(err, result, resource, position) {
@@ -127,8 +129,6 @@ function searchName(name, callback, settings) {
         }
     }
     
-    var resultList = [],
-        api, generalSettings, nC, nI, nTotal, realSettings, resource, resourceList, resourceSettings;
     if (! settings) {
         settings = {};
     }
@@ -183,6 +183,9 @@ function searchName(name, callback, settings) {
  */
 function search(names, callback, settings) {
     /*jshint boss:true*/
+    var progressCallback = settings && settings.progressCallback,
+        resultMap = {},
+        nI, nK;
     
     // Notify about operation progress
     function searchNameProgress(data) {
@@ -204,10 +207,6 @@ function search(names, callback, settings) {
             callback(resultMap);
         }
     }
-    
-    var progressCallback = settings && settings.progressCallback,
-        resultMap = {},
-        nI, nK;
     
     if (names && typeof names === "string") {
         names = [names];

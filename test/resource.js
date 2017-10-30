@@ -741,6 +741,8 @@ describe("resource", function() {
     
     
     describe(".filterList(settings)", function() {
+        var filterList = resource.filterList;
+        
         function checkResNames(settings, resultNames) {
             var list = filterList(settings).getList(),
                 nL = list.length,
@@ -762,8 +764,6 @@ describe("resource", function() {
                     .above(-1);
             }
         }
-        
-        var filterList = resource.filterList;
         
         it("should filter list of available resources", function() {
             checkResNames({selectTag: "package"}, ["Github", "Npm", "Bower"]);
@@ -787,6 +787,8 @@ describe("resource", function() {
     
     
     describe(".getMap", function() {
+        var getMap = resource.getMap;
+        
         function checkResNames(settings, resultNames) {
             var resMap = getMap(settings),
                 nK = 0,
@@ -809,8 +811,6 @@ describe("resource", function() {
             expect( nK )
                 .equal(resultNames.length);
         }
-        
-        var getMap = resource.getMap;
         
         describe("getMap()", function() {
             it("should return object containing data about all available resources", function() {

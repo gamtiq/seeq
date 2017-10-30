@@ -97,7 +97,7 @@ exports.detect = function detect(name, callback, settings) {
     
     function handler(err, response, data) {
         /*jshint boss:true*/
-        var bRun, itemList, nI, nL, preparePlugin;
+        var bRun, errorData, itemList, nI, nL, preparePlugin, task;
         if (! err && response.statusCode === 200) {
             preparePlugin = exports.preparePlugin;
             itemList = data.results;
@@ -115,16 +115,25 @@ exports.detect = function detect(name, callback, settings) {
                 }
             }
         }
-        else if (! tempPluginList.length) {
-            callback(new util.getHttpRequestError(err, response), result);
-        }
         else {
+            if (! tempPluginList.length) {
+                tempPluginList = null;
+                errorData = new util.getHttpRequestError(err, response);
+            }
             bRun = true;
         }
         if (bRun) {
             for (nI = 0, nL = taskList.length; nI < nL; nI++) {
-                detectWithList.apply(null, [tempPluginList].concat(taskList[nI]));
+                task = taskList[nI];
+                if (tempPluginList) {
+                    detectWithList.apply(null, [tempPluginList].concat(task));
+                }
+                else {
+                    task[1](errorData, result);
+                }
             }
+            taskList.length = 0;
+            tempPluginList = null;
         }
     }
     

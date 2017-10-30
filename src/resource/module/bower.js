@@ -44,6 +44,9 @@ exports.detect = function(name, callback, settings) {
         clientSettings.timeout = settings.requestTimeout;
     }
     new RegistryClient(Config.read(process.cwd(), clientSettings))[util.isSearchSet(settings) ? "search" : "lookup"](name, function(err, packageList) {
+        var nC = 0,
+            result = [],
+            bRealSearch, pkg, nI, nK, nL, nLimit, sUrl;
         
         function getConfigCallback(err, response, data) {
             /*jshint validthis:true*/
@@ -62,10 +65,6 @@ exports.detect = function(name, callback, settings) {
                 callback(null, result);
             }
         }
-        
-        var nC = 0,
-            result = [],
-            bRealSearch, pkg, nI, nK, nL, nLimit, sUrl;
         
         if (packageList) {
             if (! Array.isArray(packageList)) {
