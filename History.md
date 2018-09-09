@@ -1,3 +1,7 @@
+### 1.0.2 / 2018-09-09
+
+* Fix URL of Bower registry
+
 ### 1.0.1 / 2017-10-31
 
 * Fix gulp resource module implementation
