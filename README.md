@@ -424,5 +424,5 @@ Add unit tests for any new or changed functionality.
 Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## License
-Copyright (c) 2014-2017 Denis Sikuler  
+Copyright (c) 2014-2018 Denis Sikuler  
 Licensed under the MIT license.

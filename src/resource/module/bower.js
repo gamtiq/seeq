@@ -39,7 +39,7 @@ var RegistryClient = require("bower-registry-client"),
 exports.detect = function(name, callback, settings) {
     var clientSettings = {
         registry: {
-            search: ['https://registry.bower.io']
+            search: ["https://registry.bower.io"]
         },
         force: true
     };
