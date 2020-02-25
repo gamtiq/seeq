@@ -1,5 +1,5 @@
 /**
- * Module that provides means to check/search in {@link http://gruntjs.com/plugins registry of Grunt plugins}.
+ * Module that provides means to check/search in {@link https://gruntjs.com/plugins registry of Grunt plugins}.
  * 
  * @module grunt
  */
@@ -39,7 +39,7 @@ exports.detect = function detect(name, callback, settings) {
         bRealSearch = util.isRealSearchSet(settings);
         nLimit = util.getLimit(settings);
         for (nI = 0, nL = pluginList.length; nI < nL; nI++) {
-            plugin = pluginList[nI];
+            plugin = pluginList[nI].package;
             sName = plugin.name;
             if (sName.indexOf("grunt-") === 0) {
                 sName = plugin.name = sName.substring(6);

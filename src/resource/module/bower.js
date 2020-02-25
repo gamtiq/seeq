@@ -1,5 +1,5 @@
 /**
- * Module that provides means to check/search in {@link http://bower.io Bower}.
+ * Module that provides means to check/search in {@link https://bower.io Bower}.
  * 
  * @module bower
  */

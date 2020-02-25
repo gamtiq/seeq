@@ -1,5 +1,5 @@
 /**
- * Module that provides means to check/search in {@link http://gulpjs.com/plugins/ registry of Gulp plugins}.
+ * Module that provides means to check/search in {@link https://gulpjs.com/plugins/ registry of Gulp plugins}.
  * 
  * @module gulp
  */

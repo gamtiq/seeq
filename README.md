@@ -1,7 +1,7 @@
 # seeq
 
 Detect whether a name is registered or present on some resource ([GitHub](https://github.com), [NPM](https://npmjs.org),
-[Bower](http://bower.io), ...).
+[Bower](https://bower.io), ...).
 
 Also allows searching for string on specified resources.
 
@@ -15,12 +15,12 @@ The following resources are available:
 
 * [GitHub](https://github.com)
 * [NPM](https://npmjs.org)
-* [Bower](http://bower.io)
-* [Registry of Grunt plugins](http://gruntjs.com/plugins)
-* [Registry of Gulp plugins](http://gulpjs.com/plugins)
+* [Bower](https://bower.io)
+* [Registry of Grunt plugins](https://gruntjs.com/plugins)
+* [Registry of Gulp plugins](https://gulpjs.com/plugins)
 * [JSter](http://jster.net)
 * [MicroJS](http://microjs.com)
-* [CDNJS](http://cdnjs.com)
+* [CDNJS](https://cdnjs.com)
 * [Web components](https://www.webcomponents.org)
 
 You can see information about all available resources by running `seeq -l` (see below).
@@ -66,15 +66,15 @@ Options:
 
 Available resources (9):
 
-    * GitHub (https://github.com) - GitHub repositories
-    * NPM (https://npmjs.org) - Node packaged modules registry
-    * Bower (http://bower.io) - Bower package manager registry
-    * Grunt (http://gruntjs.com/plugins) - Registry of Grunt plugins
-    * Gulp (http://gulpjs.com/plugins/) - Registry of Gulp plugins
-    * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development
-    * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries
-    * CDNJS (http://cdnjs.com) - Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets
-    * Web components (https://www.webcomponents.org) - Share and discover reusable web UI components. A long-term project committed to making the web better by sharing peer-reviewed custom elements that are usable across all browsers, and interoperable with existing libraries.
+    * GitHub (https://github.com) - GitHub repositories (tags: github repository project library framework package)
+    * NPM (https://npmjs.org) - Node packaged modules registry (tags: npm js javascript package library node)
+    * Bower (https://bower.io) - Bower package manager registry (tags: bower js javascript package component library browser)
+    * Grunt (https://gruntjs.com/plugins) - Registry of Grunt plugins (tags: grunt js javascript plugin registry node task runner)
+    * Gulp (https://gulpjs.com/plugins) - Registry of Gulp plugins (tags: gulp js javascript plugin registry node build)
+    * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development (tags: jster js javascript catalog library framework tool)
+    * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries (tags: microjs js javascript library framework micro)
+    * CDNJS (https://cdnjs.com) - CDN for popular web development frameworks, libraries, CSS and other assets (tags: cdnjs cdn js javascript library framework css browser)
+    * Web components (https://www.webcomponents.org) - Share and discover reusable web UI components (tags: webcomponents customelements web component webcomponent custom element js javascript css html gallery browser)
 ```
 
 To make a search you can use `sees` command (`sees` equals to `seeq -s`).
@@ -421,8 +421,8 @@ See JSDoc-generated documentation in `doc` folder.
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style.
 Add unit tests for any new or changed functionality.
-Lint and test your code using [Grunt](http://gruntjs.com/).
+Lint and test your code using [Grunt](https://gruntjs.com/).
 
 ## License
-Copyright (c) 2014-2018 Denis Sikuler  
+Copyright (c) 2014-2020 Denis Sikuler  
 Licensed under the MIT license.

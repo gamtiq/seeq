@@ -150,6 +150,9 @@ function add(resource) {
     if (! resource.tag) {
         resource.tag = [];
     }
+    if (! resource.shortDescr) {
+        resource.shortDescr = resource.description;
+    }
     resourceList.push(resource);
     resourceMap[sId] = resource;
     return exports;

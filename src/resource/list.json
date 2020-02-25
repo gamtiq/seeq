@@ -17,21 +17,21 @@
     {
         "name": "Bower",
         "description": "Bower package manager registry",
-        "url": "http://bower.io",
+        "url": "https://bower.io",
         "tag": ["bower", "js", "javascript", "package", "component", "library", "browser"],
         "module": "./module/bower"
     },
     {
         "name": "Grunt",
         "description": "Registry of Grunt plugins",
-        "url": "http://gruntjs.com/plugins",
+        "url": "https://gruntjs.com/plugins",
         "tag": ["grunt", "js", "javascript", "plugin", "registry", "node", "task", "runner"],
         "module": "./module/grunt"
     },
     {
         "name": "Gulp",
         "description": "Registry of Gulp plugins",
-        "url": "http://gulpjs.com/plugins/",
+        "url": "https://gulpjs.com/plugins",
         "tag": ["gulp", "js", "javascript", "plugin", "registry", "node", "build"],
         "module": "./module/gulp"
     },
@@ -51,13 +51,15 @@
     },
     {
         "name": "CDNJS",
+        "shortDescr": "CDN for popular web development frameworks, libraries, CSS and other assets",
         "description": "Content Distribution Network for popular web development frameworks, libraries, CSS and other web assets",
-        "url": "http://cdnjs.com",
+        "url": "https://cdnjs.com",
         "tag": ["cdnjs", "cdn", "js", "javascript", "library", "framework", "css", "browser"],
         "module": "./module/cdnjs"
     },
     {
         "name": "Web components",
+        "shortDescr": "Share and discover reusable web UI components",
         "description": "Share and discover reusable web UI components. A long-term project committed to making the web better by sharing peer-reviewed custom elements that are usable across all browsers, and interoperable with existing libraries.",
         "url": "https://www.webcomponents.org",
         "tag": ["webcomponents", "customelements", "web", "component", "webcomponent", "custom", "element", "js", "javascript", "css", "html", "gallery", "browser"],

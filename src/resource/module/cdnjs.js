@@ -1,5 +1,5 @@
 /**
- * Module that provides means to check/search in {@link http://cdnjs.com/ CDNJS}.
+ * Module that provides means to check/search in {@link https://cdnjs.com/ CDNJS}.
  * 
  * @module cdnjs
  */

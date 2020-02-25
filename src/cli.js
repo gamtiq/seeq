@@ -16,7 +16,9 @@ function resourceListToString(resourceList, short) {
         resource = resourceList[nI];
         if (short) {
             result.push("\n",
-                    sIndent, "* ", resource.name, " (", resource.url, ") - ", resource.description);
+                    sIndent, "* ", resource.name, " (", resource.url, ") - ", resource.shortDescr,
+                    " (tags: ", resource.tag.join(" "), ")"
+                    );
         }
         else {
             result.push("\n",
