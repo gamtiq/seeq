@@ -1,3 +1,7 @@
+### 1.0.3 / 2020-02-25
+
+* Fix grunt resource module implementation to accommodate to new data format of plugin's list
+
 ### 1.0.2 / 2018-09-09
 
 * Fix URL of Bower registry
