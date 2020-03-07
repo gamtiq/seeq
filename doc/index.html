@@ -93,13 +93,15 @@
 
 
     <section class="readme-section">
-        <article><h1>seeq</h1><p>Detect whether a name is registered or present on some resource (<a href="https://github.com">GitHub</a>, <a href="https://npmjs.org">NPM</a>,
+        <article><h1>seeq</h1>
+<p>Detect whether a name is registered or present on some resource (<a href="https://github.com">GitHub</a>, <a href="https://npmjs.org">NPM</a>,
 <a href="https://bower.io">Bower</a>, ...).</p>
 <p>Also allows searching for string on specified resources.</p>
 <p><a href="http://badge.fury.io/js/seeq"><img src="https://badge.fury.io/js/seeq.png" alt="NPM version"></a>
 <a href="https://travis-ci.org/gamtiq/seeq"><img src="https://travis-ci.org/gamtiq/seeq.png" alt="Build Status"></a>
 <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></p>
-<h2>Available resources</h2><p>The following resources are available:</p>
+<h2>Available resources</h2>
+<p>The following resources are available:</p>
 <ul>
 <li><a href="https://github.com">GitHub</a></li>
 <li><a href="https://npmjs.org">NPM</a></li>
@@ -112,9 +114,13 @@
 <li><a href="https://www.webcomponents.org">Web components</a></li>
 </ul>
 <p>You can see information about all available resources by running <code>seeq -l</code> (see below).</p>
-<h2>Installation</h2><p>To install and use seeq <a href="http://nodejs.org">Node.js</a> should be installed in your system.
+<h2>Installation</h2>
+<p>To install and use seeq <a href="http://nodejs.org">Node.js</a> should be installed in your system.
 Run the following command to install seeq:</p>
-<pre class="prettyprint source"><code>npm install -g seeq</code></pre><h2>Usage</h2><p>Run <code>seeq</code> to show usage information.</p>
+<pre><code>npm install -g seeq
+</code></pre>
+<h2>Usage</h2>
+<p>Run <code>seeq</code> to show usage information.</p>
 <pre class="prettyprint source"><code>> seeq
 
 Usage: seeq [name]... [options]
@@ -152,16 +158,20 @@ Available resources (9):
     * JSter (http://jster.net) - Catalog of JavaScript libraries and tools for web development (tags: jster js javascript catalog library framework tool)
     * MicroJS (http://microjs.com) - List of micro-frameworks and micro-libraries (tags: microjs js javascript library framework micro)
     * CDNJS (https://cdnjs.com) - CDN for popular web development frameworks, libraries, CSS and other assets (tags: cdnjs cdn js javascript library framework css browser)
-    * Web components (https://www.webcomponents.org) - Share and discover reusable web UI components (tags: webcomponents customelements web component webcomponent custom element js javascript css html gallery browser)</code></pre><p>To make a search you can use <code>sees</code> command (<code>sees</code> equals to <code>seeq -s</code>).</p>
-<h3>Formats</h3><p>It is possible to specify format of search result:</p>
+    * Web components (https://www.webcomponents.org) - Share and discover reusable web UI components (tags: webcomponents customelements web component webcomponent custom element js javascript css html gallery browser)
+</code></pre>
+<p>To make a search you can use <code>sees</code> command (<code>sees</code> equals to <code>seeq -s</code>).</p>
+<h3>Formats</h3>
+<p>It is possible to specify format of search result:</p>
 <ul>
 <li><code>text</code> - result will be converted into plain text; default format</li>
 <li><code>json</code> - result will be converted into JSON</li>
 <li><code>markdown</code> - result will be converted into <a href="http://daringfireball.net/projects/markdown/">Markdown</a></li>
-<li><code>raw</code> - result will be returned &quot;as is&quot; (raw JSON): in usual mode auxiliary data about resources will be deleted, 
+<li><code>raw</code> - result will be returned &quot;as is&quot; (raw JSON): in usual mode auxiliary data about resources will be deleted,
 in verbose mode no processing will be applied</li>
 </ul>
-<h3>Examples</h3><p>Check <code>numgen</code>, <code>three</code> and <code>some-strange-name</code> at resources having <code>package</code> tag and limit results per resource up to 5.</p>
+<h3>Examples</h3>
+<p>Check <code>numgen</code>, <code>three</code> and <code>some-strange-name</code> at resources having <code>package</code> tag and limit results per resource up to 5.</p>
 <pre class="prettyprint source"><code>> seeq numgen three some-strange-name --tag package --limit 5
 Checking GitHub, NPM, Bower...
 Progress: 9/9 (100%)
@@ -174,17 +184,17 @@ Results:
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
 
-        numgen - doerp
-        url: https://github.com/drmarduk/numgen
+        numgen - A little Go command line application to generate ranges of numbers
+        url: https://github.com/maurogestoso/numgen
 
         numgen
-        url: https://github.com/shubham-s-del/numgen
+        url: https://github.com/namumba22/numgen
 
         numgen
-        url: https://github.com/c3er/numgen
+        url: https://github.com/gbochev/numgen
 
-        Numgen - Maven Integration to Jenkins
-        url: https://github.com/rajapaladugula/Numgen
+        numgen - numger prediction
+        url: https://github.com/sndemo/numgen
 
     NPM - 1
         numgen - Creates objects that generate number sequences
@@ -198,7 +208,7 @@ Results:
 
 2. three
 
-    GitHub - 5
+    GitHub - 3
         three - Totally not inspired Rust 3D library
         url: https://github.com/three-rs/three
 
@@ -208,21 +218,14 @@ Results:
         three - A GPL (v2) and Creative Commons (for the assets) game for the ioquake3 engine.
         url: http://www.ioquake3.org/
 
-        three - Three.js component
-        url: https://github.com/cvdlab/three
-
-        Three
-        url: https://github.com/saxocellphone/Three
-
     NPM - 1
         three - JavaScript 3D library
-        url: http://threejs.org/
-        keywords: three three.js 3d webgl
+        url: https://threejs.org/
+        keywords: three three.js 3d canvas svg webgl
 
     Bower - 1
-        three - JavaScript 3D library
-        url: http://threejs.org/
-        keywords: three threejs three.js 3D webgl
+        three
+        url: https://github.com/mrdoob/three.js
 
 3. some-strange-name
 
@@ -233,7 +236,9 @@ Results:
         some-strange-name is not found.
 
     Bower
-        some-strange-name is not found.</code></pre><p>Check <code>mixing</code> and <code>flight</code> at GitHub and Bower, allow partial matching at the beginning, use case-sensitive search,
+        some-strange-name is not found.
+</code></pre>
+<p>Check <code>mixing</code> and <code>flight</code> at GitHub and Bower, allow partial matching at the beginning, use case-sensitive search,
 limit Bower results up to 3 and GitHub results up to 5, include only GitHub projects that are written in JavaScript,
 show additional information about found items.</p>
 <pre class="prettyprint source"><code>> seeq mixing flight -r github,bower --partial-match 1 -c --bower-limit 3 --github-limit 5 --github-lang js --verbose
@@ -249,24 +254,14 @@ Results:
         url: https://github.com/gamtiq/mixing
         repository: https://github.com/gamtiq/mixing.git
         language: JavaScript
-        stars: 12
+        stars: 14
 
-        mixingMachine - program for new machines
-        url: https://github.com/heidgera/mixingMachine
-        repository: https://github.com/heidgera/mixingMachine.git
+        mixing-console-example - Audio mixing console UI example
+        url: https://github.com/wisdman/mixing-console-example
+        repository: https://github.com/wisdman/mixing-console-example.git
         language: JavaScript
-
-        mixing-desk - Simple mixing desk app used in a Digital Surgeons blog article.
-        url: https://github.com/chambaz/mixing-desk
-        repository: https://github.com/chambaz/mixing-desk.git
-        language: JavaScript
-        stars: 1
-
-        mixing-web - Build web apps with webpack,vue,react,es6,and so on,??webpack?????vue,react???
-        url: https://github.com/havefive/mixing-web
-        repository: https://github.com/havefive/mixing-web.git
-        language: JavaScript
-        stars: 1
+        license: MIT
+        stars: 3
 
         mixingloom-profiler-example - an example of profiling by mixingloom-profiler
         url: https://github.com/wighawag/mixingloom-profiler-example
@@ -274,17 +269,23 @@ Results:
         language: JavaScript
         stars: 2
 
-    Bower - 2
+        mixing - Spotify API for adding songs and playlists
+        url: https://github.com/forevernitch/mixing
+        repository: https://github.com/forevernitch/mixing.git
+        language: JavaScript
+
+        mixingMachine - program for new machines
+        url: https://github.com/heidgera/mixingMachine
+        repository: https://github.com/heidgera/mixingMachine.git
+        language: JavaScript
+
+    Bower - 1
         mixing - Functions to mix, filter, change and copy/clone objects
         url: https://github.com/gamtiq/mixing
-        keywords: mix merge mixin object filter map change copy clone update
-        version: 1.2.1
+        keywords: mix merge mixin assign object filter map change copy clone modify update
+        version: 1.2.5
         repository: https://github.com/gamtiq/mixing.git
         license: MIT
-
-        mixings
-        url: https://github.com/sebastian-yabiku/mixings
-        repository: https://github.com/sebastian-yabiku/mixings.git
 
 2. flight
 
@@ -293,31 +294,35 @@ Results:
         url: http://flightjs.github.io/
         repository: https://github.com/flightjs/flight.git
         language: JavaScript
-        stars: 6620
+        license: MIT
+        stars: 6639
 
         flightplan - Run sequences of shell commands against local and remote hosts.
         url: https://www.npmjs.com/package/flightplan
         repository: https://github.com/pstadler/flightplan.git
         language: JavaScript
-        stars: 1621
+        license: MIT
+        stars: 1782
 
         flightDelay - FlightDelay Project
         url: https://github.com/etherisc/flightDelay
         repository: https://github.com/etherisc/flightDelay.git
         language: JavaScript
-        stars: 41
+        license: MIT
+        stars: 115
 
-        flight627 - prototype work towards cloud-based developer tooling
-        url: https://github.com/spring-projects/flight627
-        repository: https://github.com/spring-projects/flight627.git
+        flightSimPanels - Flight Simulator Instrument Panels on your Browsers, using UDP over Node.js and Socket.io
+        url: https://github.com/dmolin/flightSimPanels
+        repository: https://github.com/dmolin/flightSimPanels.git
         language: JavaScript
-        stars: 49
+        license: GPL-3.0
+        stars: 85
 
-        flight - flight-framework is a jsfl script framework with a CommonJS-like module mechanism.
-        url: https://github.com/uzzu/flight
-        repository: https://github.com/uzzu/flight.git
+        flightSimulator - Eurofighter Typhoon simulated driving(???????????)
+        url: https://github.com/renjianfeng/flightSimulator
+        repository: https://github.com/renjianfeng/flightSimulator.git
         language: JavaScript
-        stars: 5
+        stars: 39
 
     Bower - 3
         flight - Clientside component infrastructure
@@ -330,10 +335,12 @@ Results:
         version: 0.2.2
         repository: https://github.com/msecret/flight-yql.git
 
-        flight-edge
-        url: https://github.com/cameronhunter/flight-edge
-        version: 0.1.1
-        repository: https://github.com/cameronhunter/flight-edge.git</code></pre><p>Search for <code>pegasus</code> at resources that have tag <code>library</code> and do not have tags <code>node</code> and <code>cdn</code>,
+        flight-withEach
+        url: https://github.com/olivierlesnicki/flight-withEach
+        version: 1.0.0
+        repository: https://github.com/olivierlesnicki/flight-withEach.git
+</code></pre>
+<p>Search for <code>pegasus</code> at resources that have tag <code>library</code> and do not have tags <code>node</code> and <code>cdn</code>,
 limit results per resource up to 5, print the search result in JSON format.</p>
 <pre class="prettyprint source"><code>> sees pegasus -m 5 --tag library,-node,-cdn --all-tag -f json
 Checking GitHub, Bower, JSter, MicroJS...
@@ -347,12 +354,13 @@ Results:
             &quot;result&quot;: [
                 {
                     &quot;name&quot;: &quot;pegasus&quot;,
-                    &quot;description&quot;: &quot;Load JSON while still loading other scripts&quot;,
-                    &quot;url&quot;: &quot;http://typicode.github.io/pegasus/&quot;
+                    &quot;description&quot;: &quot;A distributed key-value storage system developed and maintained by Xiaomi Cloud Storage Team.&quot;,
+                    &quot;url&quot;: &quot;https://pegasus-kv.github.io/&quot;
                 },
                 {
                     &quot;name&quot;: &quot;pegasus&quot;,
-                    &quot;url&quot;: &quot;https://github.com/XiaoMi/pegasus&quot;
+                    &quot;description&quot;: &quot;Load JSON while still loading other scripts&quot;,
+                    &quot;url&quot;: &quot;http://typicode.github.io/pegasus/&quot;
                 },
                 {
                     &quot;name&quot;: &quot;pegasus&quot;,
@@ -361,8 +369,8 @@ Results:
                 },
                 {
                     &quot;name&quot;: &quot;pegasus&quot;,
-                    &quot;description&quot;: &quot;Pegasus Workflow Management System&quot;,
-                    &quot;url&quot;: &quot;https://github.com/pegasus-isi/pegasus&quot;
+                    &quot;description&quot;: &quot;Pegasus Workflow Management System - Automate, recover, and debug scientific computations.&quot;,
+                    &quot;url&quot;: &quot;https://pegasus.isi.edu/&quot;
                 },
                 {
                     &quot;name&quot;: &quot;Pegasus&quot;,
@@ -422,7 +430,10 @@ Results:
             ]
         }
     }
-}</code></pre><h2>API</h2><p>In your program you can use API provided by seeq in the following way:</p>
+}
+</code></pre>
+<h2>API</h2>
+<p>In your program you can use API provided by seeq in the following way:</p>
 <pre class="prettyprint source lang-javascript"><code>var seeq = require(&quot;seeq&quot;);
 ...
 function onProgress(data) {
@@ -464,11 +475,16 @@ seeq.search([&quot;adam&quot;, &quot;eva&quot;],
                 console.log( seeq.format.format(resultMap, 
                                                 &quot;json&quot;, 
                                                 {queryList: [&quot;eva&quot;, &quot;adam&quot;], verbose: true}) );
-            });</code></pre><p>See JSDoc-generated documentation in <code>doc</code> folder.</p>
-<h2>Contributing</h2><p>In lieu of a formal styleguide, take care to maintain the existing coding style.
+            });
+</code></pre>
+<p>See JSDoc-generated documentation in <code>doc</code> folder.</p>
+<h2>Contributing</h2>
+<p>In lieu of a formal styleguide, take care to maintain the existing coding style.
 Add unit tests for any new or changed functionality.
 Lint and test your code using <a href="https://gruntjs.com/">Grunt</a>.</p>
-<h2>License</h2><p>Copyright (c) 2014-2020 Denis Sikuler<br>Licensed under the MIT license.</p></article>
+<h2>License</h2>
+<p>Copyright (c) 2014-2020 Denis Sikuler<br>
+Licensed under the MIT license.</p></article>
     </section>
 
 
@@ -516,9 +532,9 @@ Lint and test your code using <a href="https://gruntjs.com/">Grunt</a>.</p>
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
 	
-		on 2020-02-25T15:03:03+03:00
+		on 2020-03-08T01:34:34+03:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

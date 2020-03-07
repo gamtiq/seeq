@@ -106,17 +106,17 @@ Results:
         numgen - Creates objects that generate number sequences
         url: https://github.com/gamtiq/numgen
 
-        numgen - doerp
-        url: https://github.com/drmarduk/numgen
+        numgen - A little Go command line application to generate ranges of numbers
+        url: https://github.com/maurogestoso/numgen
 
         numgen
-        url: https://github.com/shubham-s-del/numgen
+        url: https://github.com/namumba22/numgen
 
         numgen
-        url: https://github.com/c3er/numgen
+        url: https://github.com/gbochev/numgen
 
-        Numgen - Maven Integration to Jenkins
-        url: https://github.com/rajapaladugula/Numgen
+        numgen - numger prediction
+        url: https://github.com/sndemo/numgen
 
     NPM - 1
         numgen - Creates objects that generate number sequences
@@ -130,7 +130,7 @@ Results:
 
 2. three
 
-    GitHub - 5
+    GitHub - 3
         three - Totally not inspired Rust 3D library
         url: https://github.com/three-rs/three
 
@@ -140,21 +140,14 @@ Results:
         three - A GPL (v2) and Creative Commons (for the assets) game for the ioquake3 engine.
         url: http://www.ioquake3.org/
 
-        three - Three.js component
-        url: https://github.com/cvdlab/three
-
-        Three
-        url: https://github.com/saxocellphone/Three
-
     NPM - 1
         three - JavaScript 3D library
-        url: http://threejs.org/
-        keywords: three three.js 3d webgl
+        url: https://threejs.org/
+        keywords: three three.js 3d canvas svg webgl
 
     Bower - 1
-        three - JavaScript 3D library
-        url: http://threejs.org/
-        keywords: three threejs three.js 3D webgl
+        three
+        url: https://github.com/mrdoob/three.js
 
 3. some-strange-name
 
@@ -186,24 +179,14 @@ Results:
         url: https://github.com/gamtiq/mixing
         repository: https://github.com/gamtiq/mixing.git
         language: JavaScript
-        stars: 12
+        stars: 14
 
-        mixingMachine - program for new machines
-        url: https://github.com/heidgera/mixingMachine
-        repository: https://github.com/heidgera/mixingMachine.git
+        mixing-console-example - Audio mixing console UI example
+        url: https://github.com/wisdman/mixing-console-example
+        repository: https://github.com/wisdman/mixing-console-example.git
         language: JavaScript
-
-        mixing-desk - Simple mixing desk app used in a Digital Surgeons blog article.
-        url: https://github.com/chambaz/mixing-desk
-        repository: https://github.com/chambaz/mixing-desk.git
-        language: JavaScript
-        stars: 1
-
-        mixing-web - Build web apps with webpack,vue,react,es6,and so on,??webpack?????vue,react???
-        url: https://github.com/havefive/mixing-web
-        repository: https://github.com/havefive/mixing-web.git
-        language: JavaScript
-        stars: 1
+        license: MIT
+        stars: 3
 
         mixingloom-profiler-example - an example of profiling by mixingloom-profiler
         url: https://github.com/wighawag/mixingloom-profiler-example
@@ -211,17 +194,23 @@ Results:
         language: JavaScript
         stars: 2
 
-    Bower - 2
+        mixing - Spotify API for adding songs and playlists
+        url: https://github.com/forevernitch/mixing
+        repository: https://github.com/forevernitch/mixing.git
+        language: JavaScript
+
+        mixingMachine - program for new machines
+        url: https://github.com/heidgera/mixingMachine
+        repository: https://github.com/heidgera/mixingMachine.git
+        language: JavaScript
+
+    Bower - 1
         mixing - Functions to mix, filter, change and copy/clone objects
         url: https://github.com/gamtiq/mixing
-        keywords: mix merge mixin object filter map change copy clone update
-        version: 1.2.1
+        keywords: mix merge mixin assign object filter map change copy clone modify update
+        version: 1.2.5
         repository: https://github.com/gamtiq/mixing.git
         license: MIT
-
-        mixings
-        url: https://github.com/sebastian-yabiku/mixings
-        repository: https://github.com/sebastian-yabiku/mixings.git
 
 2. flight
 
@@ -230,31 +219,35 @@ Results:
         url: http://flightjs.github.io/
         repository: https://github.com/flightjs/flight.git
         language: JavaScript
-        stars: 6620
+        license: MIT
+        stars: 6639
 
         flightplan - Run sequences of shell commands against local and remote hosts.
         url: https://www.npmjs.com/package/flightplan
         repository: https://github.com/pstadler/flightplan.git
         language: JavaScript
-        stars: 1621
+        license: MIT
+        stars: 1782
 
         flightDelay - FlightDelay Project
         url: https://github.com/etherisc/flightDelay
         repository: https://github.com/etherisc/flightDelay.git
         language: JavaScript
-        stars: 41
+        license: MIT
+        stars: 115
 
-        flight627 - prototype work towards cloud-based developer tooling
-        url: https://github.com/spring-projects/flight627
-        repository: https://github.com/spring-projects/flight627.git
+        flightSimPanels - Flight Simulator Instrument Panels on your Browsers, using UDP over Node.js and Socket.io
+        url: https://github.com/dmolin/flightSimPanels
+        repository: https://github.com/dmolin/flightSimPanels.git
         language: JavaScript
-        stars: 49
+        license: GPL-3.0
+        stars: 85
 
-        flight - flight-framework is a jsfl script framework with a CommonJS-like module mechanism.
-        url: https://github.com/uzzu/flight
-        repository: https://github.com/uzzu/flight.git
+        flightSimulator - Eurofighter Typhoon simulated driving(???????????)
+        url: https://github.com/renjianfeng/flightSimulator
+        repository: https://github.com/renjianfeng/flightSimulator.git
         language: JavaScript
-        stars: 5
+        stars: 39
 
     Bower - 3
         flight - Clientside component infrastructure
@@ -267,10 +260,10 @@ Results:
         version: 0.2.2
         repository: https://github.com/msecret/flight-yql.git
 
-        flight-edge
-        url: https://github.com/cameronhunter/flight-edge
-        version: 0.1.1
-        repository: https://github.com/cameronhunter/flight-edge.git
+        flight-withEach
+        url: https://github.com/olivierlesnicki/flight-withEach
+        version: 1.0.0
+        repository: https://github.com/olivierlesnicki/flight-withEach.git
 ```
 
 Search for `pegasus` at resources that have tag `library` and do not have tags `node` and `cdn`,
@@ -289,12 +282,13 @@ Results:
             "result": [
                 {
                     "name": "pegasus",
-                    "description": "Load JSON while still loading other scripts",
-                    "url": "http://typicode.github.io/pegasus/"
+                    "description": "A distributed key-value storage system developed and maintained by Xiaomi Cloud Storage Team.",
+                    "url": "https://pegasus-kv.github.io/"
                 },
                 {
                     "name": "pegasus",
-                    "url": "https://github.com/XiaoMi/pegasus"
+                    "description": "Load JSON while still loading other scripts",
+                    "url": "http://typicode.github.io/pegasus/"
                 },
                 {
                     "name": "pegasus",
@@ -303,8 +297,8 @@ Results:
                 },
                 {
                     "name": "pegasus",
-                    "description": "Pegasus Workflow Management System",
-                    "url": "https://github.com/pegasus-isi/pegasus"
+                    "description": "Pegasus Workflow Management System - Automate, recover, and debug scientific computations.",
+                    "url": "https://pegasus.isi.edu/"
                 },
                 {
                     "name": "Pegasus",

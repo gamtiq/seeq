@@ -13,8 +13,16 @@ describe("format/util", function() {
         it("should return array of found license types", function() {
             expect( getLicenseList({license: "MIT"}) )
                 .eql( ["MIT"] );
-            expect( getLicenseList({licenses: [{type: "MIT"}, {type: "BSD"}, {type: "Apache"}, {type: "LGPL"}]}) )
-                .eql( ["MIT", "BSD", "Apache", "LGPL"] );
+            expect( getLicenseList({license: {name: "MIT"}}) )
+                .eql( ["MIT"] );
+            expect( getLicenseList({license: {type: "MIT"}}) )
+                .eql( ["MIT"] );
+            expect( getLicenseList({license: {key: "MIT"}}) )
+                .eql( ["MIT"] );
+            expect( getLicenseList({license: {spdx_id: "MIT"}}) )
+                .eql( ["MIT"] );
+            expect( getLicenseList({licenses: [{type: "MIT"}, {name: "BSD"}, {key: "Apache"}, {spdx_id: "LGPL"}, "GPL-3"]}) )
+                .eql( ["MIT", "BSD", "Apache", "LGPL", "GPL-3"] );
         });
         
         it("should return empty array", function() {
@@ -26,7 +34,7 @@ describe("format/util", function() {
                 .eql( [] );
             expect( getLicenseList({licenses: "MIT"}) )
                 .eql( [] );
-            expect( getLicenseList({licenses: [{typ: "MIT"}, {name: "BSD"}, {ref: "Apache"}]}) )
+            expect( getLicenseList({licenses: [{typ: "MIT"}, {license: "BSD"}, {ref: "Apache"}]}) )
                 .eql( [] );
         });
     });

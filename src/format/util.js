@@ -19,16 +19,24 @@
 exports.getLicenseList = function(data) {
     /*jshint boss:true*/
     var result = [],
-        item, list, nI, nL, sType;
+        item, licenseList, nI, nL, sType;
+    
     if (data.license) {
-        result.push(data.license);
+        licenseList = [data.license];
     }
-    else if (Array.isArray(list = data.licenses)) {
-        for (nI = 0, nL = list.length; nI < nL; nI++) {
-            if (item = list[nI]) {
+    else if (Array.isArray(data.licenses)) {
+        licenseList = data.licenses;
+    }
+    if (licenseList && (nL = licenseList.length)) {
+        for (nI = 0; nI < nL; nI++) {
+            if (item = licenseList[nI]) {
                 sType = typeof item;
-                if (sType === "object" && item.type) {
-                    result.push(item.type);
+                if (sType === "object") {
+                    /*jshint camelcase:false */
+                    sType = item.type || item.spdx_id || item.name || item.key;
+                    if (sType) {
+                        result.push(sType);
+                    }
                 }
                 else if (sType === "string") {
                     result.push(item);
