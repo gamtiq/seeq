@@ -1,7 +1,7 @@
 {
   "name": "seeq",
   "description": "Search or detect name on some resource (GitHub, NPM, Bower, ...)",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://github.com/gamtiq/seeq",
   "author": {
     "name": "Denis Sikuler"
@@ -21,7 +21,7 @@
   },
   "preferGlobal": true,
   "engines": {
-    "node": ">= 4"
+    "node": ">= 10"
   },
   "scripts": {
     "test": "grunt test"

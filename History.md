@@ -1,3 +1,8 @@
+### 1.0.4 / 2020-03-08
+
+* Fix problem with incorrect output of license
+* Update dependencies
+
 ### 1.0.3 / 2020-02-25
 
 * Fix grunt resource module implementation to accommodate to new data format of plugin's list
